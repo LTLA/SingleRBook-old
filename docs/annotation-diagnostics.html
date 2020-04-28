@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Annotation diagnostics | Assigning cell types with SingleR</title>
+  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Annotation diagnostics | Assigning cell types with SingleR" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Annotation diagnostics | Assigning cell types with SingleR" />
+  
+  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  
+
+
+
+<meta name="date" content="2020-04-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="using-single-cell-references.html"/>
+<link rel="next" href="using-multiple-references.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">The SingleR book</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html"><i class="fa fa-check"></i><b>2</b> Using the built-in references</a><ul>
+<li class="chapter" data-level="2.1" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#running-the-algorithm"><i class="fa fa-check"></i><b>2.1</b> Running the algorithm</a></li>
+<li class="chapter" data-level="2.2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#available-references"><i class="fa fa-check"></i><b>2.2</b> Available references</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html"><i class="fa fa-check"></i><b>3</b> Using single-cell references</a><ul>
+<li class="chapter" data-level="3.1" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html#running-the-algorithm-1"><i class="fa fa-check"></i><b>3.1</b> Running the algorithm</a></li>
+<li class="chapter" data-level="3.2" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html#defining-custom-markers"><i class="fa fa-check"></i><b>3.2</b> Defining custom markers</a></li>
+<li class="chapter" data-level="3.3" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html#pseudo-bulk-aggregation"><i class="fa fa-check"></i><b>3.3</b> Pseudo-bulk aggregation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html"><i class="fa fa-check"></i><b>4</b> Annotation diagnostics</a><ul>
+<li class="chapter" data-level="4.1" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.1</b> Based on the scores within cells</a></li>
+<li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the deltas across cells</a></li>
+<li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-marker-gene-expression"><i class="fa fa-check"></i><b>4.3</b> Based on marker gene expression</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a></li>
+<li class="chapter" data-level="6" data-path="harmonizing-labels.html"><a href="harmonizing-labels.html"><i class="fa fa-check"></i><b>6</b> Harmonizing labels</a></li>
+<li class="chapter" data-level="7" data-path="advanced-options.html"><a href="advanced-options.html"><i class="fa fa-check"></i><b>7</b> Advanced options</a><ul>
+<li class="chapter" data-level="7.1" data-path="advanced-options.html"><a href="advanced-options.html#improving-efficiency"><i class="fa fa-check"></i><b>7.1</b> Improving efficiency</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bioconductor.org" target="blank">Published by Bioconductor</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Assigning cell types with SingleR</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="annotation-diagnostics" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Annotation diagnostics</h1>
+<div id="based-on-the-scores-within-cells" class="section level2">
+<h2><span class="header-section-number">4.1</span> Based on the scores within cells</h2>
+<p><em><a href="https://bioconductor.org/packages/3.11/SingleR">SingleR</a></em> provides a few basic yet powerful visualization tools. <code>plotScoreHeatmap()</code> displays the scores for all cells across all reference labels, which allows users to inspect the confidence of the predicted labels across the dataset. The actual assigned label for each cell is shown in the color bar at the top; note that this may not be the visually top-scoring label if fine-tuning is applied, as the only the pre-tuned scores are directly comparable across all labels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(SingleR)
+<span class="kw">plotScoreHeatmap</span>(pred.grun)</code></pre></div>
+<p><img src="04-diagnostics_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>For this plot, the key point is to examine the spread of scores within each cell. Ideally, each cell (i.e., column of the heatmap) should have one score that is obviously larger than the rest, indicating that it is unambiguously assigned to a single label. A spread of similar scores for a given cell indicates that the assignment is uncertain, though this may be acceptable if the uncertainty is distributed across similar cell types that cannot be easily resolved.</p>
+<p>We can also display other metadata information for each cell by setting <code>clusters=</code> or <code>annotation_col=</code>. This is occasionally useful for examining potential batch effects, differences in cell type composition between conditions, relationship to clusters from an unsupervised analysis, etc. In the code below, we display which donor each cell comes from:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotScoreHeatmap</span>(pred.grun, 
+    <span class="dt">annotation_col=</span><span class="kw">as.data.frame</span>(<span class="kw">colData</span>(sceG)[,<span class="st">&quot;donor&quot;</span>,<span class="dt">drop=</span><span class="ot">FALSE</span>]))</code></pre></div>
+<p><img src="04-diagnostics_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="based-on-the-deltas-across-cells" class="section level2">
+<h2><span class="header-section-number">4.2</span> Based on the deltas across cells</h2>
+<p>The <code>pruneScores()</code> function will remove potentially poor-quality or ambiguous assignments. In particular, ambiguous assignments are identified based on the per-cell “delta”, i.e., the difference between the score for the assigned label and the median across all labels for each cell. Low deltas indicate that the assignment is uncertain, which is especially relevant if the cell’s true label does not exist in the reference. The exact threshold used for pruning is identified using an outlier-based approach that accounts for differences in the scale of the correlations in various contexts.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">to.remove &lt;-<span class="st"> </span><span class="kw">pruneScores</span>(pred.grun)
+<span class="kw">summary</span>(to.remove)</code></pre></div>
+<pre><code>##    Mode   FALSE    TRUE 
+## logical      96       4</code></pre>
+<p>By default, <code>SingleR()</code> will report pruned labels in the <code>pruned.labels</code> field where low-quality assignments are replaced with <code>NA</code>. However, the default pruning thresholds may not be appropriate for every dataset - see <code>?pruneScores</code> for a more detailed discussion. We provide the <code>plotScoreDistribution()</code> to help in determining whether the thresholds are appropriate by using information across cells with the same label. This displays the per-label distribution of the deltas across cells, from which <code>pruneScores()</code> defines an appropriate threshold as 3 median absolute deviations (MADs) below the median.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotScoreDistribution</span>(pred.grun, <span class="dt">show =</span> <span class="st">&quot;delta.med&quot;</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">show.nmads =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="04-diagnostics_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>If some tuning parameters must be adjusted, we can simply call <code>pruneScores()</code> directly with adjusted parameters. Here, we set labels to <code>NA</code> if they are to be discarded, which is also how <code>SingleR()</code> marks such labels in <code>pruned.labels</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.pruned &lt;-<span class="st"> </span>pred.grun<span class="op">$</span>labels
+new.pruned[<span class="kw">pruneScores</span>(pred.grun, <span class="dt">nmads=</span><span class="dv">5</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+<span class="kw">table</span>(new.pruned, <span class="dt">useNA=</span><span class="st">&quot;always&quot;</span>)</code></pre></div>
+<pre><code>## new.pruned
+## acinar   beta  delta   duct   &lt;NA&gt; 
+##     53      4      2     41      0</code></pre>
+</div>
+<div id="based-on-marker-gene-expression" class="section level2">
+<h2><span class="header-section-number">4.3</span> Based on marker gene expression</h2>
+<p>Another simple yet effective diagnostic is to examine the expression of the marker genes for each label in the test dataset. We extract the identity of the markers from the metadata of the <code>SingleR()</code> results and use them in the <code>plotHeatmap()</code> function from <em><a href="https://bioconductor.org/packages/3.11/scater">scater</a></em>, as shown below for beta cell markers. If a cell in the test dataset is confidently assigned to a particular label, we would expect it to have strong expression of that label’s markers. At the very least, it should exhibit upregulation of those markers relative to cells assigned to other labels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all.markers &lt;-<span class="st"> </span><span class="kw">metadata</span>(pred.grun)<span class="op">$</span>de.genes
+sceG<span class="op">$</span>labels &lt;-<span class="st"> </span>pred.grun<span class="op">$</span>labels
+
+<span class="co"># Beta cell-related markers</span>
+<span class="kw">library</span>(scater)
+<span class="kw">plotHeatmap</span>(sceG, <span class="dt">order_columns_by=</span><span class="st">&quot;labels&quot;</span>,
+    <span class="dt">features=</span><span class="kw">unique</span>(<span class="kw">unlist</span>(all.markers<span class="op">$</span>beta))) </code></pre></div>
+<p><img src="04-diagnostics_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>We can similarly perform this for all labels by wrapping this code in a loop, as shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (lab <span class="cf">in</span> <span class="kw">unique</span>(pred.grun<span class="op">$</span>labels)) {
+    <span class="kw">plotHeatmap</span>(sceG, <span class="dt">order_columns_by=</span><span class="kw">list</span>(<span class="kw">I</span>(pred.grun<span class="op">$</span>labels)), 
+        <span class="dt">features=</span><span class="kw">unique</span>(<span class="kw">unlist</span>(all.markers[[lab]]))) 
+}</code></pre></div>
+<p>Heatmaps are particularly useful because they allow users to check that the genes are actually biologically meaningful to that cell type’s identity. For example, beta cells would be expected to express insulin, and the fact that they do so gives more confidence to the correctness of the assignment. By comparison, the scores and deltas are more abstract and difficult to interpret for diagnostic purposes. If the identified markers are not meaningful or not consistently upregulated, some skepticism towards the quality of the assignments is warranted.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="using-single-cell-references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-multiple-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+},
+"bookdown::epub_book": "default",
+"cover": "images/cover.png"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
