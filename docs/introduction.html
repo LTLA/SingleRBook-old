@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-04-27" />
+<meta name="date" content="2020-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,7 +148,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p><em><a href="https://bioconductor.org/packages/3.11/SingleR">SingleR</a></em> is an automatic annotation method for single-cell RNA sequencing (scRNAseq) data <span class="citation">(Aran et al. <a href="#ref-aran2019reference">2019</a>)</span>. Given a reference dataset of samples (single-cell or bulk) with known labels, it labels new cells from a test dataset based on similarity to the reference set. Specifically, for each test cell:</p>
+<p><em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> is an automatic annotation method for single-cell RNA sequencing (scRNAseq) data <span class="citation">(Aran et al. <a href="#ref-aran2019reference">2019</a>)</span>. Given a reference dataset of samples (single-cell or bulk) with known labels, it labels new cells from a test dataset based on similarity to the reference set. Specifically, for each test cell:</p>
 <ol style="list-style-type: decimal">
 <li>We compute the Spearman correlation between its expression profile and that of each reference sample. This is done across the union of marker genes identified between all pairs of labels.</li>
 <li>We define the per-label score as a fixed quantile (by default, 0.8) of the distribution of correlations.</li>

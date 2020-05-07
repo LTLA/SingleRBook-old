@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-04-27" />
+<meta name="date" content="2020-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -150,7 +150,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 2</span> Using the built-in references</h1>
 <div id="running-the-algorithm" class="section level2">
 <h2><span class="header-section-number">2.1</span> Running the algorithm</h2>
-<p><em><a href="https://bioconductor.org/packages/3.11/SingleR">SingleR</a></em> provides several reference datasets (mostly derived from bulk RNA-seq or microarray data) through dedicated data retrieval functions. For example, we obtain reference data from the Human Primary Cell Atlas using the <code>HumanPrimaryCellAtlasData()</code> function, which returns a <code>SummarizedExperiment</code> object containing matrix of log-expression values with sample-level labels.</p>
+<p><em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> provides several reference datasets (mostly derived from bulk RNA-seq or microarray data) through dedicated data retrieval functions. For example, we obtain reference data from the Human Primary Cell Atlas using the <code>HumanPrimaryCellAtlasData()</code> function, which returns a <code>SummarizedExperiment</code> object containing matrix of log-expression values with sample-level labels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(SingleR)
 hpca.se &lt;-<span class="st"> </span><span class="kw">HumanPrimaryCellAtlasData</span>()
 hpca.se</code></pre></div>
@@ -206,7 +206,7 @@ pred.hesc</code></pre></div>
 <pre><code>## 
 ##            Astrocyte Neuroepithelial_cell              Neurons 
 ##                   14                   81                    5</code></pre>
-<p>At this point, it is worth noting that <em><a href="https://bioconductor.org/packages/3.11/SingleR">SingleR</a></em> is workflow/package agnostic. The above example uses <code>SummarizedExperiment</code> objects, but the same functions will accept any (log-)normalized expression matrix.</p>
+<p>At this point, it is worth noting that <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> is workflow/package agnostic. The above example uses <code>SummarizedExperiment</code> objects, but the same functions will accept any (log-)normalized expression matrix.</p>
 </div>
 <div id="available-references" class="section level2">
 <h2><span class="header-section-number">2.2</span> Available references</h2>

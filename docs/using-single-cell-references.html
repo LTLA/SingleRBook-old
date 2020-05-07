@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-04-27" />
+<meta name="date" content="2020-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -150,7 +150,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 3</span> Using single-cell references</h1>
 <div id="running-the-algorithm-1" class="section level2">
 <h2><span class="header-section-number">3.1</span> Running the algorithm</h2>
-<p>Here, we will use two human pancreas datasets from the <em><a href="https://bioconductor.org/packages/3.11/scRNAseq">scRNAseq</a></em> package. The aim is to use one pre-labelled dataset to annotate the other unlabelled dataset. First, we set up the <span class="citation">Muraro et al. (<a href="#ref-muraro2016singlecell">2016</a>)</span> dataset to be our reference.</p>
+<p>Here, we will use two human pancreas datasets from the <em><a href="https://bioconductor.org/packages/3.12/scRNAseq">scRNAseq</a></em> package. The aim is to use one pre-labelled dataset to annotate the other unlabelled dataset. First, we set up the <span class="citation">Muraro et al. (<a href="#ref-muraro2016singlecell">2016</a>)</span> dataset to be our reference.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(scRNAseq)
 sceM &lt;-<span class="st"> </span><span class="kw">MuraroPancreasData</span>()
 
@@ -175,7 +175,7 @@ pred.grun &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span cl
 </div>
 <div id="defining-custom-markers" class="section level2">
 <h2><span class="header-section-number">3.2</span> Defining custom markers</h2>
-<p>Users can also construct their own marker lists with any DE testing machinery. For example, we can perform pairwise <span class="math inline">\(t\)</span>-tests using methods from <em><a href="https://bioconductor.org/packages/3.11/scran">scran</a></em> and obtain the top 10 marker genes from each pairwise comparison.</p>
+<p>Users can also construct their own marker lists with any DE testing machinery. For example, we can perform pairwise <span class="math inline">\(t\)</span>-tests using methods from <em><a href="https://bioconductor.org/packages/3.12/scran">scran</a></em> and obtain the top 10 marker genes from each pairwise comparison.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(scran)
 out &lt;-<span class="st"> </span><span class="kw">pairwiseTTests</span>(<span class="kw">logcounts</span>(sceM), sceM<span class="op">$</span>label, <span class="dt">direction=</span><span class="st">&quot;up&quot;</span>)
 markers &lt;-<span class="st"> </span><span class="kw">getTopMarkers</span>(out<span class="op">$</span>statistics, out<span class="op">$</span>pairs, <span class="dt">n=</span><span class="dv">10</span>)</code></pre></div>

@@ -2,7 +2,7 @@
 
 # Introduction
 
-*[SingleR](https://bioconductor.org/packages/3.11/SingleR)* is an automatic annotation method for single-cell RNA sequencing (scRNAseq) data [@aran2019reference].
+*[SingleR](https://bioconductor.org/packages/3.12/SingleR)* is an automatic annotation method for single-cell RNA sequencing (scRNAseq) data [@aran2019reference].
 Given a reference dataset of samples (single-cell or bulk) with known labels, it labels new cells from a test dataset based on similarity to the reference set.
 Specifically, for each test cell:
 

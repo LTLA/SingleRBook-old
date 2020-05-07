@@ -4,7 +4,7 @@
 
 ## Running the algorithm
 
-Here, we will use two human pancreas datasets from the *[scRNAseq](https://bioconductor.org/packages/3.11/scRNAseq)* package.
+Here, we will use two human pancreas datasets from the *[scRNAseq](https://bioconductor.org/packages/3.12/scRNAseq)* package.
 The aim is to use one pre-labelled dataset to annotate the other unlabelled dataset.
 First, we set up the @muraro2016singlecell dataset to be our reference.
 
@@ -52,7 +52,7 @@ table(pred.grun$labels)
 ## Defining custom markers
 
 Users can also construct their own marker lists with any DE testing machinery.
-For example, we can perform pairwise $t$-tests using methods from *[scran](https://bioconductor.org/packages/3.11/scran)* and obtain the top 10 marker genes from each pairwise comparison.
+For example, we can perform pairwise $t$-tests using methods from *[scran](https://bioconductor.org/packages/3.12/scran)* and obtain the top 10 marker genes from each pairwise comparison.
 
 
 ```r

@@ -48,7 +48,7 @@ table(pred.hesc$labels, pred.hesc2$labels)
 
 Other efficiency improvements are possible through several arguments:
 
-- Switching to an approximate algorithm for the nearest neighbor search in `trainSingleR()` via the `BNPARAM=` argument from the *[BiocNeighbors](https://bioconductor.org/packages/3.11/BiocNeighbors)* package.
-- Parallelizing the fine-tuning step in `classifySingleR()` with the `BPPARAM=` argument from the *[BiocParallel](https://bioconductor.org/packages/3.11/BiocParallel)* package.
+- Switching to an approximate algorithm for the nearest neighbor search in `trainSingleR()` via the `BNPARAM=` argument from the *[BiocNeighbors](https://bioconductor.org/packages/3.12/BiocNeighbors)* package.
+- Parallelizing the fine-tuning step in `classifySingleR()` with the `BPPARAM=` argument from the *[BiocParallel](https://bioconductor.org/packages/3.12/BiocParallel)* package.
 
 These arguments can also be specified in the `SingleR()` command.

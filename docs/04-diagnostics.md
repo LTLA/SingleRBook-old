@@ -4,7 +4,7 @@
 
 ## Based on the scores within cells
 
-*[SingleR](https://bioconductor.org/packages/3.11/SingleR)* provides a few basic yet powerful visualization tools.
+*[SingleR](https://bioconductor.org/packages/3.12/SingleR)* provides a few basic yet powerful visualization tools.
 `plotScoreHeatmap()` displays the scores for all cells across all reference labels,
 which allows users to inspect the confidence of the predicted labels across the dataset.
 The actual assigned label for each cell is shown in the color bar at the top;
@@ -83,7 +83,7 @@ table(new.pruned, useNA="always")
 ## Based on marker gene expression
 
 Another simple yet effective diagnostic is to examine the expression of the marker genes for each label in the test dataset.
-We extract the identity of the markers from the metadata of the `SingleR()` results and use them in the  `plotHeatmap()` function from *[scater](https://bioconductor.org/packages/3.11/scater)*, as shown below for beta cell markers.
+We extract the identity of the markers from the metadata of the `SingleR()` results and use them in the  `plotHeatmap()` function from *[scater](https://bioconductor.org/packages/3.12/scater)*, as shown below for beta cell markers.
 If a cell in the test dataset is confidently assigned to a particular label, we would expect it to have strong expression of that label's markers.
 At the very least, it should exhibit upregulation of those markers relative to cells assigned to other labels.
 

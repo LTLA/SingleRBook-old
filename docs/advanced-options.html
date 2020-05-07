@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-04-27" />
+<meta name="date" content="2020-05-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -183,8 +183,8 @@ pred.hesc2 &lt;-<span class="st"> </span><span class="kw">classifySingleR</span>
 ##   Smooth_muscle_cells                     0       0                   5</code></pre>
 <p>Other efficiency improvements are possible through several arguments:</p>
 <ul>
-<li>Switching to an approximate algorithm for the nearest neighbor search in <code>trainSingleR()</code> via the <code>BNPARAM=</code> argument from the <em><a href="https://bioconductor.org/packages/3.11/BiocNeighbors">BiocNeighbors</a></em> package.</li>
-<li>Parallelizing the fine-tuning step in <code>classifySingleR()</code> with the <code>BPPARAM=</code> argument from the <em><a href="https://bioconductor.org/packages/3.11/BiocParallel">BiocParallel</a></em> package.</li>
+<li>Switching to an approximate algorithm for the nearest neighbor search in <code>trainSingleR()</code> via the <code>BNPARAM=</code> argument from the <em><a href="https://bioconductor.org/packages/3.12/BiocNeighbors">BiocNeighbors</a></em> package.</li>
+<li>Parallelizing the fine-tuning step in <code>classifySingleR()</code> with the <code>BPPARAM=</code> argument from the <em><a href="https://bioconductor.org/packages/3.12/BiocParallel">BiocParallel</a></em> package.</li>
 </ul>
 <p>These arguments can also be specified in the <code>SingleR()</code> command.</p>
 

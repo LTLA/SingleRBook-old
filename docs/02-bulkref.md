@@ -4,7 +4,7 @@
 
 ## Running the algorithm
 
-*[SingleR](https://bioconductor.org/packages/3.11/SingleR)* provides several reference datasets (mostly derived from bulk RNA-seq or microarray data) through dedicated data retrieval functions.
+*[SingleR](https://bioconductor.org/packages/3.12/SingleR)* provides several reference datasets (mostly derived from bulk RNA-seq or microarray data) through dedicated data retrieval functions.
 For example, we obtain reference data from the Human Primary Cell Atlas using the `HumanPrimaryCellAtlasData()` function,
 which returns a `SummarizedExperiment` object containing matrix of log-expression values with sample-level labels.
 
@@ -94,7 +94,7 @@ table(pred.hesc$labels)
 ##                   14                   81                    5
 ```
 
-At this point, it is worth noting that *[SingleR](https://bioconductor.org/packages/3.11/SingleR)* is workflow/package agnostic.
+At this point, it is worth noting that *[SingleR](https://bioconductor.org/packages/3.12/SingleR)* is workflow/package agnostic.
 The above example uses `SummarizedExperiment` objects, but the same functions will accept any (log-)normalized expression matrix.
 
 ## Available references
