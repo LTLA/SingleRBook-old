@@ -1,4 +1,4 @@
-# For unreplicated references
+# Using the built-in references
 
 
 
@@ -267,7 +267,7 @@ head(sort(table(pred$labels), decreasing=TRUE), 10)
 
 
 
-# Session information {-}
+## Session information {-}
 
 
 ```r
@@ -355,4 +355,4 @@ sessionInfo()
 ## [85] ellipsis_0.3.0                interactiveDisplayBase_1.27.0
 ```
 
-# References {-}
+## References {-}
