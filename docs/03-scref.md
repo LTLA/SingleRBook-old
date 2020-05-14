@@ -382,5 +382,3 @@ sessionInfo()
 ## [83] statmod_1.4.34                ellipsis_0.3.0               
 ## [85] interactiveDisplayBase_1.27.0
 ```
-
-## References

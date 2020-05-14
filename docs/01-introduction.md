@@ -167,5 +167,3 @@ sessionInfo()
 ## [79] memoise_1.1.0                 ellipsis_0.3.0               
 ## [81] interactiveDisplayBase_1.27.0
 ```
-
-## References {-}

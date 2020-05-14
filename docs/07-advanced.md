@@ -307,5 +307,3 @@ sessionInfo()
 ## [87] beeswarm_0.2.3                viridisLite_0.3.0            
 ## [89] vipor_0.4.5                   askpass_1.1
 ```
-
-## References {-}

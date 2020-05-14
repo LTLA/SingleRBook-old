@@ -354,5 +354,3 @@ sessionInfo()
 ## [83] beeswarm_0.2.3                memoise_1.1.0                
 ## [85] ellipsis_0.3.0                interactiveDisplayBase_1.27.0
 ```
-
-## References {-}
