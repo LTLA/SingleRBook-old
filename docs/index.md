@@ -1,6 +1,6 @@
 --- 
 title: "Assigning cell types with SingleR"
-date: "2020-05-07"
+date: "2020-05-13"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: ref.bib
