@@ -18,7 +18,7 @@ matched <- matchReferences(bp.se, hpca.se,
 pheatmap::pheatmap(matched, col=viridis::plasma(100))
 ```
 
-<img src="06-ontology_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="ontology_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 A heatmap like the one above can be used to guide harmonization to enforce a consistent vocabulary across all labels representing the same cell type or state.
 The most obvious benefit of harmonization is that interpretation of the results is simplified.

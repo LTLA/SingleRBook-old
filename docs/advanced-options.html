@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Advanced options | Assigning cell types with SingleR</title>
   <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Advanced options | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-13" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="harmonizing-labels.html"/>
-<link rel="next" href="contributors.html"/>
+<link rel="next" href="cross-annotating-pancreas.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -106,6 +106,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Basic usage</b></span></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#method-description"><i class="fa fa-check"></i><b>1.2</b> Method description</a></li>
@@ -116,7 +117,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html"><i class="fa fa-check"></i><b>2</b> Using the built-in references</a><ul>
 <li class="chapter" data-level="2.1" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#overview"><i class="fa fa-check"></i><b>2.1</b> Overview</a></li>
 <li class="chapter" data-level="2.2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#annotation-with-default-marker-detection"><i class="fa fa-check"></i><b>2.2</b> Annotation with default marker detection</a></li>
-<li class="chapter" data-level="2.3" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#choices-of-assay-data"><i class="fa fa-check"></i><b>2.3</b> Choices of assay data</a></li>
+<li class="chapter" data-level="2.3" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#interaction-with-quality-control"><i class="fa fa-check"></i><b>2.3</b> Interaction with quality control</a></li>
+<li class="chapter" data-level="2.4" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#choices-of-assay-data"><i class="fa fa-check"></i><b>2.4</b> Choices of assay data</a></li>
 <li class="chapter" data-level="" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#session-information-1"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html"><i class="fa fa-check"></i><b>3</b> Using single-cell references</a><ul>
@@ -127,22 +129,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html#session-information-2"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html"><i class="fa fa-check"></i><b>4</b> Annotation diagnostics</a><ul>
-<li class="chapter" data-level="4.1" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.1</b> Based on the scores within cells</a></li>
-<li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the deltas across cells</a></li>
-<li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-marker-gene-expression"><i class="fa fa-check"></i><b>4.3</b> Based on marker gene expression</a></li>
+<li class="chapter" data-level="4.1" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#overview-2"><i class="fa fa-check"></i><b>4.1</b> Overview</a></li>
+<li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the scores within cells</a></li>
+<li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.3</b> Based on the deltas across cells</a></li>
+<li class="chapter" data-level="4.4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-marker-gene-expression"><i class="fa fa-check"></i><b>4.4</b> Based on marker gene expression</a></li>
+<li class="chapter" data-level="" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#session-information-3"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a></li>
+<li class="part"><span><b>II Advanced usage</b></span></li>
+<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a><ul>
+<li class="chapter" data-level="5.1" data-path="using-multiple-references.html"><a href="using-multiple-references.html#overview-3"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.2" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-reference-specific-labels"><i class="fa fa-check"></i><b>5.2</b> Using reference-specific labels</a></li>
+<li class="chapter" data-level="5.3" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-harmonized-labels"><i class="fa fa-check"></i><b>5.3</b> Using harmonized labels</a></li>
+<li class="chapter" data-level="5.4" data-path="using-multiple-references.html"><a href="using-multiple-references.html#comparing-scores-across-references"><i class="fa fa-check"></i><b>5.4</b> Comparing scores across references</a></li>
+<li class="chapter" data-level="" data-path="using-multiple-references.html"><a href="using-multiple-references.html#session-info"><i class="fa fa-check"></i>Session info</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="harmonizing-labels.html"><a href="harmonizing-labels.html"><i class="fa fa-check"></i><b>6</b> Harmonizing labels</a></li>
 <li class="chapter" data-level="7" data-path="advanced-options.html"><a href="advanced-options.html"><i class="fa fa-check"></i><b>7</b> Advanced options</a><ul>
 <li class="chapter" data-level="7.1" data-path="advanced-options.html"><a href="advanced-options.html#preconstructed-indices"><i class="fa fa-check"></i><b>7.1</b> Preconstructed indices</a></li>
 <li class="chapter" data-level="7.2" data-path="advanced-options.html"><a href="advanced-options.html#parallelization"><i class="fa fa-check"></i><b>7.2</b> Parallelization</a></li>
 <li class="chapter" data-level="7.3" data-path="advanced-options.html"><a href="advanced-options.html#approximate-algorithms"><i class="fa fa-check"></i><b>7.3</b> Approximate algorithms</a></li>
-<li class="chapter" data-level="" data-path="advanced-options.html"><a href="advanced-options.html#session-information-3"><i class="fa fa-check"></i>Session information</a></li>
+<li class="chapter" data-level="" data-path="advanced-options.html"><a href="advanced-options.html#session-information-4"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>8</b> Contributors</a><ul>
+<li class="part"><span><b>III Workflows</b></span></li>
+<li class="chapter" data-level="8" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html"><i class="fa fa-check"></i><b>8</b> Cross-annotating pancreas</a><ul>
+<li class="chapter" data-level="8.1" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#loading-the-data"><i class="fa fa-check"></i><b>8.1</b> Loading the data</a></li>
+<li class="chapter" data-level="8.2" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#applying-the-annotation"><i class="fa fa-check"></i><b>8.2</b> Applying the annotation</a></li>
+<li class="chapter" data-level="8.3" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#diagnostics"><i class="fa fa-check"></i><b>8.3</b> Diagnostics</a></li>
+<li class="chapter" data-level="" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#session-information-5"><i class="fa fa-check"></i>Session information</a></li>
+</ul></li>
+<li class="part"><span><b>IV Appendix</b></span></li>
+<li class="chapter" data-level="9" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>9</b> Contributors</a><ul>
 <li><a href="contributors.html#aaron-lun"><em>Aaron Lun</em></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>9</b> Bibliography</a></li>
+<li class="chapter" data-level="10" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>10</b> Bibliography</a></li>
 <li class="divider"></li>
 <li><a href="https://bioconductor.org" target="blank">Published by Bioconductor</a></li>
 
@@ -165,6 +184,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="advanced-options" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Advanced options</h1>
+<script>
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("aaron-collapse")) {
+        event.target.classList.toggle("active");
+        var content = event.target.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+})
+</script>
+<style>
+.aaron-collapse {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.aaron-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
 <div id="preconstructed-indices" class="section level2">
 <h2><span class="header-section-number">7.1</span> Preconstructed indices</h2>
 <p>Advanced users can split the <code>SingleR()</code> workflow into two separate training and classification steps. This means that training (e.g., marker detection, assembling of nearest-neighbor indices) only needs to be performed once. The resulting data structures can then be re-used across multiple classifications with different test datasets, provided the gene annotation in the test dataset is identical to or a superset of the genes in the training set. To illustrate, we will consider the DICE reference dataset <span class="citation">(Schmiedel et al. <a href="#ref-diceRef">2018</a>)</span>.</p>
@@ -201,29 +253,33 @@ dice</code></pre></div>
 <p>Let’s say we want to use the DICE reference to annotate the PBMC dataset from Chapter <a href="introduction.html#introduction">1</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TENxPBMCData)
 sce &lt;-<span class="st"> </span><span class="kw">TENxPBMCData</span>(<span class="st">&quot;pbmc3k&quot;</span>)</code></pre></div>
-<p>We use the <code>trainSingleR()</code> function to do all the necessary calculations that are independent of the test dataset. (Well, almost; see comments below about <code>common</code>.) This yields a list of various components that contains all identified marker genes and precomputed rank indices to be used in the score calculation.</p>
+<p>We use the <code>trainSingleR()</code> function to do all the necessary calculations that are independent of the test dataset. (Almost; see comments below about <code>common</code>.) This yields a list of various components that contains all identified marker genes and precomputed rank indices to be used in the score calculation. We can also turn on aggregation with <code>aggr.ref=TRUE</code> as described in Chapter <a href="using-single-cell-references.html#using-single-cell-references">3</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">common &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(sce), <span class="kw">rownames</span>(dice))
-trained &lt;-<span class="st"> </span><span class="kw">trainSingleR</span>(dice[common,], <span class="dt">labels=</span>dice<span class="op">$</span>label.fine)</code></pre></div>
+
+<span class="kw">set.seed</span>(<span class="dv">2000</span>)
+trained &lt;-<span class="st"> </span><span class="kw">trainSingleR</span>(dice[common,], <span class="dt">labels=</span>dice<span class="op">$</span>label.fine, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)</code></pre></div>
 <p>It is then a simple matter to use the <code>trained</code> object to annotate our dataset of interest through the <code>classifySingleR()</code> function. As we can see, this yields exactly the same result as applying <code>SingleR()</code> directly; however, the advantage here is that <code>trained</code> can be re-used for multiple <code>classifySingleR()</code> calls - possibly on different datasets - without having to repeat unnecessary steps when the reference is unchanged.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">classifySingleR</span>(sce, trained, <span class="dt">assay.type=</span><span class="dv">1</span>)
 <span class="kw">table</span>(pred<span class="op">$</span>labels)</code></pre></div>
 <pre><code>## 
 ##             B cells, naive           Monocytes, CD14+ 
-##                        344                        516 
+##                        346                        514 
 ##           Monocytes, CD16+                   NK cells 
-##                        186                        320 
+##                        187                        325 
 ## T cells, CD4+, memory TREG       T cells, CD4+, naive 
-##                        148                        111 
+##                        163                         97 
 ##  T cells, CD4+, naive TREG         T cells, CD4+, TFH 
-##                         28                        461 
+##                         41                        456 
 ##         T cells, CD4+, Th1      T cells, CD4+, Th1_17 
-##                        213                         61 
+##                        180                         73 
 ##        T cells, CD4+, Th17         T cells, CD4+, Th2 
-##                         57                         41 
+##                         60                         46 
 ##       T cells, CD8+, naive 
-##                        214</code></pre>
+##                        212</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Comparing to the direct approach.</span>
-direct &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine)
+<span class="kw">set.seed</span>(<span class="dv">2000</span>)
+direct &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
+    <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)
 <span class="kw">identical</span>(pred<span class="op">$</span>labels, direct<span class="op">$</span>labels)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The big caveat is that the universe of genes in the test dataset cannot be greater than that in the reference. This is the reason behind the intersection to <code>common</code> genes and the subsequent subsetting of <code>dice</code>. Practical use of preconstructed indices is best combined with some prior information about the gene-level annotation; for example, we might know that we always use a particular version of the Ensembl gene models, so we would filter out any genes in the reference dataset that are not in the Ensembl annotation.</p>
@@ -233,124 +289,126 @@ direct &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span 
 <p>Parallelization is an obvious approach to increasing annotation throughput. This is done using the framework in the <em><a href="https://bioconductor.org/packages/3.12/BiocParallel">BiocParallel</a></em> package, which provides several options for parallelization depending on the available hardware. On POSIX-compliant systems (i.e., Linux and MacOS), the simplest method is to use forking by passing <code>MulticoreParam()</code> to the <code>BPPARAM=</code> argument:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BiocParallel)
 pred2a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
-    <span class="dt">BPPARAM=</span><span class="kw">MulticoreParam</span>(<span class="dv">8</span>)) <span class="co"># 8 CPUs.</span>
-<span class="kw">identical</span>(pred<span class="op">$</span>labels, pred2a<span class="op">$</span>labels) </code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
-<p>Alternatively, one can use separate processes with <code>SnowParam()</code>, which is slower but can be used on all systems including Windows.</p>
+    <span class="dt">BPPARAM=</span><span class="kw">MulticoreParam</span>(<span class="dv">8</span>)) <span class="co"># 8 CPUs.</span></code></pre></div>
+<p>Alternatively, one can use separate processes with <code>SnowParam()</code>, which is slower but can be used on all systems - including Windows, our old nemesis.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred2b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
     <span class="dt">BPPARAM=</span><span class="kw">SnowParam</span>(<span class="dv">8</span>))
 <span class="kw">identical</span>(pred<span class="op">$</span>labels, pred2b<span class="op">$</span>labels) </code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
 <p>When working on a cluster, the <code>BatchtoolsParam()</code> function allows <code>SingleR()</code> to seamlessly interface with various job schedulers like SLURM, LSF and so on. This permits heavy-duty parallelization across hundreds of CPUs for highly intensive jobs, though often some configuration is required - see the <a href="https://bioconductor.org/packages/3.12/BiocParallel/vignettes/BiocParallel_BatchtoolsParam.pdf">vignette</a> for more details.</p>
 </div>
 <div id="approximate-algorithms" class="section level2">
 <h2><span class="header-section-number">7.3</span> Approximate algorithms</h2>
 <p>It is possible to sacrifice accuracy to squeeze more speed out of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>. The most obvious approach is to simply turn off the fine-tuning with <code>fine.tune=FALSE</code>, which avoids the time-consuming fine-tuning iterations. When the reference labels are well-separated, this is probably an acceptable trade-off.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred3a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.main,
-    <span class="dt">fine.tune=</span><span class="ot">FALSE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred3a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, 
+    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>)
 <span class="kw">table</span>(pred3a<span class="op">$</span>labels)</code></pre></div>
 <pre><code>## 
 ##       B cells     Monocytes      NK cells T cells, CD4+ T cells, CD8+ 
 ##           348           705           357           950           340</code></pre>
-<p>Another approximation is based on the fact that the score calculation is done using a nearest-neighbors search. By default, this is an exact seach but we can switch to an approximate algorithm via the <code>BNPARAM=</code> argument. In the example below, we use the <a href="https://github.com/spotify/annoy">Annoy algorithm</a> via the <em><a href="https://bioconductor.org/packages/3.12/BiocNeighbors">BiocNeighbors</a></em> framework, which yields mostly similar results. (Note, though, that the Annoy method does involve a considerable amount of overhead, so for small jobs it will actually be slower than the exact search.)</p>
+<p>Another approximation is based on the fact that the initial score calculation is done using a nearest-neighbors search. By default, this is an exact seach but we can switch to an approximate algorithm via the <code>BNPARAM=</code> argument. In the example below, we use the <a href="https://github.com/spotify/annoy">Annoy algorithm</a> via the <em><a href="https://bioconductor.org/packages/3.12/BiocNeighbors">BiocNeighbors</a></em> framework, which yields mostly similar results. (Note, though, that the Annoy method does involve a considerable amount of overhead, so for small jobs it will actually be slower than the exact search.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BiocNeighbors)
-pred3b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.main,
+pred3b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, 
+    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>, <span class="co"># for comparison with pred3a.</span>
     <span class="dt">BNPARAM=</span><span class="kw">AnnoyParam</span>())
 <span class="kw">table</span>(pred3a<span class="op">$</span>labels, pred3b<span class="op">$</span>labels)</code></pre></div>
 <pre><code>##                
 ##                 B cells Monocytes NK cells T cells, CD4+ T cells, CD8+
-##   B cells           347         1        0             0             0
+##   B cells           348         0        0             0             0
 ##   Monocytes           0       705        0             0             0
-##   NK cells            0         0      341            11             5
-##   T cells, CD4+       0         0        4           900            46
-##   T cells, CD8+       0         0        2            59           279</code></pre>
+##   NK cells            0         0      357             0             0
+##   T cells, CD4+       0         0        0           950             0
+##   T cells, CD8+       0         0        0             0           340</code></pre>
 </div>
-<div id="session-information-3" class="section level2 unnumbered">
+<div id="session-information-4" class="section level2 unnumbered">
 <h2>Session information</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 4.0.0 Patched (2020-05-01 r78341)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 18.04.4 LTS
-## 
-## Matrix products: default
-## BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
-## LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
-## 
-## other attached packages:
-##  [1] BiocNeighbors_1.7.0         BiocParallel_1.23.0        
-##  [3] TENxPBMCData_1.7.0          HDF5Array_1.17.0           
-##  [5] rhdf5_2.33.0                ensembldb_2.13.1           
-##  [7] AnnotationFilter_1.13.0     GenomicFeatures_1.41.0     
-##  [9] AnnotationDbi_1.51.0        SingleR_1.3.2              
-## [11] scater_1.17.0               ggplot2_3.3.0              
-## [13] scRNAseq_2.3.0              SingleCellExperiment_1.11.1
-## [15] SummarizedExperiment_1.19.2 DelayedArray_0.15.1        
-## [17] matrixStats_0.56.0          Biobase_2.49.0             
-## [19] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
-## [21] IRanges_2.23.4              S4Vectors_0.27.5           
-## [23] BiocGenerics_0.35.2         BiocStyle_2.17.0           
-## 
-## loaded via a namespace (and not attached):
-##  [1] ggbeeswarm_0.6.0              colorspace_1.4-1             
-##  [3] ellipsis_0.3.0                XVector_0.29.0               
-##  [5] bit64_0.9-7                   interactiveDisplayBase_1.27.0
-##  [7] codetools_0.2-16              knitr_1.28                   
-##  [9] Rsamtools_2.5.0               dbplyr_1.4.3                 
-## [11] shiny_1.4.0.2                 BiocManager_1.30.10          
-## [13] compiler_4.0.0                httr_1.4.1                   
-## [15] assertthat_0.2.1              Matrix_1.2-18                
-## [17] fastmap_1.0.1                 lazyeval_0.2.2               
-## [19] later_1.0.0                   BiocSingular_1.5.0           
-## [21] htmltools_0.4.0               prettyunits_1.1.1            
-## [23] tools_4.0.0                   rsvd_1.0.3                   
-## [25] gtable_0.3.0                  glue_1.4.0                   
-## [27] GenomeInfoDbData_1.2.3        dplyr_0.8.5                  
-## [29] rappdirs_0.3.1                Rcpp_1.0.4.6                 
-## [31] vctrs_0.2.4                   Biostrings_2.57.0            
-## [33] ExperimentHub_1.15.0          rtracklayer_1.49.1           
-## [35] DelayedMatrixStats_1.11.0     xfun_0.13                    
-## [37] stringr_1.4.0                 mime_0.9                     
-## [39] lifecycle_0.2.0               irlba_2.3.3                  
-## [41] XML_3.99-0.3                  AnnotationHub_2.21.0         
-## [43] zlibbioc_1.35.0               scales_1.1.0                 
-## [45] hms_0.5.3                     promises_1.1.0               
-## [47] ProtGenerics_1.21.0           yaml_2.2.1                   
-## [49] curl_4.3                      memoise_1.1.0                
-## [51] gridExtra_2.3                 biomaRt_2.45.0               
-## [53] stringi_1.4.6                 RSQLite_2.2.0                
-## [55] BiocVersion_3.12.0            rlang_0.4.6                  
-## [57] pkgconfig_2.0.3               bitops_1.0-6                 
-## [59] evaluate_0.14                 lattice_0.20-41              
-## [61] purrr_0.3.4                   Rhdf5lib_1.11.0              
-## [63] GenomicAlignments_1.25.0      bit_1.1-15.2                 
-## [65] tidyselect_1.0.0              magrittr_1.5                 
-## [67] bookdown_0.18                 R6_2.4.1                     
-## [69] snow_0.4-3                    DBI_1.1.0                    
-## [71] pillar_1.4.4                  withr_2.2.0                  
-## [73] RCurl_1.98-1.2                tibble_3.0.1                 
-## [75] crayon_1.3.4                  BiocFileCache_1.13.0         
-## [77] rmarkdown_2.1                 viridis_0.5.1                
-## [79] progress_1.2.2                grid_4.0.0                   
-## [81] blob_1.2.1                    digest_0.6.25                
-## [83] xtable_1.8-4                  httpuv_1.5.2                 
-## [85] openssl_1.4.1                 munsell_0.5.0                
-## [87] beeswarm_0.2.3                viridisLite_0.3.0            
-## [89] vipor_0.4.5                   askpass_1.1</code></pre>
+<button class="aaron-collapse">
+View session info
+</button>
+<div class="aaron-content">
+<pre><code>R version 4.0.0 Patched (2020-05-01 r78341)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.4 LTS
+
+Matrix products: default
+BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
+LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] BiocNeighbors_1.7.0         BiocParallel_1.23.0        
+ [3] TENxPBMCData_1.7.0          HDF5Array_1.17.0           
+ [5] rhdf5_2.33.0                SingleCellExperiment_1.11.1
+ [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
+ [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
+[11] SingleR_1.3.4               SummarizedExperiment_1.19.4
+[13] DelayedArray_0.15.1         matrixStats_0.56.0         
+[15] Biobase_2.49.0              GenomicRanges_1.41.1       
+[17] GenomeInfoDb_1.25.0         IRanges_2.23.4             
+[19] S4Vectors_0.27.6            BiocGenerics_0.35.2        
+[21] BiocStyle_2.17.0            rebook_0.99.0              
+
+loaded via a namespace (and not attached):
+ [1] ProtGenerics_1.21.0           bitops_1.0-6                 
+ [3] bit64_0.9-7                   progress_1.2.2               
+ [5] httr_1.4.1                    tools_4.0.0                  
+ [7] R6_2.4.1                      irlba_2.3.3                  
+ [9] lazyeval_0.2.2                DBI_1.1.0                    
+[11] prettyunits_1.1.1             tidyselect_1.1.0             
+[13] processx_3.4.2                bit_1.1-15.2                 
+[15] curl_4.3                      compiler_4.0.0               
+[17] graph_1.67.0                  rtracklayer_1.49.1           
+[19] bookdown_0.19                 askpass_1.1                  
+[21] callr_3.4.3                   rappdirs_0.3.1               
+[23] Rsamtools_2.5.0               stringr_1.4.0                
+[25] digest_0.6.25                 rmarkdown_2.1                
+[27] XVector_0.29.0                pkgconfig_2.0.3              
+[29] htmltools_0.4.0               dbplyr_1.4.3                 
+[31] fastmap_1.0.1                 rlang_0.4.6                  
+[33] RSQLite_2.2.0                 shiny_1.4.0.2                
+[35] DelayedMatrixStats_1.11.0     dplyr_0.8.5                  
+[37] RCurl_1.98-1.2                magrittr_1.5                 
+[39] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
+[41] Matrix_1.2-18                 Rhdf5lib_1.11.0              
+[43] Rcpp_1.0.4.6                  lifecycle_0.2.0              
+[45] stringi_1.4.6                 yaml_2.2.1                   
+[47] zlibbioc_1.35.0               BiocFileCache_1.13.0         
+[49] AnnotationHub_2.21.0          grid_4.0.0                   
+[51] blob_1.2.1                    promises_1.1.0               
+[53] ExperimentHub_1.15.0          crayon_1.3.4                 
+[55] lattice_0.20-41               Biostrings_2.57.0            
+[57] hms_0.5.3                     CodeDepends_0.6.5            
+[59] knitr_1.28                    ps_1.3.3                     
+[61] pillar_1.4.4                  codetools_0.2-16             
+[63] biomaRt_2.45.0                XML_3.99-0.3                 
+[65] glue_1.4.1                    BiocVersion_3.12.0           
+[67] evaluate_0.14                 BiocManager_1.30.10          
+[69] vctrs_0.3.0                   httpuv_1.5.2                 
+[71] openssl_1.4.1                 purrr_0.3.4                  
+[73] assertthat_0.2.1              xfun_0.13                    
+[75] rsvd_1.0.3                    mime_0.9                     
+[77] xtable_1.8-4                  later_1.0.0                  
+[79] tibble_3.0.1                  GenomicAlignments_1.25.0     
+[81] memoise_1.1.0                 ellipsis_0.3.1               
+[83] interactiveDisplayBase_1.27.0</code></pre>
+</div>
 
 </div>
 </div>
+
+
+
 <h3> Bibliography</h3>
 <div id="refs" class="references">
 <div id="ref-diceRef">
@@ -363,7 +421,7 @@ pred3b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span 
         </div>
       </div>
 <a href="harmonizing-labels.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="contributors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cross-annotating-pancreas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Introduction | Assigning cell types with SingleR</title>
+  <title>Chapter 8 Cross-annotating pancreas | Assigning cell types with SingleR</title>
   <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Introduction | Assigning cell types with SingleR" />
+  <meta property="og:title" content="Chapter 8 Cross-annotating pancreas | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Introduction | Assigning cell types with SingleR" />
+  <meta name="twitter:title" content="Chapter 8 Cross-annotating pancreas | Assigning cell types with SingleR" />
   
   <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="using-the-built-in-references.html"/>
+<link rel="prev" href="advanced-options.html"/>
+<link rel="next" href="contributors.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -182,8 +182,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<div id="cross-annotating-pancreas" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Cross-annotating pancreas</h1>
 <script>
 document.addEventListener("click", function (event) {
     if (event.target.classList.contains("aaron-collapse")) {
@@ -217,51 +217,56 @@ document.addEventListener("click", function (event) {
   background-color: #f1f1f1;
 }
 </style>
-<div id="motivation" class="section level2">
-<h2><span class="header-section-number">1.1</span> Motivation</h2>
-<p>The Bioconductor package <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> implements an automatic annotation method for single-cell RNA sequencing (scRNA-seq) data <span class="citation">(Aran et al. <a href="#ref-aran2019reference">2019</a>)</span>. Given a reference dataset of samples (single-cell or bulk) with known labels, it assigns those labels to new cells from a test dataset based on similarities in their expression profiles. This provides a convenient way of transferring biological knowledge across datasets. allowing users to leverage the domain expertise implicit in the creation of each reference. The most common application of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> involves predicting cell type (or “state”, or “kind”) in a new dataset, a process that is facilitated by the availability of built-in references and compatibility with user-supplied datasets. In this manner, the burden of manually interpreting clusters and defining marker genes only has to be done once, for the reference dataset, and this knowledge can be propagated to new datasets in an automated manner.</p>
-</div>
-<div id="method-description" class="section level2">
-<h2><span class="header-section-number">1.2</span> Method description</h2>
-<p><em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> can be considered a robust variant of nearest-neighbors classification, with some tweaks to improve resolution for closely related labels. For each test cell:</p>
-<ol style="list-style-type: decimal">
-<li>We compute the Spearman correlation between its expression profile and that of each reference sample. The use of Spearman’s correlation provides a measure of robustness to batch effects across datasets. The calculation only uses the union of marker genes identified by pairwise comparisons between labels in the reference data, so as to improve resolution of separation between labels.</li>
-<li>We define the per-label score as a fixed quantile (by default, 0.8) of the correlations across all samples with that label. This accounts for differences in the number of reference samples for each label, which interferes with simpler flavors of nearest neighbor classification; it also avoids penalizing classifications to heterogeneous labels by only requiring a good match to a minority of samples.</li>
-<li>We repeat the score calculation for all labels in the reference dataset. The label with the highest score is used as <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>’s prediction for this cell.</li>
-<li>We optionally perform a fine-tuning step to improve resolution between closely related labels. The reference dataset is subsetted to only include labels with scores close to the maximum, scores are recomputed using only marker genes for the subset of labels (thus focusing on the most relevant features), and this is iterated until one label remains.</li>
-</ol>
-</div>
-<div id="quick-start" class="section level2">
-<h2><span class="header-section-number">1.3</span> Quick start</h2>
-<p>We will demonstrate the use of <code>SingleR()</code> on a classic 10X Genomics dataset <span class="citation">(Zheng et al. <a href="#ref-zheng2017massively">2017</a>)</span> with the built-in Human Primary Cell Atlas dataset <span class="citation">(Mabbott et al. <a href="#ref-hpcaRef">2013</a>)</span> as the reference.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loading test data.</span>
-<span class="kw">library</span>(TENxPBMCData)
-new.data &lt;-<span class="st"> </span><span class="kw">TENxPBMCData</span>(<span class="st">&quot;pbmc4k&quot;</span>)
+<div id="loading-the-data" class="section level2">
+<h2><span class="header-section-number">8.1</span> Loading the data</h2>
+<p>We load the <span class="citation">Muraro et al. (<a href="#ref-muraro2016singlecell">2016</a>)</span> dataset as our reference, removing unlabelled cells or cells without a clear label. We also need to compute log-expression values for use in <code>SingleR()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(scRNAseq)
+sceM &lt;-<span class="st"> </span><span class="kw">MuraroPancreasData</span>()
 
-<span class="co"># Loading reference data with Ensembl annotations.</span>
-<span class="kw">library</span>(SingleR)
-ref.data &lt;-<span class="st"> </span><span class="kw">HumanPrimaryCellAtlasData</span>(<span class="dt">ensembl=</span><span class="ot">TRUE</span>)
+sceM &lt;-<span class="st"> </span>sceM[,<span class="op">!</span><span class="kw">is.na</span>(sceM<span class="op">$</span>label) <span class="op">&amp;</span><span class="st"> </span>sceM<span class="op">$</span>label<span class="op">!=</span><span class="st">&quot;unclear&quot;</span>] 
 
-<span class="co"># Performing predictions.</span>
-predictions &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span class="dt">test=</span>new.data, <span class="dt">assay.type.test=</span><span class="dv">1</span>, 
-    <span class="dt">ref=</span>ref.data, <span class="dt">labels=</span>ref.data<span class="op">$</span>label.main)
-
-<span class="kw">table</span>(predictions<span class="op">$</span>labels)</code></pre></div>
+<span class="kw">library</span>(scater)
+sceM &lt;-<span class="st"> </span><span class="kw">logNormCounts</span>(sceM)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Examining the distribution of labels in this reference.</span>
+<span class="kw">table</span>(sceM<span class="op">$</span>label)</code></pre></div>
 <pre><code>## 
-##           B_cell              CMP               DC              GMP 
-##              606                8                1                2 
-##         Monocyte          NK_cell        Platelets Pre-B_cell_CD34- 
-##             1164              217                3               46 
-##          T_cells 
-##             2293</code></pre>
-<p>And that’s it, really.</p>
+##      acinar       alpha        beta       delta        duct endothelial 
+##         219         812         448         193         245          21 
+##     epsilon mesenchymal          pp 
+##           3          80         101</code></pre>
+<p>We load the <span class="citation">Grun et al. (<a href="#ref-grun2016denovo">2016</a>)</span> dataset as our test, applying some basic quality control to remove low-quality cells in some of the batches (see <a href="https://osca.bioconductor.org/grun-human-pancreas-cel-seq2.html#quality-control-8">here</a> for details). Technically speaking, this does not need log-expression values but we compute them anyway for convenience.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sceG &lt;-<span class="st"> </span><span class="kw">GrunPancreasData</span>()
+
+sceG &lt;-<span class="st"> </span><span class="kw">addPerCellQC</span>(sceG)
+qc &lt;-<span class="st"> </span><span class="kw">quickPerCellQC</span>(<span class="kw">colData</span>(sceG), 
+    <span class="dt">percent_subsets=</span><span class="st">&quot;altexps_ERCC_percent&quot;</span>,
+    <span class="dt">batch=</span>sceG<span class="op">$</span>donor,
+    <span class="dt">subset=</span>sceG<span class="op">$</span>donor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;D17&quot;</span>, <span class="st">&quot;D7&quot;</span>, <span class="st">&quot;D2&quot;</span>))
+sceG &lt;-<span class="st"> </span>sceG[,<span class="op">!</span>qc<span class="op">$</span>discard]
+
+sceG &lt;-<span class="st"> </span><span class="kw">logNormCounts</span>(sceG)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(sceG)</code></pre></div>
+<pre><code>## [1] 1064</code></pre>
 </div>
-<div id="where-to-get-help" class="section level2">
-<h2><span class="header-section-number">1.4</span> Where to get help</h2>
-<p>Questions on the general use of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> should be posted to the <a href="https://support.bioconductor.org">Bioconductor support site</a>. Please send requests for general assistance and advice to the support site rather than to the individual authors. Bug reports or feature requests should be made to the <a href="https://github.com/LTLA/SingleR">GitHub repository</a>; well-considered suggestions for improvements are always welcome.</p>
+<div id="applying-the-annotation" class="section level2">
+<h2><span class="header-section-number">8.2</span> Applying the annotation</h2>
+<p>We apply <code>SingleR()</code> with Wilcoxon rank sum test-based marker detection to annotate the Grun dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(SingleR)
+pred.grun &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span class="dt">test=</span>sceG, <span class="dt">ref=</span>sceM, <span class="dt">labels=</span>sceM<span class="op">$</span>label, <span class="dt">de.method=</span><span class="st">&quot;wilcox&quot;</span>)</code></pre></div>
+<p>We examine the distribution of predicted labels:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(pred.grun<span class="op">$</span>labels)</code></pre></div>
+<pre><code>## 
+##      acinar       alpha        beta       delta        duct endothelial 
+##         277         203         181          50         306           5 
+##     epsilon mesenchymal          pp 
+##           1          22          19</code></pre>
 </div>
-<div id="session-information" class="section level2 unnumbered">
+<div id="diagnostics" class="section level2">
+<h2><span class="header-section-number">8.3</span> Diagnostics</h2>
+</div>
+<div id="session-information-5" class="section level2 unnumbered">
 <h2>Session information</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prettySessionInfo</span>()</code></pre></div>
 <button class="aaron-collapse">
 View session info
 </button>
@@ -283,79 +288,80 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
- [1] ensembldb_2.13.1            AnnotationFilter_1.13.0    
- [3] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [5] SingleR_1.3.4               TENxPBMCData_1.7.0         
- [7] HDF5Array_1.17.0            rhdf5_2.33.0               
- [9] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
-[11] DelayedArray_0.15.1         matrixStats_0.56.0         
-[13] Biobase_2.49.0              GenomicRanges_1.41.1       
-[15] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-[17] S4Vectors_0.27.6            BiocGenerics_0.35.2        
-[19] BiocStyle_2.17.0            rebook_0.99.0              
+ [1] SingleR_1.3.2               scater_1.17.0              
+ [3] ggplot2_3.3.0               scRNAseq_2.3.0             
+ [5] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
+ [7] DelayedArray_0.15.1         matrixStats_0.56.0         
+ [9] Biobase_2.49.0              GenomicRanges_1.41.1       
+[11] GenomeInfoDb_1.25.0         IRanges_2.23.4             
+[13] S4Vectors_0.27.6            BiocGenerics_0.35.2        
+[15] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
- [1] ProtGenerics_1.21.0           bitops_1.0-6                 
- [3] bit64_0.9-7                   progress_1.2.2               
- [5] httr_1.4.1                    tools_4.0.0                  
- [7] R6_2.4.1                      irlba_2.3.3                  
- [9] lazyeval_0.2.2                DBI_1.1.0                    
-[11] prettyunits_1.1.1             tidyselect_1.1.0             
+ [1] bitops_1.0-6                  bit64_0.9-7                  
+ [3] httr_1.4.1                    tools_4.0.0                  
+ [5] R6_2.4.1                      irlba_2.3.3                  
+ [7] vipor_0.4.5                   DBI_1.1.0                    
+ [9] colorspace_1.4-1              withr_2.2.0                  
+[11] gridExtra_2.3                 tidyselect_1.1.0             
 [13] processx_3.4.2                bit_1.1-15.2                 
 [15] curl_4.3                      compiler_4.0.0               
 [17] graph_1.67.0                  BiocNeighbors_1.7.0          
-[19] rtracklayer_1.49.1            bookdown_0.19                
-[21] askpass_1.1                   callr_3.4.3                  
-[23] rappdirs_0.3.1                Rsamtools_2.5.0              
-[25] stringr_1.4.0                 digest_0.6.25                
-[27] rmarkdown_2.1                 XVector_0.29.0               
-[29] pkgconfig_2.0.3               htmltools_0.4.0              
-[31] dbplyr_1.4.3                  fastmap_1.0.1                
-[33] rlang_0.4.6                   RSQLite_2.2.0                
-[35] shiny_1.4.0.2                 DelayedMatrixStats_1.11.0    
-[37] BiocParallel_1.23.0           dplyr_0.8.5                  
-[39] RCurl_1.98-1.2                magrittr_1.5                 
-[41] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
+[19] bookdown_0.19                 scales_1.1.1                 
+[21] callr_3.4.3                   rappdirs_0.3.1               
+[23] stringr_1.4.0                 digest_0.6.25                
+[25] rmarkdown_2.1                 XVector_0.29.0               
+[27] pkgconfig_2.0.3               htmltools_0.4.0              
+[29] limma_3.45.0                  dbplyr_1.4.3                 
+[31] fastmap_1.0.1                 rlang_0.4.6                  
+[33] RSQLite_2.2.0                 shiny_1.4.0.2                
+[35] DelayedMatrixStats_1.11.0     BiocParallel_1.23.0          
+[37] dplyr_0.8.5                   RCurl_1.98-1.2               
+[39] magrittr_1.5                  BiocSingular_1.5.0           
+[41] scuttle_0.99.6                GenomeInfoDbData_1.2.3       
 [43] Matrix_1.2-18                 Rcpp_1.0.4.6                 
-[45] Rhdf5lib_1.11.0               lifecycle_0.2.0              
-[47] stringi_1.4.6                 yaml_2.2.1                   
-[49] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[51] AnnotationHub_2.21.0          grid_4.0.0                   
-[53] blob_1.2.1                    promises_1.1.0               
-[55] ExperimentHub_1.15.0          crayon_1.3.4                 
-[57] lattice_0.20-41               Biostrings_2.57.0            
-[59] hms_0.5.3                     CodeDepends_0.6.5            
-[61] knitr_1.28                    ps_1.3.3                     
-[63] pillar_1.4.4                  codetools_0.2-16             
-[65] biomaRt_2.45.0                XML_3.99-0.3                 
-[67] glue_1.4.1                    BiocVersion_3.12.0           
-[69] evaluate_0.14                 BiocManager_1.30.10          
-[71] vctrs_0.3.0                   httpuv_1.5.2                 
-[73] openssl_1.4.1                 purrr_0.3.4                  
-[75] assertthat_0.2.1              xfun_0.13                    
-[77] rsvd_1.0.3                    mime_0.9                     
-[79] xtable_1.8-4                  later_1.0.0                  
-[81] tibble_3.0.1                  GenomicAlignments_1.25.0     
-[83] memoise_1.1.0                 ellipsis_0.3.1               
-[85] interactiveDisplayBase_1.27.0</code></pre>
+[45] ggbeeswarm_0.6.0              munsell_0.5.0                
+[47] viridis_0.5.1                 lifecycle_0.2.0              
+[49] edgeR_3.31.0                  stringi_1.4.6                
+[51] yaml_2.2.1                    zlibbioc_1.35.0              
+[53] BiocFileCache_1.13.0          AnnotationHub_2.21.0         
+[55] grid_4.0.0                    blob_1.2.1                   
+[57] dqrng_0.2.1                   promises_1.1.0               
+[59] ExperimentHub_1.15.0          crayon_1.3.4                 
+[61] lattice_0.20-41               locfit_1.5-9.4               
+[63] CodeDepends_0.6.5             knitr_1.28                   
+[65] ps_1.3.3                      pillar_1.4.4                 
+[67] igraph_1.2.5                  codetools_0.2-16             
+[69] XML_3.99-0.3                  glue_1.4.1                   
+[71] BiocVersion_3.12.0            evaluate_0.14                
+[73] scran_1.17.0                  BiocManager_1.30.10          
+[75] vctrs_0.3.0                   httpuv_1.5.2                 
+[77] gtable_0.3.0                  purrr_0.3.4                  
+[79] assertthat_0.2.1              xfun_0.13                    
+[81] rsvd_1.0.3                    mime_0.9                     
+[83] xtable_1.8-4                  later_1.0.0                  
+[85] viridisLite_0.3.0             tibble_3.0.1                 
+[87] AnnotationDbi_1.51.0          beeswarm_0.2.3               
+[89] memoise_1.1.0                 statmod_1.4.34               
+[91] ellipsis_0.3.1                interactiveDisplayBase_1.27.0</code></pre>
 </div>
 
 </div>
 </div>
+
+
+
 <h3> Bibliography</h3>
 <div id="refs" class="references">
-<div id="ref-aran2019reference">
-<p>Aran, D., A. P. Looney, L. Liu, E. Wu, V. Fong, A. Hsu, S. Chak, et al. 2019. “Reference-based analysis of lung single-cell sequencing reveals a transitional profibrotic macrophage.” <em>Nat. Immunol.</em> 20 (2): 163–72.</p>
+<div id="ref-grun2016denovo">
+<p>Grun, D., M. J. Muraro, J. C. Boisset, K. Wiebrands, A. Lyubimova, G. Dharmadhikari, M. van den Born, et al. 2016. “De Novo Prediction of Stem Cell Identity using Single-Cell Transcriptome Data.” <em>Cell Stem Cell</em> 19 (2): 266–77.</p>
 </div>
-<div id="ref-hpcaRef">
-<p>Mabbott, Neil A., J. K. Baillie, Helen Brown, Tom C. Freeman, and David A. Hume. 2013. “An expression atlas of human primary cells: Inference of gene function from coexpression networks.” <em>BMC Genomics</em> 14. doi:<a href="https://doi.org/10.1186/1471-2164-14-632">10.1186/1471-2164-14-632</a>.</p>
-</div>
-<div id="ref-zheng2017massively">
-<p>Zheng, G. X., J. M. Terry, P. Belgrader, P. Ryvkin, Z. W. Bent, R. Wilson, S. B. Ziraldo, et al. 2017. “Massively parallel digital transcriptional profiling of single cells.” <em>Nat Commun</em> 8 (January): 14049.</p>
+<div id="ref-muraro2016singlecell">
+<p>Muraro, M. J., G. Dharmadhikari, D. Grun, N. Groen, T. Dielen, E. Jansen, L. van Gurp, et al. 2016. “A Single-Cell Transcriptome Atlas of the Human Pancreas.” <em>Cell Syst</em> 3 (4): 385–94.</p>
 </div>
 </div>
             </section>
@@ -363,8 +369,8 @@ loaded via a namespace (and not attached):
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="using-the-built-in-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="advanced-options.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="contributors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

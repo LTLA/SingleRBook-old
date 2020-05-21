@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Using the built-in references | Assigning cell types with SingleR</title>
   <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Using the built-in references | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-13" />
+<meta name="date" content="2020-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -106,6 +106,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Basic usage</b></span></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#method-description"><i class="fa fa-check"></i><b>1.2</b> Method description</a></li>
@@ -116,7 +117,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html"><i class="fa fa-check"></i><b>2</b> Using the built-in references</a><ul>
 <li class="chapter" data-level="2.1" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#overview"><i class="fa fa-check"></i><b>2.1</b> Overview</a></li>
 <li class="chapter" data-level="2.2" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#annotation-with-default-marker-detection"><i class="fa fa-check"></i><b>2.2</b> Annotation with default marker detection</a></li>
-<li class="chapter" data-level="2.3" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#choices-of-assay-data"><i class="fa fa-check"></i><b>2.3</b> Choices of assay data</a></li>
+<li class="chapter" data-level="2.3" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#interaction-with-quality-control"><i class="fa fa-check"></i><b>2.3</b> Interaction with quality control</a></li>
+<li class="chapter" data-level="2.4" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#choices-of-assay-data"><i class="fa fa-check"></i><b>2.4</b> Choices of assay data</a></li>
 <li class="chapter" data-level="" data-path="using-the-built-in-references.html"><a href="using-the-built-in-references.html#session-information-1"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html"><i class="fa fa-check"></i><b>3</b> Using single-cell references</a><ul>
@@ -127,22 +129,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="using-single-cell-references.html"><a href="using-single-cell-references.html#session-information-2"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html"><i class="fa fa-check"></i><b>4</b> Annotation diagnostics</a><ul>
-<li class="chapter" data-level="4.1" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.1</b> Based on the scores within cells</a></li>
-<li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the deltas across cells</a></li>
-<li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-marker-gene-expression"><i class="fa fa-check"></i><b>4.3</b> Based on marker gene expression</a></li>
+<li class="chapter" data-level="4.1" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#overview-2"><i class="fa fa-check"></i><b>4.1</b> Overview</a></li>
+<li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the scores within cells</a></li>
+<li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.3</b> Based on the deltas across cells</a></li>
+<li class="chapter" data-level="4.4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-marker-gene-expression"><i class="fa fa-check"></i><b>4.4</b> Based on marker gene expression</a></li>
+<li class="chapter" data-level="" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#session-information-3"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a></li>
+<li class="part"><span><b>II Advanced usage</b></span></li>
+<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a><ul>
+<li class="chapter" data-level="5.1" data-path="using-multiple-references.html"><a href="using-multiple-references.html#overview-3"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
+<li class="chapter" data-level="5.2" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-reference-specific-labels"><i class="fa fa-check"></i><b>5.2</b> Using reference-specific labels</a></li>
+<li class="chapter" data-level="5.3" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-harmonized-labels"><i class="fa fa-check"></i><b>5.3</b> Using harmonized labels</a></li>
+<li class="chapter" data-level="5.4" data-path="using-multiple-references.html"><a href="using-multiple-references.html#comparing-scores-across-references"><i class="fa fa-check"></i><b>5.4</b> Comparing scores across references</a></li>
+<li class="chapter" data-level="" data-path="using-multiple-references.html"><a href="using-multiple-references.html#session-info"><i class="fa fa-check"></i>Session info</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="harmonizing-labels.html"><a href="harmonizing-labels.html"><i class="fa fa-check"></i><b>6</b> Harmonizing labels</a></li>
 <li class="chapter" data-level="7" data-path="advanced-options.html"><a href="advanced-options.html"><i class="fa fa-check"></i><b>7</b> Advanced options</a><ul>
 <li class="chapter" data-level="7.1" data-path="advanced-options.html"><a href="advanced-options.html#preconstructed-indices"><i class="fa fa-check"></i><b>7.1</b> Preconstructed indices</a></li>
 <li class="chapter" data-level="7.2" data-path="advanced-options.html"><a href="advanced-options.html#parallelization"><i class="fa fa-check"></i><b>7.2</b> Parallelization</a></li>
 <li class="chapter" data-level="7.3" data-path="advanced-options.html"><a href="advanced-options.html#approximate-algorithms"><i class="fa fa-check"></i><b>7.3</b> Approximate algorithms</a></li>
-<li class="chapter" data-level="" data-path="advanced-options.html"><a href="advanced-options.html#session-information-3"><i class="fa fa-check"></i>Session information</a></li>
+<li class="chapter" data-level="" data-path="advanced-options.html"><a href="advanced-options.html#session-information-4"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>8</b> Contributors</a><ul>
+<li class="part"><span><b>III Workflows</b></span></li>
+<li class="chapter" data-level="8" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html"><i class="fa fa-check"></i><b>8</b> Cross-annotating pancreas</a><ul>
+<li class="chapter" data-level="8.1" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#loading-the-data"><i class="fa fa-check"></i><b>8.1</b> Loading the data</a></li>
+<li class="chapter" data-level="8.2" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#applying-the-annotation"><i class="fa fa-check"></i><b>8.2</b> Applying the annotation</a></li>
+<li class="chapter" data-level="8.3" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#diagnostics"><i class="fa fa-check"></i><b>8.3</b> Diagnostics</a></li>
+<li class="chapter" data-level="" data-path="cross-annotating-pancreas.html"><a href="cross-annotating-pancreas.html#session-information-5"><i class="fa fa-check"></i>Session information</a></li>
+</ul></li>
+<li class="part"><span><b>IV Appendix</b></span></li>
+<li class="chapter" data-level="9" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>9</b> Contributors</a><ul>
 <li><a href="contributors.html#aaron-lun"><em>Aaron Lun</em></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>9</b> Bibliography</a></li>
+<li class="chapter" data-level="10" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>10</b> Bibliography</a></li>
 <li class="divider"></li>
 <li><a href="https://bioconductor.org" target="blank">Published by Bioconductor</a></li>
 
@@ -165,6 +184,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="using-the-built-in-references" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Using the built-in references</h1>
+<script>
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("aaron-collapse")) {
+        event.target.classList.toggle("active");
+        var content = event.target.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+})
+</script>
+<style>
+.aaron-collapse {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.aaron-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
 <div id="overview" class="section level2">
 <h2><span class="header-section-number">2.1</span> Overview</h2>
 <p><em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> detects markers in a pairwise manner between labels in the reference dataset. Specifically, for each label of interest, it performs pairwise comparisons to every other label in the reference and identifies the genes that are upregulated in the label of interest for each comparison. The initial score calculation is then performed on the union of marker genes across all comparisons for all label. This approach ensures that the selected subset of features will contain genes that distinguish each label from any other label. (In contrast, other approaches that treat the “other” labels as a single group do not offer this guarantee; see <a href="https://osca.bioconductor.org/marker-detection.html#standard-application">here</a> for a discussion.) It also allows the fine-tuning step to aggressively improve resolution by only using marker genes from comparisons involving labels that both have scores close to the maximum.</p>
@@ -268,6 +320,9 @@ pred</code></pre></div>
 ## JC48P6_1202_HSC_FE_S8_            Stem cells (SC.LT34F)
 ## JC48P6_1203_HSC_FE_S8_             Stem cells (SC.STSL)
 ## JC48P6_1204_HSC_FE_S8_             Stem cells (SC.STSL)</code></pre>
+</div>
+<div id="interaction-with-quality-control" class="section level2">
+<h2><span class="header-section-number">2.3</span> Interaction with quality control</h2>
 <p>Upon summarizing the distribution of assigned labels, we see that many of them are related to stem cells, though there are quite a large number of more differentiated labels mixed in. This is probably because - despite what its name might suggest - the dataset obtained by <code>GrunHSCData()</code> actually contains more than HSCs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">sort</span>(<span class="kw">table</span>(pred<span class="op">$</span>labels), <span class="dt">decreasing=</span><span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## 
@@ -275,7 +330,7 @@ pred</code></pre></div>
 ##                   362                   314                   165 
 ##  Stem cells (SC.STSL)    B cells (proB.FrA) Stem cells (SC.LT34F) 
 ##                   142                   121                   103</code></pre>
-<p>If we restrict our analysis to the sorted HSCs (obviously) and remove one low-quality batch (see <a href="https://osca.bioconductor.org/merged-hcsc.html#quality-control-12">the analysis here</a> for the rationale) we can see that the distribution of cell type labels is much more as expected.</p>
+<p>If we restrict our analysis to the sorted HSCs (obviously) and remove one low-quality batch (see <a href="https://osca.bioconductor.org/merged-hcsc.html#quality-control-12">the analysis here</a> for the rationale) we can see that the distribution of cell type labels is more similar to what we might expect. Low-quality cells - typically those with low library sizes and low numbers of detected genes - lack information for accurate label assignment and often need to be removed to enable interpretation of the results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">actual.hsc &lt;-<span class="st"> </span>pred<span class="op">$</span>labels[sce<span class="op">$</span>protocol<span class="op">==</span><span class="st">&quot;sorted hematopoietic stem cells&quot;</span> <span class="op">&amp;</span><span class="st"> </span>sce<span class="op">$</span>sample<span class="op">!=</span><span class="st">&quot;JC4&quot;</span>]
 <span class="kw">head</span>(<span class="kw">sort</span>(<span class="kw">table</span>(actual.hsc), <span class="dt">decreasing=</span><span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## actual.hsc
@@ -285,9 +340,10 @@ pred</code></pre></div>
 ##                          37                          15 
 ##          Stem cells (LTHSC)            Stem cells (MLP) 
 ##                          12                           8</code></pre>
+<p>Filtering on the results in the above manner is possible because <code>SingleR()</code> operates independently on each cell. The annotation is orthogonal to any decisions about the relative quality of the cells in the test dataset; the same results will be obtained regardless of whether the annotation is performed before or after quality control. This is logisitically convenient as it means that the annotation does not have to be repeated if the quality control scheme (or any other downstream step, like clustering) changes throughout the lifetime of the analysis.</p>
 </div>
 <div id="choices-of-assay-data" class="section level2">
-<h2><span class="header-section-number">2.3</span> Choices of assay data</h2>
+<h2><span class="header-section-number">2.4</span> Choices of assay data</h2>
 <p>For the reference dataset, the assay matrix <em>must</em> contain log-transformed normalized expression values. This is because the default marker detection scheme computes log-fold changes by subtracting the medians, which makes little sense unless the input expression values are already log-transformed. For alternative schemes, this requirement may be relaxed (e.g., Wilcoxon rank sum tests do not require transformation); similarly, if pre-defined markers are supplied, no transformaton or normalization is necessary (see comments below for the test data).</p>
 <p>For the test data, the assay data need not be log-transformed or even (scale) normalized. This is because <code>SingleR()</code> computes Spearman correlations within each cell, which is unaffected by monotonic transformations like cell-specific scaling or log-transformation. It is perfectly satisfactory to provide the raw counts for the test dataset to <code>SingleR()</code>, which is the reason for setting <code>assay.type.test=1</code> in our previous <code>SingleR()</code> call for the Grun dataset.</p>
 <p>The exception to this rule occurs when comparing data from full-length technologies to the built-in references. The built-in references are constructed to be comparable to unique molecular identifier (UMI) protocols, where the expression values are less sensitive to differences in gene length. Thus, when comparing Smart-seq2 test datasets to the built-in references, better performance can often be achieved by processing the test counts to transcripts-per-million values.</p>
@@ -323,85 +379,92 @@ pred &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span class="
 </div>
 <div id="session-information-1" class="section level2 unnumbered">
 <h2>Session information</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 4.0.0 Patched (2020-05-01 r78341)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 18.04.4 LTS
-## 
-## Matrix products: default
-## BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
-## LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
-## 
-## other attached packages:
-##  [1] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
-##  [3] dbplyr_1.4.3                ensembldb_2.13.1           
-##  [5] AnnotationFilter_1.13.0     GenomicFeatures_1.41.0     
-##  [7] AnnotationDbi_1.51.0        knitr_1.28                 
-##  [9] scater_1.17.0               ggplot2_3.3.0              
-## [11] scRNAseq_2.3.0              SingleCellExperiment_1.11.1
-## [13] SingleR_1.3.2               SummarizedExperiment_1.19.2
-## [15] DelayedArray_0.15.1         matrixStats_0.56.0         
-## [17] Biobase_2.49.0              GenomicRanges_1.41.1       
-## [19] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-## [21] S4Vectors_0.27.5            BiocGenerics_0.35.2        
-## [23] BiocStyle_2.17.0           
-## 
-## loaded via a namespace (and not attached):
-##  [1] ProtGenerics_1.21.0           bitops_1.0-6                 
-##  [3] bit64_0.9-7                   progress_1.2.2               
-##  [5] httr_1.4.1                    tools_4.0.0                  
-##  [7] R6_2.4.1                      irlba_2.3.3                  
-##  [9] vipor_0.4.5                   lazyeval_0.2.2               
-## [11] DBI_1.1.0                     colorspace_1.4-1             
-## [13] withr_2.2.0                   prettyunits_1.1.1            
-## [15] tidyselect_1.0.0              gridExtra_2.3                
-## [17] bit_1.1-15.2                  curl_4.3                     
-## [19] compiler_4.0.0                BiocNeighbors_1.7.0          
-## [21] rtracklayer_1.49.1            bookdown_0.18                
-## [23] scales_1.1.0                  askpass_1.1                  
-## [25] rappdirs_0.3.1                Rsamtools_2.5.0              
-## [27] stringr_1.4.0                 digest_0.6.25                
-## [29] rmarkdown_2.1                 XVector_0.29.0               
-## [31] pkgconfig_2.0.3               htmltools_0.4.0              
-## [33] fastmap_1.0.1                 rlang_0.4.6                  
-## [35] RSQLite_2.2.0                 shiny_1.4.0.2                
-## [37] DelayedMatrixStats_1.11.0     BiocParallel_1.23.0          
-## [39] dplyr_0.8.5                   RCurl_1.98-1.2               
-## [41] magrittr_1.5                  BiocSingular_1.5.0           
-## [43] GenomeInfoDbData_1.2.3        Matrix_1.2-18                
-## [45] Rcpp_1.0.4.6                  ggbeeswarm_0.6.0             
-## [47] munsell_0.5.0                 viridis_0.5.1                
-## [49] lifecycle_0.2.0               stringi_1.4.6                
-## [51] yaml_2.2.1                    zlibbioc_1.35.0              
-## [53] grid_4.0.0                    blob_1.2.1                   
-## [55] promises_1.1.0                ExperimentHub_1.15.0         
-## [57] crayon_1.3.4                  lattice_0.20-41              
-## [59] Biostrings_2.57.0             hms_0.5.3                    
-## [61] pillar_1.4.4                  biomaRt_2.45.0               
-## [63] codetools_0.2-16              XML_3.99-0.3                 
-## [65] glue_1.4.0                    BiocVersion_3.12.0           
-## [67] evaluate_0.14                 BiocManager_1.30.10          
-## [69] vctrs_0.2.4                   httpuv_1.5.2                 
-## [71] openssl_1.4.1                 gtable_0.3.0                 
-## [73] purrr_0.3.4                   assertthat_0.2.1             
-## [75] xfun_0.13                     rsvd_1.0.3                   
-## [77] mime_0.9                      xtable_1.8-4                 
-## [79] later_1.0.0                   viridisLite_0.3.0            
-## [81] tibble_3.0.1                  GenomicAlignments_1.25.0     
-## [83] beeswarm_0.2.3                memoise_1.1.0                
-## [85] ellipsis_0.3.0                interactiveDisplayBase_1.27.0</code></pre>
+<button class="aaron-collapse">
+View session info
+</button>
+<div class="aaron-content">
+<pre><code>R version 4.0.0 Patched (2020-05-01 r78341)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.4 LTS
+
+Matrix products: default
+BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
+LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] scater_1.17.0               ggplot2_3.3.0              
+ [3] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
+ [5] dbplyr_1.4.3                SingleR_1.3.2              
+ [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
+ [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
+[11] scRNAseq_2.3.0              SingleCellExperiment_1.11.1
+[13] SummarizedExperiment_1.19.4 DelayedArray_0.15.1        
+[15] matrixStats_0.56.0          Biobase_2.49.0             
+[17] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
+[19] IRanges_2.23.4              S4Vectors_0.27.6           
+[21] BiocGenerics_0.35.2         BiocStyle_2.17.0           
+[23] rebook_0.99.0              
+
+loaded via a namespace (and not attached):
+ [1] ProtGenerics_1.21.0           bitops_1.0-6                 
+ [3] bit64_0.9-7                   progress_1.2.2               
+ [5] httr_1.4.1                    tools_4.0.0                  
+ [7] irlba_2.3.3                   R6_2.4.1                     
+ [9] vipor_0.4.5                   colorspace_1.4-1             
+[11] DBI_1.1.0                     lazyeval_0.2.2               
+[13] withr_2.2.0                   gridExtra_2.3                
+[15] tidyselect_1.1.0              prettyunits_1.1.1            
+[17] processx_3.4.2                bit_1.1-15.2                 
+[19] curl_4.3                      compiler_4.0.0               
+[21] graph_1.67.0                  BiocNeighbors_1.7.0          
+[23] rtracklayer_1.49.1            bookdown_0.19                
+[25] scales_1.1.1                  callr_3.4.3                  
+[27] askpass_1.1                   rappdirs_0.3.1               
+[29] stringr_1.4.0                 digest_0.6.25                
+[31] Rsamtools_2.5.0               rmarkdown_2.1                
+[33] XVector_0.29.0                pkgconfig_2.0.3              
+[35] htmltools_0.4.0               fastmap_1.0.1                
+[37] rlang_0.4.6                   RSQLite_2.2.0                
+[39] DelayedMatrixStats_1.11.0     shiny_1.4.0.2                
+[41] BiocParallel_1.23.0           dplyr_0.8.5                  
+[43] BiocSingular_1.5.0            RCurl_1.98-1.2               
+[45] magrittr_1.5                  GenomeInfoDbData_1.2.3       
+[47] Matrix_1.2-18                 ggbeeswarm_0.6.0             
+[49] munsell_0.5.0                 Rcpp_1.0.4.6                 
+[51] viridis_0.5.1                 lifecycle_0.2.0              
+[53] stringi_1.4.6                 yaml_2.2.1                   
+[55] zlibbioc_1.35.0               grid_4.0.0                   
+[57] blob_1.2.1                    promises_1.1.0               
+[59] ExperimentHub_1.15.0          crayon_1.3.4                 
+[61] lattice_0.20-41               Biostrings_2.57.0            
+[63] hms_0.5.3                     CodeDepends_0.6.5            
+[65] knitr_1.28                    ps_1.3.3                     
+[67] pillar_1.4.4                  codetools_0.2-16             
+[69] biomaRt_2.45.0                XML_3.99-0.3                 
+[71] glue_1.4.1                    BiocVersion_3.12.0           
+[73] evaluate_0.14                 BiocManager_1.30.10          
+[75] vctrs_0.3.0                   httpuv_1.5.2                 
+[77] gtable_0.3.0                  openssl_1.4.1                
+[79] purrr_0.3.4                   assertthat_0.2.1             
+[81] xfun_0.13                     rsvd_1.0.3                   
+[83] mime_0.9                      xtable_1.8-4                 
+[85] later_1.0.0                   viridisLite_0.3.0            
+[87] tibble_3.0.1                  beeswarm_0.2.3               
+[89] GenomicAlignments_1.25.0      memoise_1.1.0                
+[91] ellipsis_0.3.1                interactiveDisplayBase_1.27.0</code></pre>
+</div>
 
 </div>
 </div>

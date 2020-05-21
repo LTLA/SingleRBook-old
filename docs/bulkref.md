@@ -1,6 +1,43 @@
+---
+bibliography: ref.bib
+---
+
 # Using the built-in references
 
+<script>
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("aaron-collapse")) {
+        event.target.classList.toggle("active");
+        var content = event.target.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+})
+</script>
 
+<style>
+.aaron-collapse {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.aaron-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
 
 ## Overview
 
@@ -167,6 +204,8 @@ pred
 ## JC48P6_1204_HSC_FE_S8_             Stem cells (SC.STSL)
 ```
 
+## Interaction with quality control
+
 Upon summarizing the distribution of assigned labels, we see that many of them are related to stem cells, 
 though there are quite a large number of more differentiated labels mixed in.
 This is probably because - despite what its name might suggest -
@@ -185,9 +224,13 @@ head(sort(table(pred$labels), decreasing=TRUE))
 ##                   142                   121                   103
 ```
 
+
+
 If we restrict our analysis to the sorted HSCs (obviously) and remove one low-quality batch
 (see [the analysis here](https://osca.bioconductor.org/merged-hcsc.html#quality-control-12) for the rationale)
-we can see that the distribution of cell type labels is much more as expected.
+we can see that the distribution of cell type labels is more similar to what we might expect.
+Low-quality cells - typically those with low library sizes and low numbers of detected genes -
+lack information for accurate label assignment and often need to be removed to enable interpretation of the results.
 
 
 ```r
@@ -206,6 +249,12 @@ head(sort(table(actual.hsc), decreasing=TRUE))
 ```
 
 
+
+Filtering on the results in the above manner is possible because `SingleR()` operates independently on each cell.
+The annotation is orthogonal to any decisions about the relative quality of the cells in the test dataset;
+the same results will be obtained regardless of whether the annotation is performed before or after quality control.
+This is logisitically convenient as it means that the annotation does not have to be repeated 
+if the quality control scheme (or any other downstream step, like clustering) changes throughout the lifetime of the analysis.
 
 ## Choices of assay data
 
@@ -269,88 +318,89 @@ head(sort(table(pred$labels), decreasing=TRUE), 10)
 
 ## Session information {-}
 
+<button class="aaron-collapse">View session info</button>
+<div class="aaron-content">
+```
+R version 4.0.0 Patched (2020-05-01 r78341)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 18.04.4 LTS
 
-```r
-sessionInfo()
-```
+Matrix products: default
+BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
+LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
 
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] scater_1.17.0               ggplot2_3.3.0              
+ [3] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
+ [5] dbplyr_1.4.3                SingleR_1.3.2              
+ [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
+ [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
+[11] scRNAseq_2.3.0              SingleCellExperiment_1.11.1
+[13] SummarizedExperiment_1.19.4 DelayedArray_0.15.1        
+[15] matrixStats_0.56.0          Biobase_2.49.0             
+[17] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
+[19] IRanges_2.23.4              S4Vectors_0.27.6           
+[21] BiocGenerics_0.35.2         BiocStyle_2.17.0           
+[23] rebook_0.99.0              
+
+loaded via a namespace (and not attached):
+ [1] ProtGenerics_1.21.0           bitops_1.0-6                 
+ [3] bit64_0.9-7                   progress_1.2.2               
+ [5] httr_1.4.1                    tools_4.0.0                  
+ [7] irlba_2.3.3                   R6_2.4.1                     
+ [9] vipor_0.4.5                   colorspace_1.4-1             
+[11] DBI_1.1.0                     lazyeval_0.2.2               
+[13] withr_2.2.0                   gridExtra_2.3                
+[15] tidyselect_1.1.0              prettyunits_1.1.1            
+[17] processx_3.4.2                bit_1.1-15.2                 
+[19] curl_4.3                      compiler_4.0.0               
+[21] graph_1.67.0                  BiocNeighbors_1.7.0          
+[23] rtracklayer_1.49.1            bookdown_0.19                
+[25] scales_1.1.1                  callr_3.4.3                  
+[27] askpass_1.1                   rappdirs_0.3.1               
+[29] stringr_1.4.0                 digest_0.6.25                
+[31] Rsamtools_2.5.0               rmarkdown_2.1                
+[33] XVector_0.29.0                pkgconfig_2.0.3              
+[35] htmltools_0.4.0               fastmap_1.0.1                
+[37] rlang_0.4.6                   RSQLite_2.2.0                
+[39] DelayedMatrixStats_1.11.0     shiny_1.4.0.2                
+[41] BiocParallel_1.23.0           dplyr_0.8.5                  
+[43] BiocSingular_1.5.0            RCurl_1.98-1.2               
+[45] magrittr_1.5                  GenomeInfoDbData_1.2.3       
+[47] Matrix_1.2-18                 ggbeeswarm_0.6.0             
+[49] munsell_0.5.0                 Rcpp_1.0.4.6                 
+[51] viridis_0.5.1                 lifecycle_0.2.0              
+[53] stringi_1.4.6                 yaml_2.2.1                   
+[55] zlibbioc_1.35.0               grid_4.0.0                   
+[57] blob_1.2.1                    promises_1.1.0               
+[59] ExperimentHub_1.15.0          crayon_1.3.4                 
+[61] lattice_0.20-41               Biostrings_2.57.0            
+[63] hms_0.5.3                     CodeDepends_0.6.5            
+[65] knitr_1.28                    ps_1.3.3                     
+[67] pillar_1.4.4                  codetools_0.2-16             
+[69] biomaRt_2.45.0                XML_3.99-0.3                 
+[71] glue_1.4.1                    BiocVersion_3.12.0           
+[73] evaluate_0.14                 BiocManager_1.30.10          
+[75] vctrs_0.3.0                   httpuv_1.5.2                 
+[77] gtable_0.3.0                  openssl_1.4.1                
+[79] purrr_0.3.4                   assertthat_0.2.1             
+[81] xfun_0.13                     rsvd_1.0.3                   
+[83] mime_0.9                      xtable_1.8-4                 
+[85] later_1.0.0                   viridisLite_0.3.0            
+[87] tibble_3.0.1                  beeswarm_0.2.3               
+[89] GenomicAlignments_1.25.0      memoise_1.1.0                
+[91] ellipsis_0.3.1                interactiveDisplayBase_1.27.0
 ```
-## R version 4.0.0 Patched (2020-05-01 r78341)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 18.04.4 LTS
-## 
-## Matrix products: default
-## BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
-## LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
-## 
-## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
-## 
-## attached base packages:
-## [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
-## 
-## other attached packages:
-##  [1] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
-##  [3] dbplyr_1.4.3                ensembldb_2.13.1           
-##  [5] AnnotationFilter_1.13.0     GenomicFeatures_1.41.0     
-##  [7] AnnotationDbi_1.51.0        knitr_1.28                 
-##  [9] scater_1.17.0               ggplot2_3.3.0              
-## [11] scRNAseq_2.3.0              SingleCellExperiment_1.11.1
-## [13] SingleR_1.3.2               SummarizedExperiment_1.19.2
-## [15] DelayedArray_0.15.1         matrixStats_0.56.0         
-## [17] Biobase_2.49.0              GenomicRanges_1.41.1       
-## [19] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-## [21] S4Vectors_0.27.5            BiocGenerics_0.35.2        
-## [23] BiocStyle_2.17.0           
-## 
-## loaded via a namespace (and not attached):
-##  [1] ProtGenerics_1.21.0           bitops_1.0-6                 
-##  [3] bit64_0.9-7                   progress_1.2.2               
-##  [5] httr_1.4.1                    tools_4.0.0                  
-##  [7] R6_2.4.1                      irlba_2.3.3                  
-##  [9] vipor_0.4.5                   lazyeval_0.2.2               
-## [11] DBI_1.1.0                     colorspace_1.4-1             
-## [13] withr_2.2.0                   prettyunits_1.1.1            
-## [15] tidyselect_1.0.0              gridExtra_2.3                
-## [17] bit_1.1-15.2                  curl_4.3                     
-## [19] compiler_4.0.0                BiocNeighbors_1.7.0          
-## [21] rtracklayer_1.49.1            bookdown_0.18                
-## [23] scales_1.1.0                  askpass_1.1                  
-## [25] rappdirs_0.3.1                Rsamtools_2.5.0              
-## [27] stringr_1.4.0                 digest_0.6.25                
-## [29] rmarkdown_2.1                 XVector_0.29.0               
-## [31] pkgconfig_2.0.3               htmltools_0.4.0              
-## [33] fastmap_1.0.1                 rlang_0.4.6                  
-## [35] RSQLite_2.2.0                 shiny_1.4.0.2                
-## [37] DelayedMatrixStats_1.11.0     BiocParallel_1.23.0          
-## [39] dplyr_0.8.5                   RCurl_1.98-1.2               
-## [41] magrittr_1.5                  BiocSingular_1.5.0           
-## [43] GenomeInfoDbData_1.2.3        Matrix_1.2-18                
-## [45] Rcpp_1.0.4.6                  ggbeeswarm_0.6.0             
-## [47] munsell_0.5.0                 viridis_0.5.1                
-## [49] lifecycle_0.2.0               stringi_1.4.6                
-## [51] yaml_2.2.1                    zlibbioc_1.35.0              
-## [53] grid_4.0.0                    blob_1.2.1                   
-## [55] promises_1.1.0                ExperimentHub_1.15.0         
-## [57] crayon_1.3.4                  lattice_0.20-41              
-## [59] Biostrings_2.57.0             hms_0.5.3                    
-## [61] pillar_1.4.4                  biomaRt_2.45.0               
-## [63] codetools_0.2-16              XML_3.99-0.3                 
-## [65] glue_1.4.0                    BiocVersion_3.12.0           
-## [67] evaluate_0.14                 BiocManager_1.30.10          
-## [69] vctrs_0.2.4                   httpuv_1.5.2                 
-## [71] openssl_1.4.1                 gtable_0.3.0                 
-## [73] purrr_0.3.4                   assertthat_0.2.1             
-## [75] xfun_0.13                     rsvd_1.0.3                   
-## [77] mime_0.9                      xtable_1.8-4                 
-## [79] later_1.0.0                   viridisLite_0.3.0            
-## [81] tibble_3.0.1                  GenomicAlignments_1.25.0     
-## [83] beeswarm_0.2.3                memoise_1.1.0                
-## [85] ellipsis_0.3.0                interactiveDisplayBase_1.27.0
-```
+</div>
