@@ -43,10 +43,10 @@ document.addEventListener("click", function (event) {
 
 In addition to the labels, `SingleR()` returns a number of helpful diagnostics about the annotation process
 that can be used to determine whether the assignments are appropriate.
-Unambiguous assignments corroborated by expression of canonical markers add confidence to the results,
-while low-confidence assignments can then be pruned out to avoid adding noise to downstream analyses.
+Unambiguous assignments corroborated by expression of canonical markers add confidence to the results;
+conversely, low-confidence assignments can be pruned out to avoid adding noise to downstream analyses.
 This chapter will demonstrate some of these common sanity checks on the pancreas datasets
-from Chapter \@ref(using-single-cell-references) [@muraro2016singlecell,@grun2016denovo].
+from Chapter \@ref(using-single-cell-references) [@muraro2016singlecell;@grun2016denovo].
 
 <button class="aaron-collapse">View history</button>
 <div class="aaron-content">
@@ -163,12 +163,17 @@ and instead adjusts the values to highlight any differences between labels withi
 
 ## Based on the deltas across cells
 
-We can identify poor-quality or ambiguous assignments based on the per-cell "delta", 
+We identify poor-quality or ambiguous assignments based on the per-cell "delta", 
 i.e., the difference between the score for the assigned label and the median across all labels for each cell.
+Our assumption is that most of the labels in the reference are not relevant to any given cell. 
+Thus, the median across all labels can be used as a measure of the baseline correlation,
+while the gap from the assigned label to this baseline can be used as a measure of the assignment confidence.
+
 Low deltas indicate that the assignment is uncertain, possibly because the cell's true label does not exist in the reference.
-We use the delta rather than an absolute threshold on the score as the latter is more sensitive to technical effects.
+An obvious next step is to apply a threshold on the delta to filter out these low-confidence assignments.
+We use the delta rather than the assignment score as the latter is more sensitive to technical effects.
 For example, changes in library size affect the technical noise and can increase/decrease all scores for a given cell,
-while the delta should be somewhat more robust as it focuses on the differences between scores.
+while the delta is somewhat more robust as it focuses on the differences between scores within each cell.
 
 `SingleR()` will set a threshold on the delta for each label using an outlier-based strategy.
 Specifically, we identify cells with deltas that are small outliers relative to the deltas of other cells with the same label.
@@ -225,18 +230,43 @@ table(Label=pred.grun$labels, Removed=to.remove)
 
 This entire process can be visualized using the `plotScoreDistribution()` function,
 which displays the per-label distribution of the deltas across cells (Figure \@ref(fig:score-dist-grun)).
-We can check that outlier detection in `pruneScores()` behaved sensibly,
-and we might reconsider the reliability of labels with deltas close to zero.
+We can use this plot to check that outlier detection in `pruneScores()` behaved sensibly.
+Labels with especially low deltas may warrant some additional caution in their interpretation.
 
 
 ```r
-plotScoreDistribution(pred.grun, show = "delta.med", ncol = 3, show.nmads = 3)
+plotDeltaDistribution(pred.grun)
 ```
 
 <div class="figure">
-<img src="diagnostics_files/figure-html/score-dist-grun-1.png" alt="Distribution of deltas for the Grun dataset. Each facet represents a label in the Muraro dataset, and each point represents a cell assigned to that label or assigned to that label and pruned. For comparison, the equivalent deltas for cells assigned to other labels are also shown." width="672" />
-<p class="caption">(\#fig:score-dist-grun)Distribution of deltas for the Grun dataset. Each facet represents a label in the Muraro dataset, and each point represents a cell assigned to that label or assigned to that label and pruned. For comparison, the equivalent deltas for cells assigned to other labels are also shown.</p>
+<img src="diagnostics_files/figure-html/score-dist-grun-1.png" alt="Distribution of deltas for the Grun dataset. Each facet represents a label in the Muraro dataset, and each point represents a cell assigned to that label (colored by whether it was pruned)." width="672" />
+<p class="caption">(\#fig:score-dist-grun)Distribution of deltas for the Grun dataset. Each facet represents a label in the Muraro dataset, and each point represents a cell assigned to that label (colored by whether it was pruned).</p>
 </div>
+
+If fine-tuning was performed, we can apply an even more stringent filter 
+based on the difference between the highest and second-highest scores after fine-tuning.
+Cells will only pass the filter if they are assigned to a label that is clearly distinguishable from any other label.
+In practice, this approach tends to be too conservative as assignments involving closely related labels are heavily penalized.
+
+
+```r
+to.remove2 <- pruneScores(pred.grun, min.diff.next=0.1)
+table(Label=pred.grun$labels, Removed=to.remove2)
+```
+
+```
+##              Removed
+## Label         FALSE TRUE
+##   acinar        235   42
+##   alpha         166   37
+##   beta          117   64
+##   delta          25   25
+##   duct          157  149
+##   endothelial     4    1
+##   epsilon         0    1
+##   mesenchymal    22    0
+##   pp              9   10
+```
 
 ## Based on marker gene expression
 
@@ -244,7 +274,7 @@ Another simple yet effective diagnostic is to examine the expression of the mark
 The marker genes used for each label are reported in the `metadata()` of the `SingleR()` output,
 so we can simply retrieve them to visualize their (usually log-transformed) expression values across the test dataset.
 Here, we use the  `plotHeatmap()` function from *[scater](https://bioconductor.org/packages/3.12/scater)* 
-to examine the expression of markers used to identify beta cells (Figure \@ref(fig:grun-beta-heat).
+to examine the expression of markers used to identify beta cells (Figure \@ref(fig:grun-beta-heat)).
 
 
 ```r
@@ -257,8 +287,8 @@ plotHeatmap(sceG, order_columns_by="labels",
 ```
 
 <div class="figure">
-<img src="diagnostics_files/figure-html/grun-beta-heat-1.png" alt="Heatmap of log-expression values in the Grun dataset for all marker genes upregulated in beta cells in the Muraro reference dataset. Assigned labels for each cell are shown at the top." width="672" />
-<p class="caption">(\#fig:grun-beta-heat)Heatmap of log-expression values in the Grun dataset for all marker genes upregulated in beta cells in the Muraro reference dataset. Assigned labels for each cell are shown at the top.</p>
+<img src="diagnostics_files/figure-html/grun-beta-heat-1.png" alt="Heatmap of log-expression values in the Grun dataset for all marker genes upregulated in beta cells in the Muraro reference dataset. Assigned labels for each cell are shown at the top of the plot." width="672" />
+<p class="caption">(\#fig:grun-beta-heat)Heatmap of log-expression values in the Grun dataset for all marker genes upregulated in beta cells in the Muraro reference dataset. Assigned labels for each cell are shown at the top of the plot.</p>
 </div>
 
 If a cell in the test dataset is confidently assigned to a particular label, 
@@ -287,8 +317,8 @@ do.call(gridExtra::grid.arrange, collected)
 ```
 
 <div class="figure">
-<img src="diagnostics_files/figure-html/grun-beta-heat-all-1.png" alt="Heatmaps of log-expression values in the Grun dataset for all marker genes upregulated in each label in the Muraro reference dataset. Assigned labels for each cell are shown at the top." width="1920" />
-<p class="caption">(\#fig:grun-beta-heat-all)Heatmaps of log-expression values in the Grun dataset for all marker genes upregulated in each label in the Muraro reference dataset. Assigned labels for each cell are shown at the top.</p>
+<img src="diagnostics_files/figure-html/grun-beta-heat-all-1.png" alt="Heatmaps of log-expression values in the Grun dataset for all marker genes upregulated in each label in the Muraro reference dataset. Assigned labels for each cell are shown at the top of each plot." width="1920" />
+<p class="caption">(\#fig:grun-beta-heat-all)Heatmaps of log-expression values in the Grun dataset for all marker genes upregulated in each label in the Muraro reference dataset. Assigned labels for each cell are shown at the top of each plot.</p>
 </div>
 
 In general, the heatmap provides a more interpretable diagnostic visualization than the plots of scores and deltas.
@@ -317,12 +347,12 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
  [1] scater_1.17.0               ggplot2_3.3.0              
- [3] SingleCellExperiment_1.11.1 SingleR_1.3.2              
+ [3] SingleCellExperiment_1.11.1 SingleR_1.3.4              
  [5] SummarizedExperiment_1.19.4 DelayedArray_0.15.1        
  [7] matrixStats_0.56.0          Biobase_2.49.0             
  [9] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
@@ -340,40 +370,41 @@ loaded via a namespace (and not attached):
 [13] tidyselect_1.1.0              processx_3.4.2               
 [15] bit_1.1-15.2                  curl_4.3                     
 [17] compiler_4.0.0                graph_1.67.0                 
-[19] BiocNeighbors_1.7.0           bookdown_0.19                
-[21] scales_1.1.1                  callr_3.4.3                  
-[23] rappdirs_0.3.1                stringr_1.4.0                
-[25] digest_0.6.25                 rmarkdown_2.1                
-[27] XVector_0.29.0                pkgconfig_2.0.3              
-[29] htmltools_0.4.0               highr_0.8                    
-[31] dbplyr_1.4.3                  fastmap_1.0.1                
-[33] rlang_0.4.6                   RSQLite_2.2.0                
-[35] shiny_1.4.0.2                 DelayedMatrixStats_1.11.0    
-[37] farver_2.0.3                  BiocParallel_1.23.0          
-[39] dplyr_0.8.5                   RCurl_1.98-1.2               
-[41] magrittr_1.5                  BiocSingular_1.5.0           
-[43] GenomeInfoDbData_1.2.3        Matrix_1.2-18                
-[45] ggbeeswarm_0.6.0              munsell_0.5.0                
-[47] Rcpp_1.0.4.6                  viridis_0.5.1                
-[49] lifecycle_0.2.0               stringi_1.4.6                
-[51] yaml_2.2.1                    zlibbioc_1.35.0              
-[53] BiocFileCache_1.13.0          AnnotationHub_2.21.0         
-[55] grid_4.0.0                    blob_1.2.1                   
-[57] promises_1.1.0                ExperimentHub_1.15.0         
-[59] crayon_1.3.4                  lattice_0.20-41              
-[61] CodeDepends_0.6.5             knitr_1.28                   
-[63] ps_1.3.3                      pillar_1.4.4                 
-[65] codetools_0.2-16              XML_3.99-0.3                 
-[67] glue_1.4.1                    BiocVersion_3.12.0           
-[69] evaluate_0.14                 BiocManager_1.30.10          
-[71] vctrs_0.3.0                   httpuv_1.5.2                 
-[73] gtable_0.3.0                  purrr_0.3.4                  
-[75] assertthat_0.2.1              xfun_0.13                    
-[77] rsvd_1.0.3                    mime_0.9                     
-[79] xtable_1.8-4                  later_1.0.0                  
-[81] viridisLite_0.3.0             pheatmap_1.0.12              
-[83] tibble_3.0.1                  beeswarm_0.2.3               
-[85] AnnotationDbi_1.51.0          memoise_1.1.0                
-[87] ellipsis_0.3.1                interactiveDisplayBase_1.27.0
+[19] BiocNeighbors_1.7.0           labeling_0.3                 
+[21] bookdown_0.19                 scales_1.1.1                 
+[23] callr_3.4.3                   rappdirs_0.3.1               
+[25] stringr_1.4.0                 digest_0.6.25                
+[27] rmarkdown_2.1                 XVector_0.29.0               
+[29] pkgconfig_2.0.3               htmltools_0.4.0              
+[31] highr_0.8                     dbplyr_1.4.3                 
+[33] fastmap_1.0.1                 rlang_0.4.6                  
+[35] RSQLite_2.2.0                 shiny_1.4.0.2                
+[37] DelayedMatrixStats_1.11.0     farver_2.0.3                 
+[39] BiocParallel_1.23.0           dplyr_0.8.5                  
+[41] RCurl_1.98-1.2                magrittr_1.5                 
+[43] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
+[45] Matrix_1.2-18                 ggbeeswarm_0.6.0             
+[47] munsell_0.5.0                 Rcpp_1.0.4.6                 
+[49] viridis_0.5.1                 lifecycle_0.2.0              
+[51] stringi_1.4.6                 yaml_2.2.1                   
+[53] zlibbioc_1.35.0               BiocFileCache_1.13.0         
+[55] AnnotationHub_2.21.0          grid_4.0.0                   
+[57] blob_1.2.1                    promises_1.1.0               
+[59] ExperimentHub_1.15.0          crayon_1.3.4                 
+[61] lattice_0.20-41               CodeDepends_0.6.5            
+[63] knitr_1.28                    ps_1.3.3                     
+[65] pillar_1.4.4                  codetools_0.2-16             
+[67] XML_3.99-0.3                  glue_1.4.1                   
+[69] BiocVersion_3.12.0            evaluate_0.14                
+[71] BiocManager_1.30.10           vctrs_0.3.0                  
+[73] httpuv_1.5.2                  gtable_0.3.0                 
+[75] purrr_0.3.4                   assertthat_0.2.1             
+[77] xfun_0.13                     rsvd_1.0.3                   
+[79] mime_0.9                      xtable_1.8-4                 
+[81] later_1.0.0                   viridisLite_0.3.0            
+[83] pheatmap_1.0.12               tibble_3.0.1                 
+[85] beeswarm_0.2.3                AnnotationDbi_1.51.0         
+[87] memoise_1.1.0                 ellipsis_0.3.1               
+[89] interactiveDisplayBase_1.27.0
 ```
 </div>

@@ -49,7 +49,7 @@ The Bioconductor package *[SingleR](https://bioconductor.org/packages/3.12/Singl
 for single-cell RNA sequencing (scRNA-seq) data [@aran2019reference].
 Given a reference dataset of samples (single-cell or bulk) with known labels, 
 it assigns those labels to new cells from a test dataset based on similarities in their expression profiles.
-This provides a convenient way of transferring biological knowledge across datasets. 
+This provides a convenient way of transferring biological knowledge across datasets,
 allowing users to leverage the domain expertise implicit in the creation of each reference.
 The most common application of *[SingleR](https://bioconductor.org/packages/3.12/SingleR)* involves predicting cell type (or "state", or "kind") in a new dataset,
 a process that is facilitated by the availability of built-in references and compatibility with user-supplied datasets.
@@ -72,9 +72,9 @@ it also avoids penalizing classifications to heterogeneous labels by only requir
 3. We repeat the score calculation for all labels in the reference dataset.
 The label with the highest score is used as *[SingleR](https://bioconductor.org/packages/3.12/SingleR)*'s prediction for this cell.
 4. We optionally perform a fine-tuning step to improve resolution between closely related labels.
-The reference dataset is subsetted to only include labels with scores close to the maximum,
-scores are recomputed using only marker genes for the subset of labels (thus focusing on the most relevant features),
-and this is iterated until one label remains.
+The reference dataset is subsetted to only include labels with scores close to the maximum;
+scores are recomputed using only marker genes for the subset of labels, thus focusing on the most relevant features;
+and this process is iterated until only one label remains.
 
 ## Quick start
 
@@ -141,7 +141,7 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
@@ -185,20 +185,20 @@ loaded via a namespace (and not attached):
 [51] AnnotationHub_2.21.0          grid_4.0.0                   
 [53] blob_1.2.1                    promises_1.1.0               
 [55] ExperimentHub_1.15.0          crayon_1.3.4                 
-[57] lattice_0.20-41               Biostrings_2.57.0            
-[59] hms_0.5.3                     CodeDepends_0.6.5            
-[61] knitr_1.28                    ps_1.3.3                     
-[63] pillar_1.4.4                  codetools_0.2-16             
-[65] biomaRt_2.45.0                XML_3.99-0.3                 
-[67] glue_1.4.1                    BiocVersion_3.12.0           
-[69] evaluate_0.14                 BiocManager_1.30.10          
-[71] vctrs_0.3.0                   httpuv_1.5.2                 
-[73] openssl_1.4.1                 purrr_0.3.4                  
-[75] assertthat_0.2.1              xfun_0.13                    
-[77] rsvd_1.0.3                    mime_0.9                     
-[79] xtable_1.8-4                  later_1.0.0                  
-[81] tibble_3.0.1                  GenomicAlignments_1.25.0     
-[83] memoise_1.1.0                 ellipsis_0.3.1               
-[85] interactiveDisplayBase_1.27.0
+[57] lattice_0.20-41               beachmat_2.5.0               
+[59] Biostrings_2.57.0             hms_0.5.3                    
+[61] CodeDepends_0.6.5             knitr_1.28                   
+[63] ps_1.3.3                      pillar_1.4.4                 
+[65] codetools_0.2-16              biomaRt_2.45.0               
+[67] XML_3.99-0.3                  glue_1.4.1                   
+[69] BiocVersion_3.12.0            evaluate_0.14                
+[71] BiocManager_1.30.10           vctrs_0.3.0                  
+[73] httpuv_1.5.2                  openssl_1.4.1                
+[75] purrr_0.3.4                   assertthat_0.2.1             
+[77] xfun_0.13                     rsvd_1.0.3                   
+[79] mime_0.9                      xtable_1.8-4                 
+[81] later_1.0.0                   tibble_3.0.1                 
+[83] GenomicAlignments_1.25.0      memoise_1.1.0                
+[85] ellipsis_0.3.1                interactiveDisplayBase_1.27.0
 ```
 </div>

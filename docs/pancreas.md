@@ -158,7 +158,7 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] SingleR_1.3.2               scater_1.17.0              
+ [1] SingleR_1.3.4               scater_1.17.0              
  [3] ggplot2_3.3.0               scRNAseq_2.3.0             
  [5] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
  [7] DelayedArray_0.15.1         matrixStats_0.56.0         

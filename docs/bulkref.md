@@ -49,7 +49,7 @@ This approach ensures that the selected subset of features will contain genes th
 (In contrast, other approaches that treat the "other" labels as a single group do not offer this guarantee;
 see [here](https://osca.bioconductor.org/marker-detection.html#standard-application) for a discussion.)
 It also allows the fine-tuning step to aggressively improve resolution by only using marker genes 
-from comparisons involving labels that both have scores close to the maximum.
+from comparisons where both labels have scores close to the maximum.
 
 The original ("classic") marker detection algorithm used in @aran2019reference identified marker genes 
 based on their log-fold changes in each pairwise comparison.
@@ -57,7 +57,7 @@ Specifically, it used the genes with the largest positive differences in the per
 The number of genes taken from each pairwise comparison was defined as $500 (\frac{2}{3})^{\log_{2}(n)}$,
 where $n$ is the number of unique labels in the reference;
 this aimed to reduce the number of genes (and thus the computational time) as the number of labels and pairwise comparisons increased.
-It is primarily intended for reference datasets that have little or no replication,
+This classic mode is primarily intended for reference datasets that have little or no replication,
 a description that covers most of the built-in references 
 and precludes more complicated marker detection procedures (Chapter \@ref(using-single-cell-references)).
 
@@ -94,7 +94,7 @@ Our plan is to annotate each cell with the built-in ImmGen reference dataset [@I
 Calling the `ImmGenData()` function returns a `SummarizedExperiment` object 
 containing a matrix of log-expression values with sample-level labels.
 We set `ensembl=TRUE` to match the reference's gene annotation with that in the `sce` object
-(the default is to use the gene symbol).
+(the default behavior is to use the gene symbol).
 
 
 ```r
@@ -120,7 +120,8 @@ immgen
 ```
 
 Technically speaking, each built-in dataset actually has three sets of labels that primarily differ in their resolution.
-For the purposes of this demonstration, we will use the "fine" labels in the `label.fine` metadata field.
+For the purposes of this demonstration, we will use the "fine" labels in the `label.fine` metadata field,
+which represents the highest resolution of annotation available in ImmGen.
 
 
 ```r
@@ -137,79 +138,27 @@ Annotation is then a simple matter of calling `SingleR()` on our test (Grun) dat
 leaving the default of `de.method="classic"` to use the original marker detection scheme.
 This applies the algorithm described in Section \@ref(method-description),
 returning a `DataFrame` where each row contains prediction results for a single cell in the `sce` object.
-Labels are shown before fine-tuning (`first.labels`), after fine-tuning (`labels`) and after pruning (`pruned.labels`), 
-along with the associated scores for each label.
+Labels are provided before fine-tuning (`first.labels`), after fine-tuning (`labels`) and after pruning (`pruned.labels`);
+some of the other fields are discussed in more detail in Chapter \@ref(annotation-diagnostics).
 
 
 ```r
 # See 'Choices of assay data' for 'assay.type.test=' explanation.
 pred <- SingleR(test = sce, ref = immgen, 
     labels = immgen$label.fine, assay.type.test=1)
-pred
+colnames(pred)
 ```
 
 ```
-## DataFrame with 1915 rows and 5 columns
-##                                                        scores
-##                                                      <matrix>
-## JC4_349_HSC_FE_S13_    0.02170371:0.023365296: 0.02462244:...
-## JC4_350_HSC_FE_S13_    0.03127428:0.031426006: 0.03286075:...
-## JC4_351_HSC_FE_S13_    0.02485081:0.024722089: 0.02174789:...
-## JC4_352_HSC_FE_S13_    0.03612959:0.036907421: 0.03950824:...
-## JC4_353_HSC_FE_S13_    0.00246304:0.000508024:-0.00191648:...
-## ...                                                       ...
-## JC48P6_1200_HSC_FE_S8_         0.192889:0.192199:0.191950:...
-## JC48P6_1201_HSC_FE_S8_         0.164670:0.161995:0.162909:...
-## JC48P6_1202_HSC_FE_S8_         0.162044:0.160878:0.158804:...
-## JC48P6_1203_HSC_FE_S8_         0.175933:0.178043:0.180334:...
-## JC48P6_1204_HSC_FE_S8_         0.204651:0.205074:0.203180:...
-##                                            first.labels       tuning.scores
-##                                             <character>         <DataFrame>
-## JC4_349_HSC_FE_S13_    T cells (T.8EFF.OT1.48HR.LISOVA) 0.0465958:0.0458002
-## JC4_350_HSC_FE_S13_              Stem cells (SC.CMP.DR) 0.0457856:0.0438811
-## JC4_351_HSC_FE_S13_                 Stem cells (SC.MEP) 0.0328072:0.0321104
-## JC4_352_HSC_FE_S13_                 Stem cells (SC.MEP) 0.0511217:0.0509664
-## JC4_353_HSC_FE_S13_     Macrophages (MF.103-11B+.SALM3) 0.0183372:0.0168012
-## ...                                                 ...                 ...
-## JC48P6_1200_HSC_FE_S8_            Stem cells (SC.LT34F)  0.236700:0.1178367
-## JC48P6_1201_HSC_FE_S8_                 Stem cells (MLP)  0.341081:0.2547433
-## JC48P6_1202_HSC_FE_S8_            Stem cells (SC.LT34F)  0.160514:0.0955061
-## JC48P6_1203_HSC_FE_S8_            Stem cells (SC.LT34F)  0.500000:0.5000000
-## JC48P6_1204_HSC_FE_S8_            Stem cells (SC.LT34F)  0.161313:0.1437619
-##                                                  labels
-##                                             <character>
-## JC4_349_HSC_FE_S13_    T cells (T.8EFF.OT1.48HR.LISOVA)
-## JC4_350_HSC_FE_S13_              Stem cells (SC.CMP.DR)
-## JC4_351_HSC_FE_S13_                 Stem cells (SC.MEP)
-## JC4_352_HSC_FE_S13_                 Stem cells (SC.MEP)
-## JC4_353_HSC_FE_S13_     Macrophages (MF.103-11B+.SALM3)
-## ...                                                 ...
-## JC48P6_1200_HSC_FE_S8_            Stem cells (SC.LT34F)
-## JC48P6_1201_HSC_FE_S8_            Stem cells (SC.ST34F)
-## JC48P6_1202_HSC_FE_S8_            Stem cells (SC.LT34F)
-## JC48P6_1203_HSC_FE_S8_             Stem cells (SC.STSL)
-## JC48P6_1204_HSC_FE_S8_             Stem cells (SC.STSL)
-##                                           pruned.labels
-##                                             <character>
-## JC4_349_HSC_FE_S13_    T cells (T.8EFF.OT1.48HR.LISOVA)
-## JC4_350_HSC_FE_S13_              Stem cells (SC.CMP.DR)
-## JC4_351_HSC_FE_S13_                 Stem cells (SC.MEP)
-## JC4_352_HSC_FE_S13_                 Stem cells (SC.MEP)
-## JC4_353_HSC_FE_S13_     Macrophages (MF.103-11B+.SALM3)
-## ...                                                 ...
-## JC48P6_1200_HSC_FE_S8_            Stem cells (SC.LT34F)
-## JC48P6_1201_HSC_FE_S8_            Stem cells (SC.ST34F)
-## JC48P6_1202_HSC_FE_S8_            Stem cells (SC.LT34F)
-## JC48P6_1203_HSC_FE_S8_             Stem cells (SC.STSL)
-## JC48P6_1204_HSC_FE_S8_             Stem cells (SC.STSL)
+## [1] "scores"        "first.labels"  "tuning.scores" "labels"       
+## [5] "pruned.labels"
 ```
 
 ## Interaction with quality control
 
-Upon summarizing the distribution of assigned labels, we see that many of them are related to stem cells, 
-though there are quite a large number of more differentiated labels mixed in.
-This is probably because - despite what its name might suggest -
-the dataset obtained by `GrunHSCData()` actually contains more than HSCs.
+Upon examining the distribution of assigned labels, we see that many of them are related to stem cells.
+However, there are quite a large number of more differentiated labels mixed in,
+which is not what we expect from a sorted population of HSCs.
 
 
 ```r
@@ -226,6 +175,8 @@ head(sort(table(pred$labels), decreasing=TRUE))
 
 
 
+This is probably because - despite what its name might suggest -
+the dataset obtained by `GrunHSCData()` actually contains more than HSCs.
 If we restrict our analysis to the sorted HSCs (obviously) and remove one low-quality batch
 (see [the analysis here](https://osca.bioconductor.org/merged-hcsc.html#quality-control-12) for the rationale)
 we can see that the distribution of cell type labels is more similar to what we might expect.
@@ -250,7 +201,7 @@ head(sort(table(actual.hsc), decreasing=TRUE))
 
 
 
-Filtering on the results in the above manner is possible because `SingleR()` operates independently on each cell.
+Filtering the annotation results in the above manner is possible because `SingleR()` operates independently on each cell.
 The annotation is orthogonal to any decisions about the relative quality of the cells in the test dataset;
 the same results will be obtained regardless of whether the annotation is performed before or after quality control.
 This is logisitically convenient as it means that the annotation does not have to be repeated 
@@ -262,7 +213,7 @@ For the reference dataset, the assay matrix _must_ contain log-transformed norma
 This is because the default marker detection scheme computes log-fold changes by subtracting the medians,
 which makes little sense unless the input expression values are already log-transformed.
 For alternative schemes, this requirement may be relaxed (e.g., Wilcoxon rank sum tests do not require transformation);
-similarly, if pre-defined markers are supplied, no transformaton or normalization is necessary (see comments below for the test data).
+similarly, if pre-defined markers are supplied, no transformation or normalization is necessary.
 
 For the test data, the assay data need not be log-transformed or even (scale) normalized.
 This is because `SingleR()` computes Spearman correlations within each cell, 
@@ -276,7 +227,7 @@ where the expression values are less sensitive to differences in gene length.
 Thus, when comparing Smart-seq2 test datasets to the built-in references,
 better performance can often be achieved by processing the test counts to transcripts-per-million values.
 
-We demonstrate below using another HSC dataset that was generated using the Smart-seq2 protocol [@nestorowa2016].
+We demonstrate below using another HSC dataset that was generated using the Smart-seq2 protocol [@nestorowa2016singlecell].
 Again, we see that most of the predicted labels are related to stem cells, which is comforting.
 
 
@@ -338,13 +289,13 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
  [1] scater_1.17.0               ggplot2_3.3.0              
  [3] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
- [5] dbplyr_1.4.3                SingleR_1.3.2              
+ [5] dbplyr_1.4.3                SingleR_1.3.4              
  [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
 [11] scRNAseq_2.3.0              SingleCellExperiment_1.11.1

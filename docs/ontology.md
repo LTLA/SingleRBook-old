@@ -1,34 +1,91 @@
+# Exploiting the cell ontology
 
+<script>
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("aaron-collapse")) {
+        event.target.classList.toggle("active");
+        var content = event.target.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+})
+</script>
 
-# Harmonizing labels 
+<style>
+.aaron-collapse {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
 
-The `matchReferences()` function provides a simple yet elegant approach for label harmonization between two references.
-Each reference is used to annotate the other and the probability of mutual assignment between each pair of labels is computed.
-Probabilities close to 1 indicate there is a 1:1 relation between that pair of labels;
-on the other hand, an all-zero probability vector indicates that a label is unique to a particular reference.
+.aaron-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+</style>
+
+As previously discussed in Section \@ref(using-harmonized-labels),
+*[SingleR](https://bioconductor.org/packages/3.12/SingleR)* maps the labels in its references to the [Cell Ontology](https://www.ebi.ac.uk/ols/ontologies/cl).
+The most obvious advantage of doing this is to provide a standardized vocabulary with which to describe cell types,
+thus facilitating integrated analyses with multiple references.
+However, another useful feature of the Cell Ontology is its hierarchical organization of terms,
+allowing us to adjust cell type annotations to the desired resolution.
+This represents a more dynamic alternative to the static `label.main` and `label.fine` options in each reference.
+
+## Session information {-}
 
 
 ```r
-library(SingleR)
-bp.se <- BlueprintEncodeData()
-hpca.se <- HumanPrimaryCellAtlasData()
-
-matched <- matchReferences(bp.se, hpca.se,
-    bp.se$label.main, hpca.se$label.main)
-pheatmap::pheatmap(matched, col=viridis::plasma(100))
+prettySessionInfo()
 ```
 
-<img src="ontology_files/figure-html/unnamed-chunk-2-1.png" width="672" />
-
-A heatmap like the one above can be used to guide harmonization to enforce a consistent vocabulary across all labels representing the same cell type or state.
-The most obvious benefit of harmonization is that interpretation of the results is simplified.
-However, an even more important effect is that the presence of harmonized labels from multiple references allows the classification machinery to protect against irrelevant batch effects between references.
-For example, in `SingleR()`'s case, marker genes are favored if they are consistently upregulated across multiple references, improving robustness to technical idiosyncrasies in any test dataset.
-
-We stress that some manual intervention is still required in this process, given the risks posed by differences in biological systems and technologies.
-For example, neurons are considered unique to each reference while smooth muscle cells in the HPCA data are incorrectly matched to fibroblasts in the Blueprint/ENCODE data.
-CD4^+^ and CD8^+^ T cells are also both assigned to "T cells", so some decision about the acceptable resolution of the harmonized labels is required here.
-
-As an aside, we can also use this function to identify the matching clusters between two independent scRNA-seq analyses.
-This is an "off-label" use that involves substituting the cluster assignments as proxies for the labels.
-We can then match up clusters and integrate conclusions from multiple datasets without the difficulty of batch correction and reclustering.
+```
+## <button class="aaron-collapse">View session info</button>
+## <div class="aaron-content">
+## ```
+## R version 4.0.0 Patched (2020-05-01 r78341)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 18.04.4 LTS
+## 
+## Matrix products: default
+## BLAS:   /home/luna/Software/R/R-4-0-branch-dev/lib/libRblas.so
+## LAPACK: /home/luna/Software/R/R-4-0-branch-dev/lib/libRlapack.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] BiocStyle_2.17.0 rebook_0.99.0   
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.4.6        bookdown_0.19       codetools_0.2-16   
+##  [4] XML_3.99-0.3        ps_1.3.3            digest_0.6.25      
+##  [7] stats4_4.0.0        magrittr_1.5        evaluate_0.14      
+## [10] graph_1.67.0        rlang_0.4.6         stringi_1.4.6      
+## [13] callr_3.4.3         rmarkdown_2.1       tools_4.0.0        
+## [16] stringr_1.4.0       processx_3.4.2      parallel_4.0.0     
+## [19] xfun_0.13           yaml_2.2.1          compiler_4.0.0     
+## [22] BiocGenerics_0.35.2 BiocManager_1.30.10 htmltools_0.4.0    
+## [25] CodeDepends_0.6.5   knitr_1.28         
+## ```
+## </div>
+```
