@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Annotation diagnostics | Assigning cell types with SingleR</title>
-  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Annotation diagnostics | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 Annotation diagnostics | Assigning cell types with SingleR" />
   
-  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
 
 
-<meta name="date" content="2020-05-24" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -263,7 +263,7 @@ pred.grun &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span cl
 </div>
 <div id="based-on-the-scores-within-cells" class="section level2">
 <h2><span class="header-section-number">4.2</span> Based on the scores within cells</h2>
-<p>The most obvious diagnostic reported by <code>SingleR()</code> is the nested matrix of per-cell scores in the <code>scores</code> field. This contains the correlation-based scores prior to any fine-tuning for each cell (row) and reference label (column). Ideally, we would see unambiguous assignments where, for any given cell, one label’s score is clearly larger than the others.</p>
+<p>The most obvious diagnostic reported by <code>SingleR()</code> is the nested matrix of per-cell scores in the <code>scores</code> field. This contains the correlation-based scores prior to any fine-tuning for each cell (row) and reference label (column). Ideally, we would see unambiguous assignments where, for any given cell, one label's score is clearly larger than the others.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred.grun<span class="op">$</span>scores[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</code></pre></div>
 <pre><code>##       acinar  alpha   beta  delta   duct endothelial epsilon mesenchymal
 ##  [1,] 0.6797 0.1463 0.1554 0.1029 0.4971      0.2030 0.04434      0.1848
@@ -305,12 +305,12 @@ Figure 4.1: Heatmap of normalized scores for the Grun dataset. Each cell is a co
 Figure 4.2: Heatmap of normalized scores for the Grun dataset, including the donor of origin for each cell.
 </p>
 </div>
-<p>The <code>scores</code> matrix has several caveats associated with its interpretation. Only the pre-tuned scores are stored in this matrix, as scores after fine-tuning are not comparable across all labels. This means that the label with the highest score for a cell may not be the cell’s final label if fine-tuning is applied. Moreover, the magnitude of differences in the scores has no clear interpretation; indeed, <code>plotScoreHeatmap()</code> dispenses with any faithful representation of the scores and instead adjusts the values to highlight any differences between labels within each cell.</p>
+<p>The <code>scores</code> matrix has several caveats associated with its interpretation. Only the pre-tuned scores are stored in this matrix, as scores after fine-tuning are not comparable across all labels. This means that the label with the highest score for a cell may not be the cell's final label if fine-tuning is applied. Moreover, the magnitude of differences in the scores has no clear interpretation; indeed, <code>plotScoreHeatmap()</code> dispenses with any faithful representation of the scores and instead adjusts the values to highlight any differences between labels within each cell.</p>
 </div>
 <div id="based-on-the-deltas-across-cells" class="section level2">
 <h2><span class="header-section-number">4.3</span> Based on the deltas across cells</h2>
-<p>We identify poor-quality or ambiguous assignments based on the per-cell “delta”, i.e., the difference between the score for the assigned label and the median across all labels for each cell. Our assumption is that most of the labels in the reference are not relevant to any given cell. Thus, the median across all labels can be used as a measure of the baseline correlation, while the gap from the assigned label to this baseline can be used as a measure of the assignment confidence.</p>
-<p>Low deltas indicate that the assignment is uncertain, possibly because the cell’s true label does not exist in the reference. An obvious next step is to apply a threshold on the delta to filter out these low-confidence assignments. We use the delta rather than the assignment score as the latter is more sensitive to technical effects. For example, changes in library size affect the technical noise and can increase/decrease all scores for a given cell, while the delta is somewhat more robust as it focuses on the differences between scores within each cell.</p>
+<p>We identify poor-quality or ambiguous assignments based on the per-cell &quot;delta&quot;, i.e., the difference between the score for the assigned label and the median across all labels for each cell. Our assumption is that most of the labels in the reference are not relevant to any given cell. Thus, the median across all labels can be used as a measure of the baseline correlation, while the gap from the assigned label to this baseline can be used as a measure of the assignment confidence.</p>
+<p>Low deltas indicate that the assignment is uncertain, possibly because the cell's true label does not exist in the reference. An obvious next step is to apply a threshold on the delta to filter out these low-confidence assignments. We use the delta rather than the assignment score as the latter is more sensitive to technical effects. For example, changes in library size affect the technical noise and can increase/decrease all scores for a given cell, while the delta is somewhat more robust as it focuses on the differences between scores within each cell.</p>
 <p><code>SingleR()</code> will set a threshold on the delta for each label using an outlier-based strategy. Specifically, we identify cells with deltas that are small outliers relative to the deltas of other cells with the same label. This assumes that, for any given label, most cells assigned to that label are correct. We focus on outliers to avoid difficulties with setting a fixed threshold, especially given that the magnitudes of the deltas are about as uninterpretable as the scores themselves. Pruned labels are reported in the <code>pruned.labels</code> field where low-quality assignments are replaced with <code>NA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">to.remove &lt;-<span class="st"> </span><span class="kw">is.na</span>(pred.grun<span class="op">$</span>pruned.labels)
 <span class="kw">table</span>(<span class="dt">Label=</span>pred.grun<span class="op">$</span>labels, <span class="dt">Removed=</span>to.remove)</code></pre></div>
@@ -377,7 +377,7 @@ sceG<span class="op">$</span>labels &lt;-<span class="st"> </span>pred.grun<span
 Figure 4.4: Heatmap of log-expression values in the Grun dataset for all marker genes upregulated in beta cells in the Muraro reference dataset. Assigned labels for each cell are shown at the top of the plot.
 </p>
 </div>
-<p>If a cell in the test dataset is confidently assigned to a particular label, we would expect it to have strong expression of that label’s markers. We would also hope that those label’s markers are biologically meaningful; in this case, we do observe strong upregulation of insulin (<em>INS</em>) in the beta cells, which is reassuring and gives greater confidence to the correctness of the assignment. If the identified markers are not meaningful or not consistently upregulated, some skepticism towards the quality of the assignments is warranted.</p>
+<p>If a cell in the test dataset is confidently assigned to a particular label, we would expect it to have strong expression of that label's markers. We would also hope that those label's markers are biologically meaningful; in this case, we do observe strong upregulation of insulin (<em>INS</em>) in the beta cells, which is reassuring and gives greater confidence to the correctness of the assignment. If the identified markers are not meaningful or not consistently upregulated, some skepticism towards the quality of the assignments is warranted.</p>
 <p>It is straightforward to repeat this process for all labels by wrapping this code in a loop, as shown below in Figure <a href="annotation-diagnostics.html#fig:grun-beta-heat-all">4.5</a>. Note that <code>plotHeatmap()</code> is not the only function that can be used for this visualization; we could also use <code>plotDots()</code> to create a <em><a href="https://CRAN.R-project.org/package=Seurat">Seurat</a></em>-style dot plot, or we could use other heatmap plotting functions such as <code>dittoHeatmap()</code> from <em><a href="https://bioconductor.org/packages/3.12/dittoSeq">dittoSeq</a></em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">collected &lt;-<span class="st"> </span><span class="kw">list</span>()
 <span class="cf">for</span> (lab <span class="cf">in</span> <span class="kw">unique</span>(pred.grun<span class="op">$</span>labels)) {
@@ -421,13 +421,13 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] scater_1.17.0               ggplot2_3.3.0              
- [3] SingleCellExperiment_1.11.1 SingleR_1.3.4              
- [5] SummarizedExperiment_1.19.4 DelayedArray_0.15.1        
+ [1] scater_1.17.3               ggplot2_3.3.1              
+ [3] SingleCellExperiment_1.11.4 SingleR_1.3.5              
+ [5] SummarizedExperiment_1.19.5 DelayedArray_0.15.1        
  [7] matrixStats_0.56.0          Biobase_2.49.0             
- [9] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
-[11] IRanges_2.23.4              S4Vectors_0.27.6           
-[13] BiocGenerics_0.35.2         BiocStyle_2.17.0           
+ [9] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
+[11] IRanges_2.23.9              S4Vectors_0.27.12          
+[13] BiocGenerics_0.35.4         BiocStyle_2.17.0           
 [15] rebook_0.99.0              
 
 loaded via a namespace (and not attached):
@@ -439,43 +439,44 @@ loaded via a namespace (and not attached):
 [11] withr_2.2.0                   gridExtra_2.3                
 [13] tidyselect_1.1.0              processx_3.4.2               
 [15] bit_1.1-15.2                  curl_4.3                     
-[17] compiler_4.0.0                graph_1.67.0                 
+[17] compiler_4.0.0                graph_1.67.1                 
 [19] BiocNeighbors_1.7.0           labeling_0.3                 
 [21] bookdown_0.19                 scales_1.1.1                 
 [23] callr_3.4.3                   rappdirs_0.3.1               
 [25] stringr_1.4.0                 digest_0.6.25                
-[27] rmarkdown_2.1                 XVector_0.29.0               
+[27] rmarkdown_2.2                 XVector_0.29.2               
 [29] pkgconfig_2.0.3               htmltools_0.4.0              
-[31] highr_0.8                     dbplyr_1.4.3                 
+[31] highr_0.8                     dbplyr_1.4.4                 
 [33] fastmap_1.0.1                 rlang_0.4.6                  
 [35] RSQLite_2.2.0                 shiny_1.4.0.2                
 [37] DelayedMatrixStats_1.11.0     farver_2.0.3                 
-[39] BiocParallel_1.23.0           dplyr_0.8.5                  
-[41] RCurl_1.98-1.2                magrittr_1.5                 
-[43] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[45] Matrix_1.2-18                 ggbeeswarm_0.6.0             
-[47] munsell_0.5.0                 Rcpp_1.0.4.6                 
-[49] viridis_0.5.1                 lifecycle_0.2.0              
-[51] stringi_1.4.6                 yaml_2.2.1                   
-[53] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[55] AnnotationHub_2.21.0          grid_4.0.0                   
-[57] blob_1.2.1                    promises_1.1.0               
-[59] ExperimentHub_1.15.0          crayon_1.3.4                 
-[61] lattice_0.20-41               CodeDepends_0.6.5            
-[63] knitr_1.28                    ps_1.3.3                     
-[65] pillar_1.4.4                  codetools_0.2-16             
-[67] XML_3.99-0.3                  glue_1.4.1                   
-[69] BiocVersion_3.12.0            evaluate_0.14                
-[71] BiocManager_1.30.10           vctrs_0.3.0                  
-[73] httpuv_1.5.2                  gtable_0.3.0                 
-[75] purrr_0.3.4                   assertthat_0.2.1             
-[77] xfun_0.13                     rsvd_1.0.3                   
-[79] mime_0.9                      xtable_1.8-4                 
-[81] later_1.0.0                   viridisLite_0.3.0            
-[83] pheatmap_1.0.12               tibble_3.0.1                 
-[85] beeswarm_0.2.3                AnnotationDbi_1.51.0         
-[87] memoise_1.1.0                 ellipsis_0.3.1               
-[89] interactiveDisplayBase_1.27.0</code></pre>
+[39] generics_0.0.2                BiocParallel_1.23.0          
+[41] dplyr_1.0.0                   RCurl_1.98-1.2               
+[43] magrittr_1.5                  BiocSingular_1.5.0           
+[45] scuttle_0.99.9                GenomeInfoDbData_1.2.3       
+[47] Matrix_1.2-18                 ggbeeswarm_0.6.0             
+[49] munsell_0.5.0                 Rcpp_1.0.4.6                 
+[51] viridis_0.5.1                 lifecycle_0.2.0              
+[53] stringi_1.4.6                 yaml_2.2.1                   
+[55] zlibbioc_1.35.0               BiocFileCache_1.13.0         
+[57] AnnotationHub_2.21.0          grid_4.0.0                   
+[59] blob_1.2.1                    promises_1.1.1               
+[61] ExperimentHub_1.15.0          crayon_1.3.4                 
+[63] lattice_0.20-41               CodeDepends_0.6.5            
+[65] knitr_1.28                    ps_1.3.3                     
+[67] pillar_1.4.4                  codetools_0.2-16             
+[69] XML_3.99-0.3                  glue_1.4.1                   
+[71] BiocVersion_3.12.0            evaluate_0.14                
+[73] BiocManager_1.30.10           vctrs_0.3.1                  
+[75] httpuv_1.5.4                  gtable_0.3.0                 
+[77] purrr_0.3.4                   assertthat_0.2.1             
+[79] xfun_0.14                     rsvd_1.0.3                   
+[81] mime_0.9                      xtable_1.8-4                 
+[83] later_1.1.0.1                 viridisLite_0.3.0            
+[85] pheatmap_1.0.12               tibble_3.0.1                 
+[87] beeswarm_0.2.3                AnnotationDbi_1.51.0         
+[89] memoise_1.1.0                 ellipsis_0.3.1               
+[91] interactiveDisplayBase_1.27.5</code></pre>
 </div>
 
 </div>

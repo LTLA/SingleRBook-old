@@ -149,8 +149,8 @@ head(translated)
 ```
 
 ```
-## <NA> <NA> <NA> <NA> <NA> <NA> 
-##   NA   NA   NA   NA   NA   NA
+## CL:0000136 CL:0000136 CL:0000136 CL:0000136 CL:0000136 CL:0000136 
+## "fat cell" "fat cell" "fat cell" "fat cell" "fat cell" "fat cell"
 ```
 
 Another interesting application involves examining the relationship between different terms.
@@ -170,9 +170,9 @@ g
 ```
 
 ```
-## IGRAPH 045f37f DN-- 2234 3141 -- 
+## IGRAPH 5434583 DN-- 2234 3141 -- 
 ## + attr: name (v/c)
-## + edges from 045f37f (vertex names):
+## + edges from 5434583 (vertex names):
 ##  [1] CL:0000010->CL:0000001 CL:0000000->CL:0000003 CL:0000057->CL:0000005
 ##  [4] CL:0000101->CL:0000006 CL:0000197->CL:0000006 CL:0002321->CL:0000007
 ##  [7] CL:0000333->CL:0000008 CL:0000578->CL:0000010 CL:0000333->CL:0000011
@@ -444,10 +444,10 @@ head(lca2)
 ## 
 ## $`CL:0000623`$descendents
 ## DataFrame with 2 rows and 3 columns
-##                                          name  MouseRNA    ImmGen
-##                                   <character> <logical> <logical>
-## CL:0000623                natural killer cell      TRUE      TRUE
-## CL:0002438 NK1.1-positive natural killer cell     FALSE      TRUE
+##                              name  MouseRNA    ImmGen
+##                       <character> <logical> <logical>
+## CL:0000623    natural killer cell      TRUE      TRUE
+## CL:0002438 NK1.1-positive natur..     FALSE      TRUE
 ## 
 ## 
 ## $`CL:0000813`
@@ -456,10 +456,10 @@ head(lca2)
 ## 
 ## $`CL:0000813`$descendents
 ## DataFrame with 2 rows and 3 columns
-##                                              name  MouseRNA    ImmGen
-##                                       <character> <logical> <logical>
-## CL:0000897 CD4-positive, alpha-beta memory T cell     FALSE      TRUE
-## CL:0000909 CD8-positive, alpha-beta memory T cell     FALSE      TRUE
+##                              name  MouseRNA    ImmGen
+##                       <character> <logical> <logical>
+## CL:0000897 CD4-positive, alpha-..     FALSE      TRUE
+## CL:0000909 CD8-positive, alpha-..     FALSE      TRUE
 ## 
 ## 
 ## $`CL:0000815`
@@ -468,14 +468,10 @@ head(lca2)
 ## 
 ## $`CL:0000815`$descendents
 ## DataFrame with 2 rows and 3 columns
-##                                                                 name  MouseRNA
-##                                                          <character> <logical>
-## CL:0000792 CD4-positive, CD25-positive, alpha-beta regulatory T cell     FALSE
-## CL:0000815                                         regulatory T cell     FALSE
-##               ImmGen
-##            <logical>
-## CL:0000792      TRUE
-## CL:0000815      TRUE
+##                              name  MouseRNA    ImmGen
+##                       <character> <logical> <logical>
+## CL:0000792 CD4-positive, CD25-p..     FALSE      TRUE
+## CL:0000815      regulatory T cell     FALSE      TRUE
 ## 
 ## 
 ## $`CL:0000819`
@@ -504,32 +500,19 @@ children
 
 ```
 ## DataFrame with 35 rows and 3 columns
-##                                                                 name  MouseRNA
-##                                                          <character> <logical>
-## CL:0000084                                                    T cell      TRUE
-## CL:0002427                         resting double-positive thymocyte     FALSE
-## CL:0000809                     double-positive, alpha-beta thymocyte     FALSE
-## CL:0002429                   CD69-positive double-positive thymocyte     FALSE
-## CL:0000624                           CD4-positive, alpha-beta T cell     FALSE
-## ...                                                              ...       ...
-## CL:0002415 immature Vgamma1.1-positive, Vdelta6.3-positive thymocyte     FALSE
-## CL:0002411          Vgamma1.1-positive, Vdelta6.3-negative thymocyte     FALSE
-## CL:0002416   mature Vgamma1.1-positive, Vdelta6.3-positive thymocyte     FALSE
-## CL:0002407                         mature Vgamma2-positive thymocyte     FALSE
-## CL:0000815                                         regulatory T cell     FALSE
-##               ImmGen
-##            <logical>
-## CL:0000084      TRUE
-## CL:0002427      TRUE
-## CL:0000809      TRUE
-## CL:0002429      TRUE
-## CL:0000624      TRUE
-## ...              ...
-## CL:0002415      TRUE
-## CL:0002411      TRUE
-## CL:0002416      TRUE
-## CL:0002407      TRUE
-## CL:0000815      TRUE
+##                              name  MouseRNA    ImmGen
+##                       <character> <logical> <logical>
+## CL:0000084                 T cell      TRUE      TRUE
+## CL:0002427 resting double-posit..     FALSE      TRUE
+## CL:0000809 double-positive, alp..     FALSE      TRUE
+## CL:0002429 CD69-positive double..     FALSE      TRUE
+## CL:0000624 CD4-positive, alpha-..     FALSE      TRUE
+## ...                           ...       ...       ...
+## CL:0002415 immature Vgamma1.1-p..     FALSE      TRUE
+## CL:0002411 Vgamma1.1-positive, ..     FALSE      TRUE
+## CL:0002416 mature Vgamma1.1-pos..     FALSE      TRUE
+## CL:0002407 mature Vgamma2-posit..     FALSE      TRUE
+## CL:0000815      regulatory T cell     FALSE      TRUE
 ```
 
 ```r
@@ -562,16 +545,16 @@ locale:
 [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 
 attached base packages:
-[1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
 [8] methods   base     
 
 other attached packages:
- [1] igraph_1.2.5                SingleR_1.3.4              
- [3] SummarizedExperiment_1.19.4 DelayedArray_0.15.1        
+ [1] igraph_1.2.5                SingleR_1.3.5              
+ [3] SummarizedExperiment_1.19.5 DelayedArray_0.15.1        
  [5] matrixStats_0.56.0          Biobase_2.49.0             
- [7] GenomicRanges_1.41.1        GenomeInfoDb_1.25.0        
- [9] IRanges_2.23.5              S4Vectors_0.27.6           
-[11] BiocGenerics_0.35.2         ontoProc_1.9.2             
+ [7] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
+ [9] IRanges_2.23.9              S4Vectors_0.27.12          
+[11] BiocGenerics_0.35.4         ontoProc_1.11.1            
 [13] ontologyIndex_2.5           BiocStyle_2.17.0           
 [15] rebook_0.99.0              
 
@@ -580,39 +563,41 @@ loaded via a namespace (and not attached):
  [3] AnnotationHub_2.21.0          bit64_0.9-7                  
  [5] DelayedMatrixStats_1.11.0     ontologyPlot_1.4             
  [7] paintmap_1.0                  shiny_1.4.0.2                
- [9] assertthat_0.2.1              interactiveDisplayBase_1.27.2
-[11] BiocFileCache_1.13.0          BiocManager_1.30.10          
+ [9] assertthat_0.2.1              interactiveDisplayBase_1.27.5
+[11] BiocManager_1.30.10           BiocFileCache_1.13.0         
 [13] blob_1.2.1                    GenomeInfoDbData_1.2.3       
 [15] yaml_2.2.1                    BiocVersion_3.12.0           
 [17] pillar_1.4.4                  RSQLite_2.2.0                
 [19] lattice_0.20-41               glue_1.4.1                   
-[21] digest_0.6.25                 promises_1.1.0               
-[23] XVector_0.29.1                htmltools_0.4.0              
-[25] httpuv_1.5.2                  Matrix_1.2-18                
+[21] digest_0.6.25                 promises_1.1.1               
+[23] XVector_0.29.2                htmltools_0.4.0              
+[25] httpuv_1.5.4                  Matrix_1.2-18                
 [27] XML_3.99-0.3                  pkgconfig_2.0.3              
 [29] bookdown_0.19                 zlibbioc_1.35.0              
 [31] purrr_0.3.4                   xtable_1.8-4                 
-[33] processx_3.4.2                later_1.0.0                  
+[33] processx_3.4.2                later_1.1.0.1                
 [35] BiocParallel_1.23.0           tibble_3.0.1                 
-[37] ellipsis_0.3.1                magrittr_1.5                 
-[39] crayon_1.3.4                  CodeDepends_0.6.5            
-[41] mime_0.9                      memoise_1.1.0                
-[43] evaluate_0.14                 ps_1.3.3                     
-[45] graph_1.67.0                  tools_4.0.0                  
-[47] lifecycle_0.2.0               stringr_1.4.0                
-[49] irlba_2.3.3                   AnnotationDbi_1.51.0         
-[51] callr_3.4.3                   compiler_4.0.0               
-[53] rsvd_1.0.3                    rlang_0.4.6                  
-[55] grid_4.0.0                    RCurl_1.98-1.2               
-[57] BiocNeighbors_1.7.0           rappdirs_0.3.1               
-[59] bitops_1.0-6                  rmarkdown_2.1                
-[61] ExperimentHub_1.15.0          codetools_0.2-16             
-[63] curl_4.3                      DBI_1.1.0                    
-[65] R6_2.4.1                      knitr_1.28                   
-[67] dplyr_0.8.5                   fastmap_1.0.1                
-[69] bit_1.1-15.2                  Rgraphviz_2.33.0             
-[71] stringi_1.4.6                 Rcpp_1.0.4.6                 
-[73] vctrs_0.3.0                   dbplyr_1.4.3                 
-[75] tidyselect_1.1.0              xfun_0.14                    
+[37] generics_0.0.2                ellipsis_0.3.1               
+[39] DT_0.13                       magrittr_1.5                 
+[41] crayon_1.3.4                  CodeDepends_0.6.5            
+[43] mime_0.9                      memoise_1.1.0                
+[45] evaluate_0.14                 ps_1.3.3                     
+[47] graph_1.67.1                  tools_4.0.0                  
+[49] lifecycle_0.2.0               stringr_1.4.0                
+[51] irlba_2.3.3                   AnnotationDbi_1.51.0         
+[53] callr_3.4.3                   compiler_4.0.0               
+[55] rsvd_1.0.3                    rlang_0.4.6                  
+[57] grid_4.0.0                    RCurl_1.98-1.2               
+[59] BiocNeighbors_1.7.0           rappdirs_0.3.1               
+[61] htmlwidgets_1.5.1             bitops_1.0-6                 
+[63] rmarkdown_2.2                 ExperimentHub_1.15.0         
+[65] codetools_0.2-16              DBI_1.1.0                    
+[67] curl_4.3                      R6_2.4.1                     
+[69] knitr_1.28                    dplyr_1.0.0                  
+[71] fastmap_1.0.1                 bit_1.1-15.2                 
+[73] Rgraphviz_2.33.0              stringi_1.4.6                
+[75] Rcpp_1.0.4.6                  vctrs_0.3.1                  
+[77] dbplyr_1.4.4                  tidyselect_1.1.0             
+[79] xfun_0.14                    
 ```
 </div>

@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Using multiple references | Assigning cell types with SingleR</title>
-  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Using multiple references | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 5 Using multiple references | Assigning cell types with SingleR" />
   
-  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
 
 
-<meta name="date" content="2020-05-24" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -247,7 +247,7 @@ bpe &lt;-<span class="st"> </span><span class="kw">BlueprintEncodeData</span>(<s
 </div>
 <div id="using-reference-specific-labels" class="section level2">
 <h2><span class="header-section-number">5.2</span> Using reference-specific labels</h2>
-<p>In this strategy, each label is defined in the context of its reference dataset. This means that a label - say, “B cell” - in reference dataset X is considered to be different from a “B cell” label in reference dataset Y. Use of reference-specific labels is most appropriate if there are relevant biological differences between the references; for example, if one reference is concerned with healthy tissue while the other reference considers diseased tissue, it can be helpful to distinguish between the same cell type in different biological contexts.</p>
+<p>In this strategy, each label is defined in the context of its reference dataset. This means that a label - say, &quot;B cell&quot; - in reference dataset X is considered to be different from a &quot;B cell&quot; label in reference dataset Y. Use of reference-specific labels is most appropriate if there are relevant biological differences between the references; for example, if one reference is concerned with healthy tissue while the other reference considers diseased tissue, it can be helpful to distinguish between the same cell type in different biological contexts.</p>
 <p>We can easily implement this approach by combining the expression matrices together and pasting the reference name onto the corresponding character vector of labels. This modification ensures that the downstream <code>SingleR()</code> call will treat each label-reference combination as a distinct entity.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hpca2 &lt;-<span class="st"> </span>hpca
 hpca2<span class="op">$</span>label.main &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;HPCA.&quot;</span>, hpca2<span class="op">$</span>label.main)
@@ -371,7 +371,7 @@ bpe.ont &lt;-<span class="st"> </span>bpe.ont[shared,]
 ##          1          1          1          1          1          1          1 
 ## CL:0000913 CL:0000972 CL:0000127 
 ##          1          1          2</code></pre>
-<p>The simplest way to take advantage of the standardization in terminology is to use <code>label.ont</code> in place of <code>label.main</code> in the previous section’s <code>SingleR()</code> call. This yields annotations that have follow the same vocabulary regardless of the reference used for assignment.</p>
+<p>The simplest way to take advantage of the standardization in terminology is to use <code>label.ont</code> in place of <code>label.main</code> in the previous section's <code>SingleR()</code> call. This yields annotations that have follow the same vocabulary regardless of the reference used for assignment.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">com.res3a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span class="dt">test =</span> pbmc, <span class="dt">assay.type.test=</span><span class="dv">1</span>,
     <span class="dt">ref =</span> <span class="kw">list</span>(<span class="dt">BPE=</span>bpe.ont, <span class="dt">HPCA=</span>hpca.ont), 
     <span class="dt">labels =</span> <span class="kw">list</span>(bpe.ont<span class="op">$</span>label.ont, hpca.ont<span class="op">$</span>label.ont))
@@ -463,7 +463,7 @@ pheatmap<span class="op">::</span><span class="kw">pheatmap</span>(matched, <spa
 Figure 5.4: Heatmap of mutual assignment probabilities between the Blueprint/ENCODE reference dataset (labels in rows) and the Human primary cell atlas reference (labels in columns).
 </p>
 </div>
-<p>This function can be used to guide harmonization to enforce a consistent vocabulary between two sets of labels. However, some manual intervention is still required in this process given the ambiguities posed by differences in biological systems and technologies. In the example above, neurons are considered to be unique to each reference while smooth muscle cells in the HPCA data are incorrectly matched to fibroblasts in the Blueprint/ENCODE data. CD4<sup>+</sup> and CD8<sup>+</sup> T cells are also both assigned to “T cells”, so some decision about the acceptable resolution of the harmonized labels is required here.</p>
+<p>This function can be used to guide harmonization to enforce a consistent vocabulary between two sets of labels. However, some manual intervention is still required in this process given the ambiguities posed by differences in biological systems and technologies. In the example above, neurons are considered to be unique to each reference while smooth muscle cells in the HPCA data are incorrectly matched to fibroblasts in the Blueprint/ENCODE data. CD4<sup>+</sup> and CD8<sup>+</sup> T cells are also both assigned to &quot;T cells&quot;, so some decision about the acceptable resolution of the harmonized labels is required here.</p>
 <p>As an aside, we can also use this function to identify the matching clusters between two independent scRNA-seq analyses. This involves substituting the cluster assignments as proxies for the labels, allowing us to match up clusters and integrate conclusions from multiple datasets without the difficulties of batch correction and reclustering.</p>
 </div>
 </div>
@@ -494,70 +494,72 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] scater_1.17.0               ggplot2_3.3.0              
+ [1] scater_1.17.3               ggplot2_3.3.1              
  [3] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [5] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [7] SingleR_1.3.4               TENxPBMCData_1.7.0         
- [9] HDF5Array_1.17.0            rhdf5_2.33.0               
-[11] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
+ [7] SingleR_1.3.5               TENxPBMCData_1.7.0         
+ [9] HDF5Array_1.17.0            rhdf5_2.33.3               
+[11] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
 [13] DelayedArray_0.15.1         matrixStats_0.56.0         
-[15] Biobase_2.49.0              GenomicRanges_1.41.1       
-[17] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-[19] S4Vectors_0.27.6            BiocGenerics_0.35.2        
+[15] Biobase_2.49.0              GenomicRanges_1.41.5       
+[17] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[19] S4Vectors_0.27.12           BiocGenerics_0.35.4        
 [21] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
   [1] ggbeeswarm_0.6.0              colorspace_1.4-1             
-  [3] ellipsis_0.3.1                XVector_0.29.0               
-  [5] BiocNeighbors_1.7.0           farver_2.0.3                 
-  [7] bit64_0.9-7                   interactiveDisplayBase_1.27.0
-  [9] codetools_0.2-16              knitr_1.28                   
- [11] Rsamtools_2.5.0               dbplyr_1.4.3                 
- [13] pheatmap_1.0.12               graph_1.67.0                 
- [15] shiny_1.4.0.2                 BiocManager_1.30.10          
- [17] compiler_4.0.0                httr_1.4.1                   
- [19] assertthat_0.2.1              Matrix_1.2-18                
- [21] fastmap_1.0.1                 lazyeval_0.2.2               
- [23] later_1.0.0                   BiocSingular_1.5.0           
- [25] htmltools_0.4.0               prettyunits_1.1.1            
- [27] tools_4.0.0                   rsvd_1.0.3                   
- [29] gtable_0.3.0                  glue_1.4.1                   
- [31] GenomeInfoDbData_1.2.3        dplyr_0.8.5                  
- [33] rappdirs_0.3.1                Rcpp_1.0.4.6                 
- [35] vctrs_0.3.0                   Biostrings_2.57.0            
- [37] ExperimentHub_1.15.0          rtracklayer_1.49.1           
- [39] DelayedMatrixStats_1.11.0     xfun_0.13                    
- [41] stringr_1.4.0                 ps_1.3.3                     
- [43] beachmat_2.5.0                mime_0.9                     
- [45] lifecycle_0.2.0               irlba_2.3.3                  
- [47] XML_3.99-0.3                  AnnotationHub_2.21.0         
- [49] zlibbioc_1.35.0               scales_1.1.1                 
- [51] hms_0.5.3                     promises_1.1.0               
- [53] ProtGenerics_1.21.0           RColorBrewer_1.1-2           
- [55] yaml_2.2.1                    curl_4.3                     
- [57] memoise_1.1.0                 gridExtra_2.3                
- [59] biomaRt_2.45.0                stringi_1.4.6                
- [61] RSQLite_2.2.0                 highr_0.8                    
- [63] BiocVersion_3.12.0            BiocParallel_1.23.0          
- [65] rlang_0.4.6                   pkgconfig_2.0.3              
- [67] bitops_1.0-6                  evaluate_0.14                
- [69] lattice_0.20-41               purrr_0.3.4                  
- [71] Rhdf5lib_1.11.0               labeling_0.3                 
- [73] GenomicAlignments_1.25.0      CodeDepends_0.6.5            
- [75] bit_1.1-15.2                  processx_3.4.2               
- [77] tidyselect_1.1.0              magrittr_1.5                 
- [79] bookdown_0.19                 R6_2.4.1                     
- [81] DBI_1.1.0                     withr_2.2.0                  
- [83] pillar_1.4.4                  RCurl_1.98-1.2               
- [85] tibble_3.0.1                  crayon_1.3.4                 
- [87] BiocFileCache_1.13.0          rmarkdown_2.1                
- [89] viridis_0.5.1                 progress_1.2.2               
- [91] grid_4.0.0                    blob_1.2.1                   
- [93] callr_3.4.3                   digest_0.6.25                
- [95] xtable_1.8-4                  httpuv_1.5.2                 
- [97] openssl_1.4.1                 munsell_0.5.0                
- [99] beeswarm_0.2.3                viridisLite_0.3.0            
-[101] vipor_0.4.5                   askpass_1.1                  </code></pre>
+  [3] ellipsis_0.3.1                scuttle_0.99.9               
+  [5] XVector_0.29.2                BiocNeighbors_1.7.0          
+  [7] farver_2.0.3                  bit64_0.9-7                  
+  [9] interactiveDisplayBase_1.27.5 codetools_0.2-16             
+ [11] knitr_1.28                    Rsamtools_2.5.1              
+ [13] dbplyr_1.4.4                  pheatmap_1.0.12              
+ [15] graph_1.67.1                  shiny_1.4.0.2                
+ [17] BiocManager_1.30.10           compiler_4.0.0               
+ [19] httr_1.4.1                    assertthat_0.2.1             
+ [21] Matrix_1.2-18                 fastmap_1.0.1                
+ [23] lazyeval_0.2.2                later_1.1.0.1                
+ [25] BiocSingular_1.5.0            htmltools_0.4.0              
+ [27] prettyunits_1.1.1             tools_4.0.0                  
+ [29] rsvd_1.0.3                    gtable_0.3.0                 
+ [31] glue_1.4.1                    GenomeInfoDbData_1.2.3       
+ [33] dplyr_1.0.0                   rappdirs_0.3.1               
+ [35] Rcpp_1.0.4.6                  vctrs_0.3.1                  
+ [37] Biostrings_2.57.2             rhdf5filters_1.1.0           
+ [39] ExperimentHub_1.15.0          rtracklayer_1.49.3           
+ [41] DelayedMatrixStats_1.11.0     xfun_0.14                    
+ [43] stringr_1.4.0                 ps_1.3.3                     
+ [45] beachmat_2.5.0                mime_0.9                     
+ [47] lifecycle_0.2.0               irlba_2.3.3                  
+ [49] XML_3.99-0.3                  AnnotationHub_2.21.0         
+ [51] zlibbioc_1.35.0               scales_1.1.1                 
+ [53] hms_0.5.3                     promises_1.1.1               
+ [55] ProtGenerics_1.21.0           RColorBrewer_1.1-2           
+ [57] yaml_2.2.1                    curl_4.3                     
+ [59] gridExtra_2.3                 memoise_1.1.0                
+ [61] biomaRt_2.45.0                stringi_1.4.6                
+ [63] RSQLite_2.2.0                 highr_0.8                    
+ [65] BiocVersion_3.12.0            BiocParallel_1.23.0          
+ [67] rlang_0.4.6                   pkgconfig_2.0.3              
+ [69] bitops_1.0-6                  evaluate_0.14                
+ [71] lattice_0.20-41               purrr_0.3.4                  
+ [73] Rhdf5lib_1.11.2               labeling_0.3                 
+ [75] GenomicAlignments_1.25.3      CodeDepends_0.6.5            
+ [77] bit_1.1-15.2                  processx_3.4.2               
+ [79] tidyselect_1.1.0              magrittr_1.5                 
+ [81] bookdown_0.19                 R6_2.4.1                     
+ [83] generics_0.0.2                DBI_1.1.0                    
+ [85] withr_2.2.0                   pillar_1.4.4                 
+ [87] RCurl_1.98-1.2                tibble_3.0.1                 
+ [89] crayon_1.3.4                  BiocFileCache_1.13.0         
+ [91] rmarkdown_2.2                 viridis_0.5.1                
+ [93] progress_1.2.2                grid_4.0.0                   
+ [95] blob_1.2.1                    callr_3.4.3                  
+ [97] digest_0.6.25                 xtable_1.8-4                 
+ [99] httpuv_1.5.4                  openssl_1.4.1                
+[101] munsell_0.5.0                 beeswarm_0.2.3               
+[103] viridisLite_0.3.0             vipor_0.4.5                  
+[105] askpass_1.1                  </code></pre>
 </div>
 
 </div>

@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | Assigning cell types with SingleR</title>
-  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 1 Introduction | Assigning cell types with SingleR" />
   
-  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
+  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
   
 
 
 
-<meta name="date" content="2020-05-24" />
+<meta name="date" content="2020-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,15 +230,15 @@ document.addEventListener("click", function (event) {
 </style>
 <div id="motivation" class="section level2">
 <h2><span class="header-section-number">1.1</span> Motivation</h2>
-<p>The Bioconductor package <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> implements an automatic annotation method for single-cell RNA sequencing (scRNA-seq) data <span class="citation">(Aran et al. <a href="#ref-aran2019reference">2019</a>)</span>. Given a reference dataset of samples (single-cell or bulk) with known labels, it assigns those labels to new cells from a test dataset based on similarities in their expression profiles. This provides a convenient way of transferring biological knowledge across datasets, allowing users to leverage the domain expertise implicit in the creation of each reference. The most common application of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> involves predicting cell type (or “state”, or “kind”) in a new dataset, a process that is facilitated by the availability of built-in references and compatibility with user-supplied datasets. In this manner, the burden of manually interpreting clusters and defining marker genes only has to be done once, for the reference dataset, and this knowledge can be propagated to new datasets in an automated manner.</p>
+<p>The Bioconductor package <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> implements an automatic annotation method for single-cell RNA sequencing (scRNA-seq) data <span class="citation">(Aran et al. <a href="#ref-aran2019reference">2019</a>)</span>. Given a reference dataset of samples (single-cell or bulk) with known labels, it assigns those labels to new cells from a test dataset based on similarities in their expression profiles. This provides a convenient way of transferring biological knowledge across datasets, allowing users to leverage the domain expertise implicit in the creation of each reference. The most common application of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> involves predicting cell type (or &quot;state&quot;, or &quot;kind&quot;) in a new dataset, a process that is facilitated by the availability of built-in references and compatibility with user-supplied datasets. In this manner, the burden of manually interpreting clusters and defining marker genes only has to be done once, for the reference dataset, and this knowledge can be propagated to new datasets in an automated manner.</p>
 </div>
 <div id="method-description" class="section level2">
 <h2><span class="header-section-number">1.2</span> Method description</h2>
 <p><em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em> can be considered a robust variant of nearest-neighbors classification, with some tweaks to improve resolution for closely related labels. For each test cell:</p>
 <ol style="list-style-type: decimal">
-<li>We compute the Spearman correlation between its expression profile and that of each reference sample. The use of Spearman’s correlation provides a measure of robustness to batch effects across datasets. The calculation only uses the union of marker genes identified by pairwise comparisons between labels in the reference data, so as to improve resolution of separation between labels.</li>
+<li>We compute the Spearman correlation between its expression profile and that of each reference sample. The use of Spearman's correlation provides a measure of robustness to batch effects across datasets. The calculation only uses the union of marker genes identified by pairwise comparisons between labels in the reference data, so as to improve resolution of separation between labels.</li>
 <li>We define the per-label score as a fixed quantile (by default, 0.8) of the correlations across all samples with that label. This accounts for differences in the number of reference samples for each label, which interferes with simpler flavors of nearest neighbor classification; it also avoids penalizing classifications to heterogeneous labels by only requiring a good match to a minority of samples.</li>
-<li>We repeat the score calculation for all labels in the reference dataset. The label with the highest score is used as <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>’s prediction for this cell.</li>
+<li>We repeat the score calculation for all labels in the reference dataset. The label with the highest score is used as <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>'s prediction for this cell.</li>
 <li>We optionally perform a fine-tuning step to improve resolution between closely related labels. The reference dataset is subsetted to only include labels with scores close to the maximum; scores are recomputed using only marker genes for the subset of labels, thus focusing on the most relevant features; and this process is iterated until only one label remains.</li>
 </ol>
 </div>
@@ -265,7 +265,7 @@ predictions &lt;-<span class="st"> </span><span class="kw">SingleR</span>(<span 
 ##             1164              217                3               46 
 ##          T_cells 
 ##             2293</code></pre>
-<p>And that’s it, really.</p>
+<p>And that's it, really.</p>
 </div>
 <div id="where-to-get-help" class="section level2">
 <h2><span class="header-section-number">1.4</span> Where to get help</h2>
@@ -300,13 +300,13 @@ attached base packages:
 other attached packages:
  [1] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [3] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [5] SingleR_1.3.4               TENxPBMCData_1.7.0         
- [7] HDF5Array_1.17.0            rhdf5_2.33.0               
- [9] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
+ [5] SingleR_1.3.5               TENxPBMCData_1.7.0         
+ [7] HDF5Array_1.17.0            rhdf5_2.33.3               
+ [9] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
 [11] DelayedArray_0.15.1         matrixStats_0.56.0         
-[13] Biobase_2.49.0              GenomicRanges_1.41.1       
-[15] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-[17] S4Vectors_0.27.6            BiocGenerics_0.35.2        
+[13] Biobase_2.49.0              GenomicRanges_1.41.5       
+[15] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[17] S4Vectors_0.27.12           BiocGenerics_0.35.4        
 [19] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
@@ -315,44 +315,45 @@ loaded via a namespace (and not attached):
  [5] httr_1.4.1                    tools_4.0.0                  
  [7] R6_2.4.1                      irlba_2.3.3                  
  [9] lazyeval_0.2.2                DBI_1.1.0                    
-[11] prettyunits_1.1.1             tidyselect_1.1.0             
-[13] processx_3.4.2                bit_1.1-15.2                 
-[15] curl_4.3                      compiler_4.0.0               
-[17] graph_1.67.0                  BiocNeighbors_1.7.0          
-[19] rtracklayer_1.49.1            bookdown_0.19                
-[21] askpass_1.1                   callr_3.4.3                  
-[23] rappdirs_0.3.1                Rsamtools_2.5.0              
-[25] stringr_1.4.0                 digest_0.6.25                
-[27] rmarkdown_2.1                 XVector_0.29.0               
-[29] pkgconfig_2.0.3               htmltools_0.4.0              
-[31] dbplyr_1.4.3                  fastmap_1.0.1                
-[33] rlang_0.4.6                   RSQLite_2.2.0                
-[35] shiny_1.4.0.2                 DelayedMatrixStats_1.11.0    
-[37] BiocParallel_1.23.0           dplyr_0.8.5                  
-[39] RCurl_1.98-1.2                magrittr_1.5                 
-[41] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[43] Matrix_1.2-18                 Rcpp_1.0.4.6                 
-[45] Rhdf5lib_1.11.0               lifecycle_0.2.0              
-[47] stringi_1.4.6                 yaml_2.2.1                   
-[49] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[51] AnnotationHub_2.21.0          grid_4.0.0                   
-[53] blob_1.2.1                    promises_1.1.0               
-[55] ExperimentHub_1.15.0          crayon_1.3.4                 
-[57] lattice_0.20-41               beachmat_2.5.0               
-[59] Biostrings_2.57.0             hms_0.5.3                    
-[61] CodeDepends_0.6.5             knitr_1.28                   
-[63] ps_1.3.3                      pillar_1.4.4                 
-[65] codetools_0.2-16              biomaRt_2.45.0               
-[67] XML_3.99-0.3                  glue_1.4.1                   
-[69] BiocVersion_3.12.0            evaluate_0.14                
-[71] BiocManager_1.30.10           vctrs_0.3.0                  
-[73] httpuv_1.5.2                  openssl_1.4.1                
-[75] purrr_0.3.4                   assertthat_0.2.1             
-[77] xfun_0.13                     rsvd_1.0.3                   
-[79] mime_0.9                      xtable_1.8-4                 
-[81] later_1.0.0                   tibble_3.0.1                 
-[83] GenomicAlignments_1.25.0      memoise_1.1.0                
-[85] ellipsis_0.3.1                interactiveDisplayBase_1.27.0</code></pre>
+[11] rhdf5filters_1.1.0            prettyunits_1.1.1            
+[13] tidyselect_1.1.0              processx_3.4.2               
+[15] bit_1.1-15.2                  curl_4.3                     
+[17] compiler_4.0.0                graph_1.67.1                 
+[19] BiocNeighbors_1.7.0           rtracklayer_1.49.3           
+[21] bookdown_0.19                 askpass_1.1                  
+[23] callr_3.4.3                   rappdirs_0.3.1               
+[25] Rsamtools_2.5.1               stringr_1.4.0                
+[27] digest_0.6.25                 rmarkdown_2.2                
+[29] XVector_0.29.2                pkgconfig_2.0.3              
+[31] htmltools_0.4.0               dbplyr_1.4.4                 
+[33] fastmap_1.0.1                 rlang_0.4.6                  
+[35] RSQLite_2.2.0                 shiny_1.4.0.2                
+[37] DelayedMatrixStats_1.11.0     generics_0.0.2               
+[39] BiocParallel_1.23.0           dplyr_1.0.0                  
+[41] RCurl_1.98-1.2                magrittr_1.5                 
+[43] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
+[45] Matrix_1.2-18                 Rcpp_1.0.4.6                 
+[47] Rhdf5lib_1.11.2               lifecycle_0.2.0              
+[49] stringi_1.4.6                 yaml_2.2.1                   
+[51] zlibbioc_1.35.0               BiocFileCache_1.13.0         
+[53] AnnotationHub_2.21.0          grid_4.0.0                   
+[55] blob_1.2.1                    promises_1.1.1               
+[57] ExperimentHub_1.15.0          crayon_1.3.4                 
+[59] lattice_0.20-41               beachmat_2.5.0               
+[61] Biostrings_2.57.2             hms_0.5.3                    
+[63] CodeDepends_0.6.5             knitr_1.28                   
+[65] ps_1.3.3                      pillar_1.4.4                 
+[67] biomaRt_2.45.0                codetools_0.2-16             
+[69] XML_3.99-0.3                  glue_1.4.1                   
+[71] BiocVersion_3.12.0            evaluate_0.14                
+[73] BiocManager_1.30.10           vctrs_0.3.1                  
+[75] httpuv_1.5.4                  openssl_1.4.1                
+[77] purrr_0.3.4                   assertthat_0.2.1             
+[79] xfun_0.14                     rsvd_1.0.3                   
+[81] mime_0.9                      xtable_1.8-4                 
+[83] later_1.1.0.1                 tibble_3.0.1                 
+[85] GenomicAlignments_1.25.3      memoise_1.1.0                
+[87] ellipsis_0.3.1                interactiveDisplayBase_1.27.5</code></pre>
 </div>
 
 </div>

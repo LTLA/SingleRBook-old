@@ -147,13 +147,13 @@ attached base packages:
 other attached packages:
  [1] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [3] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [5] SingleR_1.3.4               TENxPBMCData_1.7.0         
- [7] HDF5Array_1.17.0            rhdf5_2.33.0               
- [9] SingleCellExperiment_1.11.1 SummarizedExperiment_1.19.4
+ [5] SingleR_1.3.5               TENxPBMCData_1.7.0         
+ [7] HDF5Array_1.17.0            rhdf5_2.33.3               
+ [9] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
 [11] DelayedArray_0.15.1         matrixStats_0.56.0         
-[13] Biobase_2.49.0              GenomicRanges_1.41.1       
-[15] GenomeInfoDb_1.25.0         IRanges_2.23.4             
-[17] S4Vectors_0.27.6            BiocGenerics_0.35.2        
+[13] Biobase_2.49.0              GenomicRanges_1.41.5       
+[15] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[17] S4Vectors_0.27.12           BiocGenerics_0.35.4        
 [19] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
@@ -162,43 +162,44 @@ loaded via a namespace (and not attached):
  [5] httr_1.4.1                    tools_4.0.0                  
  [7] R6_2.4.1                      irlba_2.3.3                  
  [9] lazyeval_0.2.2                DBI_1.1.0                    
-[11] prettyunits_1.1.1             tidyselect_1.1.0             
-[13] processx_3.4.2                bit_1.1-15.2                 
-[15] curl_4.3                      compiler_4.0.0               
-[17] graph_1.67.0                  BiocNeighbors_1.7.0          
-[19] rtracklayer_1.49.1            bookdown_0.19                
-[21] askpass_1.1                   callr_3.4.3                  
-[23] rappdirs_0.3.1                Rsamtools_2.5.0              
-[25] stringr_1.4.0                 digest_0.6.25                
-[27] rmarkdown_2.1                 XVector_0.29.0               
-[29] pkgconfig_2.0.3               htmltools_0.4.0              
-[31] dbplyr_1.4.3                  fastmap_1.0.1                
-[33] rlang_0.4.6                   RSQLite_2.2.0                
-[35] shiny_1.4.0.2                 DelayedMatrixStats_1.11.0    
-[37] BiocParallel_1.23.0           dplyr_0.8.5                  
-[39] RCurl_1.98-1.2                magrittr_1.5                 
-[41] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[43] Matrix_1.2-18                 Rcpp_1.0.4.6                 
-[45] Rhdf5lib_1.11.0               lifecycle_0.2.0              
-[47] stringi_1.4.6                 yaml_2.2.1                   
-[49] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[51] AnnotationHub_2.21.0          grid_4.0.0                   
-[53] blob_1.2.1                    promises_1.1.0               
-[55] ExperimentHub_1.15.0          crayon_1.3.4                 
-[57] lattice_0.20-41               beachmat_2.5.0               
-[59] Biostrings_2.57.0             hms_0.5.3                    
-[61] CodeDepends_0.6.5             knitr_1.28                   
-[63] ps_1.3.3                      pillar_1.4.4                 
-[65] codetools_0.2-16              biomaRt_2.45.0               
-[67] XML_3.99-0.3                  glue_1.4.1                   
-[69] BiocVersion_3.12.0            evaluate_0.14                
-[71] BiocManager_1.30.10           vctrs_0.3.0                  
-[73] httpuv_1.5.2                  openssl_1.4.1                
-[75] purrr_0.3.4                   assertthat_0.2.1             
-[77] xfun_0.13                     rsvd_1.0.3                   
-[79] mime_0.9                      xtable_1.8-4                 
-[81] later_1.0.0                   tibble_3.0.1                 
-[83] GenomicAlignments_1.25.0      memoise_1.1.0                
-[85] ellipsis_0.3.1                interactiveDisplayBase_1.27.0
+[11] rhdf5filters_1.1.0            prettyunits_1.1.1            
+[13] tidyselect_1.1.0              processx_3.4.2               
+[15] bit_1.1-15.2                  curl_4.3                     
+[17] compiler_4.0.0                graph_1.67.1                 
+[19] BiocNeighbors_1.7.0           rtracklayer_1.49.3           
+[21] bookdown_0.19                 askpass_1.1                  
+[23] callr_3.4.3                   rappdirs_0.3.1               
+[25] Rsamtools_2.5.1               stringr_1.4.0                
+[27] digest_0.6.25                 rmarkdown_2.2                
+[29] XVector_0.29.2                pkgconfig_2.0.3              
+[31] htmltools_0.4.0               dbplyr_1.4.4                 
+[33] fastmap_1.0.1                 rlang_0.4.6                  
+[35] RSQLite_2.2.0                 shiny_1.4.0.2                
+[37] DelayedMatrixStats_1.11.0     generics_0.0.2               
+[39] BiocParallel_1.23.0           dplyr_1.0.0                  
+[41] RCurl_1.98-1.2                magrittr_1.5                 
+[43] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
+[45] Matrix_1.2-18                 Rcpp_1.0.4.6                 
+[47] Rhdf5lib_1.11.2               lifecycle_0.2.0              
+[49] stringi_1.4.6                 yaml_2.2.1                   
+[51] zlibbioc_1.35.0               BiocFileCache_1.13.0         
+[53] AnnotationHub_2.21.0          grid_4.0.0                   
+[55] blob_1.2.1                    promises_1.1.1               
+[57] ExperimentHub_1.15.0          crayon_1.3.4                 
+[59] lattice_0.20-41               beachmat_2.5.0               
+[61] Biostrings_2.57.2             hms_0.5.3                    
+[63] CodeDepends_0.6.5             knitr_1.28                   
+[65] ps_1.3.3                      pillar_1.4.4                 
+[67] biomaRt_2.45.0                codetools_0.2-16             
+[69] XML_3.99-0.3                  glue_1.4.1                   
+[71] BiocVersion_3.12.0            evaluate_0.14                
+[73] BiocManager_1.30.10           vctrs_0.3.1                  
+[75] httpuv_1.5.4                  openssl_1.4.1                
+[77] purrr_0.3.4                   assertthat_0.2.1             
+[79] xfun_0.14                     rsvd_1.0.3                   
+[81] mime_0.9                      xtable_1.8-4                 
+[83] later_1.1.0.1                 tibble_3.0.1                 
+[85] GenomicAlignments_1.25.3      memoise_1.1.0                
+[87] ellipsis_0.3.1                interactiveDisplayBase_1.27.5
 ```
 </div>
