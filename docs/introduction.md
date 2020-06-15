@@ -52,7 +52,7 @@ it assigns those labels to new cells from a test dataset based on similarities i
 This provides a convenient way of transferring biological knowledge across datasets,
 allowing users to leverage the domain expertise implicit in the creation of each reference.
 The most common application of *[SingleR](https://bioconductor.org/packages/3.12/SingleR)* involves predicting cell type (or "state", or "kind") in a new dataset,
-a process that is facilitated by the availability of built-in references and compatibility with user-supplied datasets.
+a process that is facilitated by the availability of curated references and compatibility with user-supplied datasets.
 In this manner, the burden of manually interpreting clusters and defining marker genes only has to be done once, for the reference dataset, and this knowledge can be propagated to new datasets in an automated manner.
 
 ## Method description
@@ -78,8 +78,8 @@ and this process is iterated until only one label remains.
 
 ## Quick start
 
-We will demonstrate the use of `SingleR()` on a classic 10X Genomics dataset [@zheng2017massively]
-with the built-in Human Primary Cell Atlas dataset [@hpcaRef] as the reference.
+We will demonstrate the use of `SingleR()` on a well-known 10X Genomics dataset [@zheng2017massively]
+with the Human Primary Cell Atlas dataset [@hpcaRef] as the reference.
 
 
 ```r
@@ -88,10 +88,11 @@ library(TENxPBMCData)
 new.data <- TENxPBMCData("pbmc4k")
 
 # Loading reference data with Ensembl annotations.
-library(SingleR)
+library(celldex)
 ref.data <- HumanPrimaryCellAtlasData(ensembl=TRUE)
 
 # Performing predictions.
+library(SingleR)
 predictions <- SingleR(test=new.data, assay.type.test=1, 
     ref=ref.data, labels=ref.data$label.main)
 
@@ -147,14 +148,15 @@ attached base packages:
 other attached packages:
  [1] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [3] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [5] SingleR_1.3.5               TENxPBMCData_1.7.0         
- [7] HDF5Array_1.17.0            rhdf5_2.33.3               
- [9] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
-[11] DelayedArray_0.15.1         matrixStats_0.56.0         
-[13] Biobase_2.49.0              GenomicRanges_1.41.5       
-[15] GenomeInfoDb_1.25.1         IRanges_2.23.9             
-[17] S4Vectors_0.27.12           BiocGenerics_0.35.4        
-[19] BiocStyle_2.17.0            rebook_0.99.0              
+ [5] SingleR_1.3.6               celldex_0.99.0             
+ [7] TENxPBMCData_1.7.0          HDF5Array_1.17.1           
+ [9] rhdf5_2.33.3                SingleCellExperiment_1.11.4
+[11] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+[13] matrixStats_0.56.0          Matrix_1.2-18              
+[15] Biobase_2.49.0              GenomicRanges_1.41.5       
+[17] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[19] S4Vectors_0.27.12           BiocGenerics_0.35.4        
+[21] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
  [1] ProtGenerics_1.21.0           bitops_1.0-6                 
@@ -179,27 +181,27 @@ loaded via a namespace (and not attached):
 [39] BiocParallel_1.23.0           dplyr_1.0.0                  
 [41] RCurl_1.98-1.2                magrittr_1.5                 
 [43] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[45] Matrix_1.2-18                 Rcpp_1.0.4.6                 
-[47] Rhdf5lib_1.11.2               lifecycle_0.2.0              
-[49] stringi_1.4.6                 yaml_2.2.1                   
-[51] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[53] AnnotationHub_2.21.0          grid_4.0.0                   
-[55] blob_1.2.1                    promises_1.1.1               
-[57] ExperimentHub_1.15.0          crayon_1.3.4                 
-[59] lattice_0.20-41               beachmat_2.5.0               
-[61] Biostrings_2.57.2             hms_0.5.3                    
-[63] CodeDepends_0.6.5             knitr_1.28                   
-[65] ps_1.3.3                      pillar_1.4.4                 
-[67] biomaRt_2.45.0                codetools_0.2-16             
-[69] XML_3.99-0.3                  glue_1.4.1                   
-[71] BiocVersion_3.12.0            evaluate_0.14                
-[73] BiocManager_1.30.10           vctrs_0.3.1                  
-[75] httpuv_1.5.4                  openssl_1.4.1                
-[77] purrr_0.3.4                   assertthat_0.2.1             
-[79] xfun_0.14                     rsvd_1.0.3                   
-[81] mime_0.9                      xtable_1.8-4                 
-[83] later_1.1.0.1                 tibble_3.0.1                 
-[85] GenomicAlignments_1.25.3      memoise_1.1.0                
-[87] ellipsis_0.3.1                interactiveDisplayBase_1.27.5
+[45] Rcpp_1.0.4.6                  Rhdf5lib_1.11.2              
+[47] lifecycle_0.2.0               stringi_1.4.6                
+[49] yaml_2.2.1                    zlibbioc_1.35.0              
+[51] BiocFileCache_1.13.0          AnnotationHub_2.21.0         
+[53] grid_4.0.0                    blob_1.2.1                   
+[55] promises_1.1.1                ExperimentHub_1.15.0         
+[57] crayon_1.3.4                  lattice_0.20-41              
+[59] beachmat_2.5.0                Biostrings_2.57.2            
+[61] hms_0.5.3                     CodeDepends_0.6.5            
+[63] knitr_1.28                    ps_1.3.3                     
+[65] pillar_1.4.4                  biomaRt_2.45.0               
+[67] codetools_0.2-16              XML_3.99-0.3                 
+[69] glue_1.4.1                    BiocVersion_3.12.0           
+[71] evaluate_0.14                 BiocManager_1.30.10          
+[73] vctrs_0.3.1                   httpuv_1.5.4                 
+[75] openssl_1.4.1                 purrr_0.3.4                  
+[77] assertthat_0.2.1              xfun_0.14                    
+[79] rsvd_1.0.3                    mime_0.9                     
+[81] xtable_1.8-4                  later_1.1.0.1                
+[83] tibble_3.0.1                  GenomicAlignments_1.25.3     
+[85] memoise_1.1.0                 ellipsis_0.3.1               
+[87] interactiveDisplayBase_1.27.5
 ```
 </div>

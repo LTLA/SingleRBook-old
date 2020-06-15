@@ -106,7 +106,7 @@ cl
 
 The most immediate use of this object lies in mapping ontology terms to their plain-English descriptions.
 We can use this to translate annotations produced by `SingleR()` from the `label.ont` labels into a more interpretable form.
-We demonstrate this approach using *[SingleR](https://bioconductor.org/packages/3.12/SingleR)*'s collection of mouse RNA-seq references [@aran2019reference].
+We demonstrate this approach using *[celldex](https://bioconductor.org/packages/3.12/celldex)*'s collection of mouse RNA-seq references [@aran2019reference].
 
 
 ```r
@@ -142,7 +142,7 @@ head(cl$def) # longer definition
 ```
 
 ```r
-library(SingleR)
+library(celldex)
 ref <- MouseRNAseqData(cell.ont="nonna")
 translated <- cl$name[ref$label.ont]
 head(translated)
@@ -170,9 +170,9 @@ g
 ```
 
 ```
-## IGRAPH 5434583 DN-- 2234 3141 -- 
+## IGRAPH ae86ffa DN-- 2234 3141 -- 
 ## + attr: name (v/c)
-## + edges from 5434583 (vertex names):
+## + edges from ae86ffa (vertex names):
 ##  [1] CL:0000010->CL:0000001 CL:0000000->CL:0000003 CL:0000057->CL:0000005
 ##  [4] CL:0000101->CL:0000006 CL:0000197->CL:0000006 CL:0002321->CL:0000007
 ##  [7] CL:0000333->CL:0000008 CL:0000578->CL:0000010 CL:0000333->CL:0000011
@@ -549,14 +549,15 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] igraph_1.2.5                SingleR_1.3.5              
- [3] SummarizedExperiment_1.19.5 DelayedArray_0.15.1        
- [5] matrixStats_0.56.0          Biobase_2.49.0             
- [7] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
- [9] IRanges_2.23.9              S4Vectors_0.27.12          
-[11] BiocGenerics_0.35.4         ontoProc_1.11.1            
-[13] ontologyIndex_2.5           BiocStyle_2.17.0           
-[15] rebook_0.99.0              
+ [1] igraph_1.2.5                SingleR_1.3.6              
+ [3] celldex_0.99.0              SummarizedExperiment_1.19.5
+ [5] DelayedArray_0.15.3         matrixStats_0.56.0         
+ [7] Matrix_1.2-18               Biobase_2.49.0             
+ [9] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
+[11] IRanges_2.23.9              S4Vectors_0.27.12          
+[13] BiocGenerics_0.35.4         ontoProc_1.11.1            
+[15] ontologyIndex_2.5           BiocStyle_2.17.0           
+[17] rebook_0.99.0              
 
 loaded via a namespace (and not attached):
  [1] httr_1.4.1                    BiocSingular_1.5.0           
@@ -571,33 +572,32 @@ loaded via a namespace (and not attached):
 [19] lattice_0.20-41               glue_1.4.1                   
 [21] digest_0.6.25                 promises_1.1.1               
 [23] XVector_0.29.2                htmltools_0.4.0              
-[25] httpuv_1.5.4                  Matrix_1.2-18                
-[27] XML_3.99-0.3                  pkgconfig_2.0.3              
-[29] bookdown_0.19                 zlibbioc_1.35.0              
-[31] purrr_0.3.4                   xtable_1.8-4                 
-[33] processx_3.4.2                later_1.1.0.1                
-[35] BiocParallel_1.23.0           tibble_3.0.1                 
-[37] generics_0.0.2                ellipsis_0.3.1               
-[39] DT_0.13                       magrittr_1.5                 
-[41] crayon_1.3.4                  CodeDepends_0.6.5            
-[43] mime_0.9                      memoise_1.1.0                
-[45] evaluate_0.14                 ps_1.3.3                     
-[47] graph_1.67.1                  tools_4.0.0                  
-[49] lifecycle_0.2.0               stringr_1.4.0                
-[51] irlba_2.3.3                   AnnotationDbi_1.51.0         
-[53] callr_3.4.3                   compiler_4.0.0               
-[55] rsvd_1.0.3                    rlang_0.4.6                  
-[57] grid_4.0.0                    RCurl_1.98-1.2               
-[59] BiocNeighbors_1.7.0           rappdirs_0.3.1               
-[61] htmlwidgets_1.5.1             bitops_1.0-6                 
-[63] rmarkdown_2.2                 ExperimentHub_1.15.0         
-[65] codetools_0.2-16              DBI_1.1.0                    
-[67] curl_4.3                      R6_2.4.1                     
-[69] knitr_1.28                    dplyr_1.0.0                  
-[71] fastmap_1.0.1                 bit_1.1-15.2                 
-[73] Rgraphviz_2.33.0              stringi_1.4.6                
-[75] Rcpp_1.0.4.6                  vctrs_0.3.1                  
-[77] dbplyr_1.4.4                  tidyselect_1.1.0             
-[79] xfun_0.14                    
+[25] httpuv_1.5.4                  XML_3.99-0.3                 
+[27] pkgconfig_2.0.3               bookdown_0.19                
+[29] zlibbioc_1.35.0               purrr_0.3.4                  
+[31] xtable_1.8-4                  processx_3.4.2               
+[33] later_1.1.0.1                 BiocParallel_1.23.0          
+[35] tibble_3.0.1                  generics_0.0.2               
+[37] ellipsis_0.3.1                DT_0.13                      
+[39] magrittr_1.5                  crayon_1.3.4                 
+[41] CodeDepends_0.6.5             mime_0.9                     
+[43] memoise_1.1.0                 evaluate_0.14                
+[45] ps_1.3.3                      graph_1.67.1                 
+[47] tools_4.0.0                   lifecycle_0.2.0              
+[49] stringr_1.4.0                 irlba_2.3.3                  
+[51] AnnotationDbi_1.51.0          callr_3.4.3                  
+[53] compiler_4.0.0                rsvd_1.0.3                   
+[55] rlang_0.4.6                   grid_4.0.0                   
+[57] RCurl_1.98-1.2                BiocNeighbors_1.7.0          
+[59] rappdirs_0.3.1                htmlwidgets_1.5.1            
+[61] bitops_1.0-6                  rmarkdown_2.2                
+[63] ExperimentHub_1.15.0          codetools_0.2-16             
+[65] DBI_1.1.0                     curl_4.3                     
+[67] R6_2.4.1                      knitr_1.28                   
+[69] dplyr_1.0.0                   fastmap_1.0.1                
+[71] bit_1.1-15.2                  Rgraphviz_2.33.0             
+[73] stringi_1.4.6                 Rcpp_1.0.4.6                 
+[75] vctrs_0.3.1                   dbplyr_1.4.4                 
+[77] tidyselect_1.1.0              xfun_0.14                    
 ```
 </div>

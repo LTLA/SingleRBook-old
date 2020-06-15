@@ -46,11 +46,11 @@ This means that training (e.g., marker detection, assembling of nearest-neighbor
 for any reference.
 The resulting data structure can then be re-used across multiple classifications with different test datasets, 
 provided the gene annotation in the test dataset is identical to or a superset of the genes in the training set.
-To illustrate, we will consider the DICE reference dataset [@diceRef].
+To illustrate, we will consider the DICE reference dataset [@diceRef] from the *[celldex](https://bioconductor.org/packages/3.12/celldex)* package.
 
 
 ```r
-library(SingleR)
+library(celldex)
 dice <- DatabaseImmuneCellExpressionData(ensembl=TRUE)
 dice
 ```
@@ -113,6 +113,7 @@ to further reduce computational work.
 ```r
 common <- intersect(rownames(sce), rownames(dice))
 
+library(SingleR)
 set.seed(2000)
 trained <- trainSingleR(dice[common,], labels=dice$label.fine, aggr.ref=TRUE)
 ```
@@ -278,16 +279,17 @@ attached base packages:
 
 other attached packages:
  [1] BiocNeighbors_1.7.0         BiocParallel_1.23.0        
- [3] TENxPBMCData_1.7.0          HDF5Array_1.17.0           
+ [3] TENxPBMCData_1.7.0          HDF5Array_1.17.1           
  [5] rhdf5_2.33.3                SingleCellExperiment_1.11.4
  [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
-[11] SingleR_1.3.5               SummarizedExperiment_1.19.5
-[13] DelayedArray_0.15.1         matrixStats_0.56.0         
-[15] Biobase_2.49.0              GenomicRanges_1.41.5       
-[17] GenomeInfoDb_1.25.1         IRanges_2.23.9             
-[19] S4Vectors_0.27.12           BiocGenerics_0.35.4        
-[21] BiocStyle_2.17.0            rebook_0.99.0              
+[11] SingleR_1.3.6               celldex_0.99.0             
+[13] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+[15] matrixStats_0.56.0          Matrix_1.2-18              
+[17] Biobase_2.49.0              GenomicRanges_1.41.5       
+[19] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[21] S4Vectors_0.27.12           BiocGenerics_0.35.4        
+[23] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
  [1] ProtGenerics_1.21.0           bitops_1.0-6                 
@@ -295,12 +297,12 @@ loaded via a namespace (and not attached):
  [5] httr_1.4.1                    tools_4.0.0                  
  [7] R6_2.4.1                      irlba_2.3.3                  
  [9] lazyeval_0.2.2                DBI_1.1.0                    
-[11] rhdf5filters_1.1.0            prettyunits_1.1.1            
-[13] tidyselect_1.1.0              processx_3.4.2               
+[11] rhdf5filters_1.1.0            tidyselect_1.1.0             
+[13] prettyunits_1.1.1             processx_3.4.2               
 [15] bit_1.1-15.2                  curl_4.3                     
 [17] compiler_4.0.0                graph_1.67.1                 
 [19] rtracklayer_1.49.3            bookdown_0.19                
-[21] askpass_1.1                   callr_3.4.3                  
+[21] callr_3.4.3                   askpass_1.1                  
 [23] rappdirs_0.3.1                Rsamtools_2.5.1              
 [25] stringr_1.4.0                 digest_0.6.25                
 [27] rmarkdown_2.2                 XVector_0.29.2               
@@ -311,27 +313,27 @@ loaded via a namespace (and not attached):
 [37] generics_0.0.2                dplyr_1.0.0                  
 [39] RCurl_1.98-1.2                magrittr_1.5                 
 [41] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[43] Matrix_1.2-18                 Rhdf5lib_1.11.2              
-[45] Rcpp_1.0.4.6                  lifecycle_0.2.0              
-[47] stringi_1.4.6                 yaml_2.2.1                   
-[49] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[51] AnnotationHub_2.21.0          grid_4.0.0                   
-[53] blob_1.2.1                    promises_1.1.1               
-[55] ExperimentHub_1.15.0          crayon_1.3.4                 
-[57] lattice_0.20-41               Biostrings_2.57.2            
-[59] hms_0.5.3                     CodeDepends_0.6.5            
-[61] knitr_1.28                    ps_1.3.3                     
-[63] pillar_1.4.4                  codetools_0.2-16             
-[65] biomaRt_2.45.0                XML_3.99-0.3                 
-[67] glue_1.4.1                    BiocVersion_3.12.0           
-[69] evaluate_0.14                 BiocManager_1.30.10          
-[71] vctrs_0.3.1                   httpuv_1.5.4                 
-[73] openssl_1.4.1                 purrr_0.3.4                  
-[75] assertthat_0.2.1              xfun_0.14                    
-[77] rsvd_1.0.3                    mime_0.9                     
-[79] xtable_1.8-4                  later_1.1.0.1                
-[81] snow_0.4-3                    tibble_3.0.1                 
-[83] GenomicAlignments_1.25.3      memoise_1.1.0                
-[85] ellipsis_0.3.1                interactiveDisplayBase_1.27.5
+[43] Rhdf5lib_1.11.2               Rcpp_1.0.4.6                 
+[45] lifecycle_0.2.0               stringi_1.4.6                
+[47] yaml_2.2.1                    zlibbioc_1.35.0              
+[49] BiocFileCache_1.13.0          AnnotationHub_2.21.0         
+[51] grid_4.0.0                    blob_1.2.1                   
+[53] promises_1.1.1                ExperimentHub_1.15.0         
+[55] crayon_1.3.4                  lattice_0.20-41              
+[57] Biostrings_2.57.2             hms_0.5.3                    
+[59] CodeDepends_0.6.5             knitr_1.28                   
+[61] ps_1.3.3                      pillar_1.4.4                 
+[63] codetools_0.2-16              biomaRt_2.45.0               
+[65] XML_3.99-0.3                  glue_1.4.1                   
+[67] BiocVersion_3.12.0            evaluate_0.14                
+[69] BiocManager_1.30.10           vctrs_0.3.1                  
+[71] httpuv_1.5.4                  openssl_1.4.1                
+[73] purrr_0.3.4                   assertthat_0.2.1             
+[75] xfun_0.14                     rsvd_1.0.3                   
+[77] mime_0.9                      xtable_1.8-4                 
+[79] later_1.1.0.1                 snow_0.4-3                   
+[81] tibble_3.0.1                  GenomicAlignments_1.25.3     
+[83] memoise_1.1.0                 ellipsis_0.3.1               
+[85] interactiveDisplayBase_1.27.5
 ```
 </div>

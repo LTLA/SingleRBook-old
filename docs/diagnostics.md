@@ -46,7 +46,7 @@ that can be used to determine whether the assignments are appropriate.
 Unambiguous assignments corroborated by expression of canonical markers add confidence to the results;
 conversely, low-confidence assignments can be pruned out to avoid adding noise to downstream analyses.
 This chapter will demonstrate some of these common sanity checks on the pancreas datasets
-from Chapter \@ref(using-single-cell-references) [@muraro2016singlecell;@grun2016denovo].
+from Chapter \@ref(more-markers) [@muraro2016singlecell;@grun2016denovo].
 
 <button class="aaron-collapse">View history</button>
 <div class="aaron-content">
@@ -121,6 +121,8 @@ we use the `plotScoreHeatmap()` function to visualize the score matrix (Figure \
 Here, the key is to examine the spread of scores within each cell, i.e., down the columns of the heatmap.
 Similar scores for a group of labels indicates that the assignment is uncertain for those columns,
 though this may be acceptable if the uncertainty is distributed across closely related cell types.
+(Note that the assigned label for a cell may not be the visually top-scoring label if fine-tuning is applied,
+as the only the pre-tuned scores are directly comparable across all labels.)
 
 
 ```r
@@ -352,60 +354,47 @@ attached base packages:
 
 other attached packages:
  [1] scater_1.17.3               ggplot2_3.3.1              
- [3] SingleCellExperiment_1.11.4 SingleR_1.3.5              
- [5] SummarizedExperiment_1.19.5 DelayedArray_0.15.1        
- [7] matrixStats_0.56.0          Biobase_2.49.0             
- [9] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
-[11] IRanges_2.23.9              S4Vectors_0.27.12          
-[13] BiocGenerics_0.35.4         BiocStyle_2.17.0           
-[15] rebook_0.99.0              
+ [3] SingleCellExperiment_1.11.4 SingleR_1.3.6              
+ [5] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+ [7] matrixStats_0.56.0          Matrix_1.2-18              
+ [9] Biobase_2.49.0              GenomicRanges_1.41.5       
+[11] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[13] S4Vectors_0.27.12           BiocGenerics_0.35.4        
+[15] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
- [1] bitops_1.0-6                  bit64_0.9-7                  
- [3] RColorBrewer_1.1-2            httr_1.4.1                   
- [5] tools_4.0.0                   R6_2.4.1                     
- [7] irlba_2.3.3                   vipor_0.4.5                  
- [9] colorspace_1.4-1              DBI_1.1.0                    
-[11] withr_2.2.0                   gridExtra_2.3                
-[13] tidyselect_1.1.0              processx_3.4.2               
-[15] bit_1.1-15.2                  curl_4.3                     
-[17] compiler_4.0.0                graph_1.67.1                 
-[19] BiocNeighbors_1.7.0           labeling_0.3                 
-[21] bookdown_0.19                 scales_1.1.1                 
-[23] callr_3.4.3                   rappdirs_0.3.1               
-[25] stringr_1.4.0                 digest_0.6.25                
-[27] rmarkdown_2.2                 XVector_0.29.2               
-[29] pkgconfig_2.0.3               htmltools_0.4.0              
-[31] highr_0.8                     dbplyr_1.4.4                 
-[33] fastmap_1.0.1                 rlang_0.4.6                  
-[35] RSQLite_2.2.0                 shiny_1.4.0.2                
-[37] DelayedMatrixStats_1.11.0     farver_2.0.3                 
-[39] generics_0.0.2                BiocParallel_1.23.0          
-[41] dplyr_1.0.0                   RCurl_1.98-1.2               
-[43] magrittr_1.5                  BiocSingular_1.5.0           
-[45] scuttle_0.99.9                GenomeInfoDbData_1.2.3       
-[47] Matrix_1.2-18                 ggbeeswarm_0.6.0             
-[49] munsell_0.5.0                 Rcpp_1.0.4.6                 
-[51] viridis_0.5.1                 lifecycle_0.2.0              
-[53] stringi_1.4.6                 yaml_2.2.1                   
-[55] zlibbioc_1.35.0               BiocFileCache_1.13.0         
-[57] AnnotationHub_2.21.0          grid_4.0.0                   
-[59] blob_1.2.1                    promises_1.1.1               
-[61] ExperimentHub_1.15.0          crayon_1.3.4                 
-[63] lattice_0.20-41               CodeDepends_0.6.5            
-[65] knitr_1.28                    ps_1.3.3                     
-[67] pillar_1.4.4                  codetools_0.2-16             
-[69] XML_3.99-0.3                  glue_1.4.1                   
-[71] BiocVersion_3.12.0            evaluate_0.14                
-[73] BiocManager_1.30.10           vctrs_0.3.1                  
-[75] httpuv_1.5.4                  gtable_0.3.0                 
-[77] purrr_0.3.4                   assertthat_0.2.1             
-[79] xfun_0.14                     rsvd_1.0.3                   
-[81] mime_0.9                      xtable_1.8-4                 
-[83] later_1.1.0.1                 viridisLite_0.3.0            
-[85] pheatmap_1.0.12               tibble_3.0.1                 
-[87] beeswarm_0.2.3                AnnotationDbi_1.51.0         
-[89] memoise_1.1.0                 ellipsis_0.3.1               
-[91] interactiveDisplayBase_1.27.5
+ [1] viridis_0.5.1             BiocSingular_1.5.0       
+ [3] viridisLite_0.3.0         DelayedMatrixStats_1.11.0
+ [5] scuttle_0.99.9            BiocManager_1.30.10      
+ [7] highr_0.8                 vipor_0.4.5              
+ [9] GenomeInfoDbData_1.2.3    yaml_2.2.1               
+[11] pillar_1.4.4              lattice_0.20-41          
+[13] glue_1.4.1                digest_0.6.25            
+[15] RColorBrewer_1.1-2        XVector_0.29.2           
+[17] colorspace_1.4-1          htmltools_0.4.0          
+[19] XML_3.99-0.3              pkgconfig_2.0.3          
+[21] pheatmap_1.0.12           bookdown_0.19            
+[23] zlibbioc_1.35.0           purrr_0.3.4              
+[25] scales_1.1.1              processx_3.4.2           
+[27] BiocParallel_1.23.0       tibble_3.0.1             
+[29] generics_0.0.2            farver_2.0.3             
+[31] ellipsis_0.3.1            withr_2.2.0              
+[33] magrittr_1.5              crayon_1.3.4             
+[35] CodeDepends_0.6.5         evaluate_0.14            
+[37] ps_1.3.3                  beeswarm_0.2.3           
+[39] graph_1.67.1              tools_4.0.0              
+[41] lifecycle_0.2.0           stringr_1.4.0            
+[43] munsell_0.5.0             irlba_2.3.3              
+[45] callr_3.4.3               compiler_4.0.0           
+[47] rsvd_1.0.3                rlang_0.4.6              
+[49] grid_4.0.0                RCurl_1.98-1.2           
+[51] BiocNeighbors_1.7.0       bitops_1.0-6             
+[53] labeling_0.3              rmarkdown_2.2            
+[55] gtable_0.3.0              codetools_0.2-16         
+[57] R6_2.4.1                  gridExtra_2.3            
+[59] knitr_1.28                dplyr_1.0.0              
+[61] ggbeeswarm_0.6.0          stringi_1.4.6            
+[63] Rcpp_1.0.4.6              vctrs_0.3.1              
+[65] tidyselect_1.1.0          xfun_0.14                
 ```
 </div>

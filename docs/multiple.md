@@ -58,7 +58,7 @@ Several strategies are available to combine inferences from multiple references:
 
 This chapter discusses the various strengths and weaknesses of each strategy
 and provides some practical demonstrations of each.
-Here, we will use the HPCA and BlueprintEncode datasets as our references
+Here, we will use the HPCA and Blueprint/ENCODE datasets as our references
 and (yet another) PBMC dataset as the test.
 
 
@@ -66,7 +66,7 @@ and (yet another) PBMC dataset as the test.
 library(TENxPBMCData)
 pbmc <- TENxPBMCData("pbmc8k")
 
-library(SingleR)
+library(celldex)
 hpca <- HumanPrimaryCellAtlasData(ensembl=TRUE)
 bpe <- BlueprintEncodeData(ensembl=TRUE)
 ```
@@ -101,6 +101,7 @@ It is then straightforward to perform annotation with the usual methods.
 
 
 ```r
+library(SingleR)
 com.res1 <- SingleR(pbmc, ref=combined, labels=combined$label.main, assay.type.test=1)
 table(com.res1$labels)
 ```
@@ -488,14 +489,15 @@ other attached packages:
  [1] scater_1.17.3               ggplot2_3.3.1              
  [3] ensembldb_2.13.1            AnnotationFilter_1.13.0    
  [5] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
- [7] SingleR_1.3.5               TENxPBMCData_1.7.0         
- [9] HDF5Array_1.17.0            rhdf5_2.33.3               
-[11] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
-[13] DelayedArray_0.15.1         matrixStats_0.56.0         
-[15] Biobase_2.49.0              GenomicRanges_1.41.5       
-[17] GenomeInfoDb_1.25.1         IRanges_2.23.9             
-[19] S4Vectors_0.27.12           BiocGenerics_0.35.4        
-[21] BiocStyle_2.17.0            rebook_0.99.0              
+ [7] SingleR_1.3.6               celldex_0.99.0             
+ [9] TENxPBMCData_1.7.0          HDF5Array_1.17.1           
+[11] rhdf5_2.33.3                SingleCellExperiment_1.11.4
+[13] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+[15] matrixStats_0.56.0          Matrix_1.2-18              
+[17] Biobase_2.49.0              GenomicRanges_1.41.5       
+[19] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[21] S4Vectors_0.27.12           BiocGenerics_0.35.4        
+[23] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
   [1] ggbeeswarm_0.6.0              colorspace_1.4-1             
@@ -508,48 +510,47 @@ loaded via a namespace (and not attached):
  [15] graph_1.67.1                  shiny_1.4.0.2                
  [17] BiocManager_1.30.10           compiler_4.0.0               
  [19] httr_1.4.1                    assertthat_0.2.1             
- [21] Matrix_1.2-18                 fastmap_1.0.1                
- [23] lazyeval_0.2.2                later_1.1.0.1                
- [25] BiocSingular_1.5.0            htmltools_0.4.0              
- [27] prettyunits_1.1.1             tools_4.0.0                  
- [29] rsvd_1.0.3                    gtable_0.3.0                 
- [31] glue_1.4.1                    GenomeInfoDbData_1.2.3       
- [33] dplyr_1.0.0                   rappdirs_0.3.1               
- [35] Rcpp_1.0.4.6                  vctrs_0.3.1                  
- [37] Biostrings_2.57.2             rhdf5filters_1.1.0           
- [39] ExperimentHub_1.15.0          rtracklayer_1.49.3           
- [41] DelayedMatrixStats_1.11.0     xfun_0.14                    
- [43] stringr_1.4.0                 ps_1.3.3                     
- [45] beachmat_2.5.0                mime_0.9                     
- [47] lifecycle_0.2.0               irlba_2.3.3                  
- [49] XML_3.99-0.3                  AnnotationHub_2.21.0         
- [51] zlibbioc_1.35.0               scales_1.1.1                 
- [53] hms_0.5.3                     promises_1.1.1               
- [55] ProtGenerics_1.21.0           RColorBrewer_1.1-2           
- [57] yaml_2.2.1                    curl_4.3                     
- [59] gridExtra_2.3                 memoise_1.1.0                
- [61] biomaRt_2.45.0                stringi_1.4.6                
- [63] RSQLite_2.2.0                 highr_0.8                    
- [65] BiocVersion_3.12.0            BiocParallel_1.23.0          
- [67] rlang_0.4.6                   pkgconfig_2.0.3              
- [69] bitops_1.0-6                  evaluate_0.14                
- [71] lattice_0.20-41               purrr_0.3.4                  
- [73] Rhdf5lib_1.11.2               labeling_0.3                 
- [75] GenomicAlignments_1.25.3      CodeDepends_0.6.5            
- [77] bit_1.1-15.2                  processx_3.4.2               
- [79] tidyselect_1.1.0              magrittr_1.5                 
- [81] bookdown_0.19                 R6_2.4.1                     
- [83] generics_0.0.2                DBI_1.1.0                    
- [85] withr_2.2.0                   pillar_1.4.4                 
- [87] RCurl_1.98-1.2                tibble_3.0.1                 
- [89] crayon_1.3.4                  BiocFileCache_1.13.0         
- [91] rmarkdown_2.2                 viridis_0.5.1                
- [93] progress_1.2.2                grid_4.0.0                   
- [95] blob_1.2.1                    callr_3.4.3                  
- [97] digest_0.6.25                 xtable_1.8-4                 
- [99] httpuv_1.5.4                  openssl_1.4.1                
-[101] munsell_0.5.0                 beeswarm_0.2.3               
-[103] viridisLite_0.3.0             vipor_0.4.5                  
-[105] askpass_1.1                  
+ [21] fastmap_1.0.1                 lazyeval_0.2.2               
+ [23] later_1.1.0.1                 BiocSingular_1.5.0           
+ [25] htmltools_0.4.0               prettyunits_1.1.1            
+ [27] tools_4.0.0                   rsvd_1.0.3                   
+ [29] gtable_0.3.0                  glue_1.4.1                   
+ [31] GenomeInfoDbData_1.2.3        dplyr_1.0.0                  
+ [33] rappdirs_0.3.1                Rcpp_1.0.4.6                 
+ [35] vctrs_0.3.1                   Biostrings_2.57.2            
+ [37] rhdf5filters_1.1.0            ExperimentHub_1.15.0         
+ [39] rtracklayer_1.49.3            DelayedMatrixStats_1.11.0    
+ [41] xfun_0.14                     stringr_1.4.0                
+ [43] ps_1.3.3                      beachmat_2.5.0               
+ [45] mime_0.9                      lifecycle_0.2.0              
+ [47] irlba_2.3.3                   XML_3.99-0.3                 
+ [49] AnnotationHub_2.21.0          zlibbioc_1.35.0              
+ [51] scales_1.1.1                  hms_0.5.3                    
+ [53] promises_1.1.1                ProtGenerics_1.21.0          
+ [55] RColorBrewer_1.1-2            yaml_2.2.1                   
+ [57] curl_4.3                      gridExtra_2.3                
+ [59] memoise_1.1.0                 biomaRt_2.45.0               
+ [61] stringi_1.4.6                 RSQLite_2.2.0                
+ [63] highr_0.8                     BiocVersion_3.12.0           
+ [65] BiocParallel_1.23.0           rlang_0.4.6                  
+ [67] pkgconfig_2.0.3               bitops_1.0-6                 
+ [69] evaluate_0.14                 lattice_0.20-41              
+ [71] purrr_0.3.4                   Rhdf5lib_1.11.2              
+ [73] labeling_0.3                  GenomicAlignments_1.25.3     
+ [75] CodeDepends_0.6.5             bit_1.1-15.2                 
+ [77] processx_3.4.2                tidyselect_1.1.0             
+ [79] magrittr_1.5                  bookdown_0.19                
+ [81] R6_2.4.1                      generics_0.0.2               
+ [83] DBI_1.1.0                     withr_2.2.0                  
+ [85] pillar_1.4.4                  RCurl_1.98-1.2               
+ [87] tibble_3.0.1                  crayon_1.3.4                 
+ [89] BiocFileCache_1.13.0          rmarkdown_2.2                
+ [91] viridis_0.5.1                 progress_1.2.2               
+ [93] grid_4.0.0                    blob_1.2.1                   
+ [95] callr_3.4.3                   digest_0.6.25                
+ [97] xtable_1.8-4                  httpuv_1.5.4                 
+ [99] openssl_1.4.1                 munsell_0.5.0                
+[101] beeswarm_0.2.3                viridisLite_0.3.0            
+[103] vipor_0.4.5                   askpass_1.1                  
 ```
 </div>

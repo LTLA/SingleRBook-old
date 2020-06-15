@@ -2,7 +2,7 @@
 bibliography: ref.bib
 ---
 
-# Using the built-in references
+# Using the classic mode
 
 <script>
 document.addEventListener("click", function (event) {
@@ -56,12 +56,12 @@ based on their log-fold changes in each pairwise comparison.
 Specifically, it used the genes with the largest positive differences in the per-label median log-expression values between labels.
 The number of genes taken from each pairwise comparison was defined as $500 (\frac{2}{3})^{\log_{2}(n)}$,
 where $n$ is the number of unique labels in the reference;
-this aimed to reduce the number of genes (and thus the computational time) as the number of labels and pairwise comparisons increased.
-This classic mode is primarily intended for reference datasets that have little or no replication,
-a description that covers most of the built-in references 
-and precludes more complicated marker detection procedures (Chapter \@ref(using-single-cell-references)).
+this scheme aimed to reduce the number of genes (and thus the computational time) as the number of labels and pairwise comparisons increased.
+Classic mode is primarily intended for reference datasets that have little or no replication,
+a description that covers many of the bulk-derived references 
+and precludes more complicated marker detection procedures (Chapter \@ref(more-markers)).
 
-## Annotation with default marker detection 
+## Annotation the test dataset
 
 For demonstration purposes, we will use the @grun2016denovo haematopoietic stem cell (HSC)
 dataset from the *[scRNAseq](https://bioconductor.org/packages/3.12/scRNAseq)* package.
@@ -90,15 +90,16 @@ sce
 ## altExpNames(0):
 ```
 
-Our plan is to annotate each cell with the built-in ImmGen reference dataset [@ImmGenRef].
+Our aim is to annotate each cell with the ImmGen reference dataset [@ImmGenRef] from the *[celldex](https://bioconductor.org/packages/3.12/celldex)* package.
+(Some further comments on the choice of reference are provided below in Section \@ref(reference-choice).)
 Calling the `ImmGenData()` function returns a `SummarizedExperiment` object 
 containing a matrix of log-expression values with sample-level labels.
-We set `ensembl=TRUE` to match the reference's gene annotation with that in the `sce` object
-(the default behavior is to use the gene symbol).
+We also set `ensembl=TRUE` to match the reference's gene annotation with that in the `sce` object -
+the default behavior is to use the gene symbol.
 
 
 ```r
-library(SingleR)
+library(celldex)
 immgen <- ImmGenData(ensembl=TRUE)
 immgen
 ```
@@ -119,9 +120,9 @@ immgen
 ## colData names(3): label.main label.fine label.ont
 ```
 
-Technically speaking, each built-in dataset actually has three sets of labels that primarily differ in their resolution.
+Each *[celldex](https://bioconductor.org/packages/3.12/celldex)* dataset actually has three sets of labels that primarily differ in their resolution.
 For the purposes of this demonstration, we will use the "fine" labels in the `label.fine` metadata field,
-which represents the highest resolution of annotation available in ImmGen.
+which represents the highest resolution of annotation available for this dataset.
 
 
 ```r
@@ -134,7 +135,7 @@ head(immgen$label.fine)
 ## [5] "Macrophages (MF.ALV)"      "Macrophages (MF.ALV)"
 ```
 
-Annotation is then a simple matter of calling `SingleR()` on our test (Grun) dataset and the reference (ImmGen) dataset,
+We perform annotation by calling `SingleR()` on our test (Grun) dataset and the reference (ImmGen) dataset,
 leaving the default of `de.method="classic"` to use the original marker detection scheme.
 This applies the algorithm described in Section \@ref(method-description),
 returning a `DataFrame` where each row contains prediction results for a single cell in the `sce` object.
@@ -143,6 +144,8 @@ some of the other fields are discussed in more detail in Chapter \@ref(annotatio
 
 
 ```r
+library(SingleR)
+
 # See 'Choices of assay data' for 'assay.type.test=' explanation.
 pred <- SingleR(test = sce, ref = immgen, 
     labels = immgen$label.fine, assay.type.test=1)
@@ -180,8 +183,7 @@ the dataset obtained by `GrunHSCData()` actually contains more than HSCs.
 If we restrict our analysis to the sorted HSCs (obviously) and remove one low-quality batch
 (see [the analysis here](https://osca.bioconductor.org/merged-hcsc.html#quality-control-12) for the rationale)
 we can see that the distribution of cell type labels is more similar to what we might expect.
-Low-quality cells - typically those with low library sizes and low numbers of detected genes -
-lack information for accurate label assignment and often need to be removed to enable interpretation of the results.
+Low-quality cells lack information for accurate label assignment and need to be removed to enable interpretation of the results.
 
 
 ```r
@@ -201,7 +203,7 @@ head(sort(table(actual.hsc), decreasing=TRUE))
 
 
 
-Filtering the annotation results in the above manner is possible because `SingleR()` operates independently on each cell.
+Filtering the annotation results in the above manner is valid because `SingleR()` operates independently on each test cell.
 The annotation is orthogonal to any decisions about the relative quality of the cells in the test dataset;
 the same results will be obtained regardless of whether the annotation is performed before or after quality control.
 This is logisitically convenient as it means that the annotation does not have to be repeated 
@@ -221,10 +223,10 @@ which is unaffected by monotonic transformations like cell-specific scaling or l
 It is perfectly satisfactory to provide the raw counts for the test dataset to `SingleR()`,
 which is the reason for setting `assay.type.test=1` in our previous `SingleR()` call for the Grun dataset.
 
-The exception to this rule occurs when comparing data from full-length technologies to the built-in references.
-The built-in references are constructed to be comparable to unique molecular identifier (UMI) protocols,
+The exception to this rule occurs when comparing data from full-length technologies to the *[celldex](https://bioconductor.org/packages/3.12/celldex)* references.
+These references are intended to be comparable to data from unique molecular identifier (UMI) protocols
 where the expression values are less sensitive to differences in gene length.
-Thus, when comparing Smart-seq2 test datasets to the built-in references,
+Thus, when annotating Smart-seq2 test datasets against the *[celldex](https://bioconductor.org/packages/3.12/celldex)* references,
 better performance can often be achieved by processing the test counts to transcripts-per-million values.
 
 We demonstrate below using another HSC dataset that was generated using the Smart-seq2 protocol [@nestorowa2016singlecell].
@@ -267,6 +269,22 @@ head(sort(table(pred$labels), decreasing=TRUE), 10)
 
 
 
+## Comments on choice of references {#reference-choice}
+
+Unsurprisingly, the choice of reference has a major impact on the annotation results.
+We need to pick a reference that contains a superset of the labels that we expect to be present in our test dataset.
+Whether the original authors assigned appropriate labels to the reference samples is largely taken as a matter of faith;
+it is not entirely unexpected that some references are "better" than others depending on the quality of sample preparation.
+We would also prefer a reference that is generated from a similar technology or protocol as our test dataset,
+though this is usually not an issue when using `SingleR()` to annotate well-defined cell types.
+
+Users are advised to read the [relevant vignette](https://bioconductor.org/packages/3.12/celldex/vignettes/userguide) 
+for more details about the available references as well as some recommendations on which to use.
+(As an aside, the ImmGen dataset and other references were originally supplied along with *[SingleR](https://bioconductor.org/packages/3.12/SingleR)* itself
+but have since been migrated to the separate *[celldex](https://bioconductor.org/packages/3.12/celldex)* package for more general use throughout Bioconductor.)
+Of course, as we shall see in the next Chapter, it is entirely possible to supply your own reference datasets instead; 
+all we need are log-expression values and a set of labels for the cells or samples.
+
 ## Session information {-}
 
 <button class="aaron-collapse">View session info</button>
@@ -295,16 +313,17 @@ attached base packages:
 other attached packages:
  [1] scater_1.17.3               ggplot2_3.3.1              
  [3] AnnotationHub_2.21.0        BiocFileCache_1.13.0       
- [5] dbplyr_1.4.4                SingleR_1.3.5              
- [7] ensembldb_2.13.1            AnnotationFilter_1.13.0    
- [9] GenomicFeatures_1.41.0      AnnotationDbi_1.51.0       
-[11] scRNAseq_2.3.4              SingleCellExperiment_1.11.4
-[13] SummarizedExperiment_1.19.5 DelayedArray_0.15.1        
-[15] matrixStats_0.56.0          Biobase_2.49.0             
-[17] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
-[19] IRanges_2.23.9              S4Vectors_0.27.12          
-[21] BiocGenerics_0.35.4         BiocStyle_2.17.0           
-[23] rebook_0.99.0              
+ [5] dbplyr_1.4.4                SingleR_1.3.6              
+ [7] celldex_0.99.0              ensembldb_2.13.1           
+ [9] AnnotationFilter_1.13.0     GenomicFeatures_1.41.0     
+[11] AnnotationDbi_1.51.0        scRNAseq_2.3.5             
+[13] SingleCellExperiment_1.11.4 SummarizedExperiment_1.19.5
+[15] DelayedArray_0.15.3         matrixStats_0.56.0         
+[17] Matrix_1.2-18               Biobase_2.49.0             
+[19] GenomicRanges_1.41.5        GenomeInfoDb_1.25.1        
+[21] IRanges_2.23.9              S4Vectors_0.27.12          
+[23] BiocGenerics_0.35.4         BiocStyle_2.17.0           
+[25] rebook_0.99.0              
 
 loaded via a namespace (and not attached):
  [1] ggbeeswarm_0.6.0              colorspace_1.4-1             
@@ -315,44 +334,44 @@ loaded via a namespace (and not attached):
 [11] Rsamtools_2.5.1               graph_1.67.1                 
 [13] shiny_1.4.0.2                 BiocManager_1.30.10          
 [15] compiler_4.0.0                httr_1.4.1                   
-[17] assertthat_0.2.1              Matrix_1.2-18                
-[19] fastmap_1.0.1                 lazyeval_0.2.2               
-[21] later_1.1.0.1                 BiocSingular_1.5.0           
-[23] htmltools_0.4.0               prettyunits_1.1.1            
-[25] tools_4.0.0                   rsvd_1.0.3                   
-[27] gtable_0.3.0                  glue_1.4.1                   
-[29] GenomeInfoDbData_1.2.3        dplyr_1.0.0                  
-[31] rappdirs_0.3.1                Rcpp_1.0.4.6                 
-[33] vctrs_0.3.1                   Biostrings_2.57.2            
-[35] ExperimentHub_1.15.0          rtracklayer_1.49.3           
-[37] DelayedMatrixStats_1.11.0     xfun_0.14                    
-[39] stringr_1.4.0                 ps_1.3.3                     
-[41] mime_0.9                      lifecycle_0.2.0              
-[43] irlba_2.3.3                   XML_3.99-0.3                 
-[45] zlibbioc_1.35.0               scales_1.1.1                 
-[47] hms_0.5.3                     promises_1.1.1               
-[49] ProtGenerics_1.21.0           yaml_2.2.1                   
-[51] curl_4.3                      memoise_1.1.0                
-[53] gridExtra_2.3                 biomaRt_2.45.0               
-[55] stringi_1.4.6                 RSQLite_2.2.0                
-[57] BiocVersion_3.12.0            BiocParallel_1.23.0          
-[59] rlang_0.4.6                   pkgconfig_2.0.3              
-[61] bitops_1.0-6                  evaluate_0.14                
-[63] lattice_0.20-41               purrr_0.3.4                  
-[65] GenomicAlignments_1.25.3      CodeDepends_0.6.5            
-[67] bit_1.1-15.2                  processx_3.4.2               
-[69] tidyselect_1.1.0              magrittr_1.5                 
-[71] bookdown_0.19                 R6_2.4.1                     
-[73] generics_0.0.2                DBI_1.1.0                    
-[75] pillar_1.4.4                  withr_2.2.0                  
-[77] RCurl_1.98-1.2                tibble_3.0.1                 
-[79] crayon_1.3.4                  rmarkdown_2.2                
-[81] viridis_0.5.1                 progress_1.2.2               
-[83] grid_4.0.0                    blob_1.2.1                   
-[85] callr_3.4.3                   digest_0.6.25                
-[87] xtable_1.8-4                  httpuv_1.5.4                 
-[89] openssl_1.4.1                 munsell_0.5.0                
-[91] beeswarm_0.2.3                viridisLite_0.3.0            
-[93] vipor_0.4.5                   askpass_1.1                  
+[17] assertthat_0.2.1              fastmap_1.0.1                
+[19] lazyeval_0.2.2                later_1.1.0.1                
+[21] BiocSingular_1.5.0            htmltools_0.4.0              
+[23] prettyunits_1.1.1             tools_4.0.0                  
+[25] rsvd_1.0.3                    gtable_0.3.0                 
+[27] glue_1.4.1                    GenomeInfoDbData_1.2.3       
+[29] dplyr_1.0.0                   rappdirs_0.3.1               
+[31] Rcpp_1.0.4.6                  vctrs_0.3.1                  
+[33] Biostrings_2.57.2             ExperimentHub_1.15.0         
+[35] rtracklayer_1.49.3            DelayedMatrixStats_1.11.0    
+[37] xfun_0.14                     stringr_1.4.0                
+[39] ps_1.3.3                      mime_0.9                     
+[41] lifecycle_0.2.0               irlba_2.3.3                  
+[43] XML_3.99-0.3                  zlibbioc_1.35.0              
+[45] scales_1.1.1                  hms_0.5.3                    
+[47] promises_1.1.1                ProtGenerics_1.21.0          
+[49] yaml_2.2.1                    curl_4.3                     
+[51] memoise_1.1.0                 gridExtra_2.3                
+[53] biomaRt_2.45.0                stringi_1.4.6                
+[55] RSQLite_2.2.0                 BiocVersion_3.12.0           
+[57] BiocParallel_1.23.0           rlang_0.4.6                  
+[59] pkgconfig_2.0.3               bitops_1.0-6                 
+[61] evaluate_0.14                 lattice_0.20-41              
+[63] purrr_0.3.4                   GenomicAlignments_1.25.3     
+[65] CodeDepends_0.6.5             bit_1.1-15.2                 
+[67] processx_3.4.2                tidyselect_1.1.0             
+[69] magrittr_1.5                  bookdown_0.19                
+[71] R6_2.4.1                      generics_0.0.2               
+[73] DBI_1.1.0                     pillar_1.4.4                 
+[75] withr_2.2.0                   RCurl_1.98-1.2               
+[77] tibble_3.0.1                  crayon_1.3.4                 
+[79] rmarkdown_2.2                 viridis_0.5.1                
+[81] progress_1.2.2                grid_4.0.0                   
+[83] blob_1.2.1                    callr_3.4.3                  
+[85] digest_0.6.25                 xtable_1.8-4                 
+[87] httpuv_1.5.4                  openssl_1.4.1                
+[89] munsell_0.5.0                 viridisLite_0.3.0            
+[91] beeswarm_0.2.3                vipor_0.4.5                  
+[93] askpass_1.1                  
 ```
 </div>
