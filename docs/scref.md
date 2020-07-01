@@ -363,13 +363,13 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] scran_1.17.2                SingleR_1.3.6              
- [3] scater_1.17.3               ggplot2_3.3.1              
- [5] scRNAseq_2.3.5              SingleCellExperiment_1.11.4
- [7] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+ [1] scran_1.17.4                SingleR_1.3.6              
+ [3] scater_1.17.3               ggplot2_3.3.2              
+ [5] scRNAseq_2.3.6              SingleCellExperiment_1.11.6
+ [7] SummarizedExperiment_1.19.5 DelayedArray_0.15.6        
  [9] matrixStats_0.56.0          Matrix_1.2-18              
 [11] Biobase_2.49.0              GenomicRanges_1.41.5       
-[13] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[13] GenomeInfoDb_1.25.5         IRanges_2.23.10            
 [15] S4Vectors_0.27.12           BiocGenerics_0.35.4        
 [17] BiocStyle_2.17.0            rebook_0.99.0              
 
@@ -383,29 +383,29 @@ loaded via a namespace (and not attached):
 [13] processx_3.4.2                bit_1.1-15.2                 
 [15] curl_4.3                      compiler_4.0.0               
 [17] graph_1.67.1                  BiocNeighbors_1.7.0          
-[19] bookdown_0.19                 scales_1.1.1                 
+[19] bookdown_0.20                 scales_1.1.1                 
 [21] callr_3.4.3                   rappdirs_0.3.1               
 [23] stringr_1.4.0                 digest_0.6.25                
-[25] rmarkdown_2.2                 XVector_0.29.2               
-[27] pkgconfig_2.0.3               htmltools_0.4.0              
-[29] limma_3.45.6                  dbplyr_1.4.4                 
+[25] rmarkdown_2.3                 XVector_0.29.3               
+[27] pkgconfig_2.0.3               htmltools_0.5.0              
+[29] limma_3.45.7                  dbplyr_1.4.4                 
 [31] fastmap_1.0.1                 rlang_0.4.6                  
-[33] RSQLite_2.2.0                 shiny_1.4.0.2                
-[35] DelayedMatrixStats_1.11.0     generics_0.0.2               
+[33] RSQLite_2.2.0                 shiny_1.5.0                  
+[35] DelayedMatrixStats_1.11.1     generics_0.0.2               
 [37] BiocParallel_1.23.0           dplyr_1.0.0                  
 [39] RCurl_1.98-1.2                magrittr_1.5                 
 [41] BiocSingular_1.5.0            GenomeInfoDbData_1.2.3       
-[43] scuttle_0.99.9                Rcpp_1.0.4.6                 
+[43] scuttle_0.99.10               Rcpp_1.0.4.6                 
 [45] ggbeeswarm_0.6.0              munsell_0.5.0                
 [47] viridis_0.5.1                 lifecycle_0.2.0              
 [49] edgeR_3.31.4                  stringi_1.4.6                
 [51] yaml_2.2.1                    zlibbioc_1.35.0              
-[53] BiocFileCache_1.13.0          AnnotationHub_2.21.0         
+[53] BiocFileCache_1.13.0          AnnotationHub_2.21.1         
 [55] grid_4.0.0                    blob_1.2.1                   
 [57] dqrng_0.2.1                   promises_1.1.1               
 [59] ExperimentHub_1.15.0          crayon_1.3.4                 
 [61] lattice_0.20-41               locfit_1.5-9.4               
-[63] CodeDepends_0.6.5             knitr_1.28                   
+[63] CodeDepends_0.6.5             knitr_1.29                   
 [65] ps_1.3.3                      pillar_1.4.4                 
 [67] igraph_1.2.5                  codetools_0.2-16             
 [69] XML_3.99-0.3                  glue_1.4.1                   
@@ -413,10 +413,10 @@ loaded via a namespace (and not attached):
 [73] BiocManager_1.30.10           vctrs_0.3.1                  
 [75] httpuv_1.5.4                  gtable_0.3.0                 
 [77] purrr_0.3.4                   assertthat_0.2.1             
-[79] xfun_0.14                     rsvd_1.0.3                   
+[79] xfun_0.15                     rsvd_1.0.3                   
 [81] mime_0.9                      xtable_1.8-4                 
 [83] later_1.1.0.1                 viridisLite_0.3.0            
-[85] tibble_3.0.1                  AnnotationDbi_1.51.0         
+[85] tibble_3.0.1                  AnnotationDbi_1.51.1         
 [87] beeswarm_0.2.3                memoise_1.1.0                
 [89] statmod_1.4.34                ellipsis_0.3.1               
 [91] interactiveDisplayBase_1.27.5

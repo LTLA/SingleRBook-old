@@ -55,9 +55,9 @@ from Chapter \@ref(more-markers) [@muraro2016singlecell;@grun2016denovo].
 #--- loading-muraro ---#
 library(scRNAseq)
 sceM <- MuraroPancreasData()
-
 sceM <- sceM[,!is.na(sceM$label) & sceM$label!="unclear"] 
 
+#--- normalize-muraro ---#
 library(scater)
 sceM <- logNormCounts(sceM)
 
@@ -71,6 +71,7 @@ qc <- quickPerCellQC(colData(sceG),
     subset=sceG$donor %in% c("D17", "D7", "D2"))
 sceG <- sceG[,!qc$discard]
 
+#--- normalize-grun ---#
 sceG <- logNormCounts(sceG)
 
 #--- annotation ---#
@@ -353,27 +354,27 @@ attached base packages:
 [8] methods   base     
 
 other attached packages:
- [1] scater_1.17.3               ggplot2_3.3.1              
- [3] SingleCellExperiment_1.11.4 SingleR_1.3.6              
- [5] SummarizedExperiment_1.19.5 DelayedArray_0.15.3        
+ [1] scater_1.17.3               ggplot2_3.3.2              
+ [3] SingleCellExperiment_1.11.6 SingleR_1.3.6              
+ [5] SummarizedExperiment_1.19.5 DelayedArray_0.15.6        
  [7] matrixStats_0.56.0          Matrix_1.2-18              
  [9] Biobase_2.49.0              GenomicRanges_1.41.5       
-[11] GenomeInfoDb_1.25.1         IRanges_2.23.9             
+[11] GenomeInfoDb_1.25.5         IRanges_2.23.10            
 [13] S4Vectors_0.27.12           BiocGenerics_0.35.4        
 [15] BiocStyle_2.17.0            rebook_0.99.0              
 
 loaded via a namespace (and not attached):
  [1] viridis_0.5.1             BiocSingular_1.5.0       
- [3] viridisLite_0.3.0         DelayedMatrixStats_1.11.0
- [5] scuttle_0.99.9            BiocManager_1.30.10      
+ [3] viridisLite_0.3.0         DelayedMatrixStats_1.11.1
+ [5] scuttle_0.99.10           BiocManager_1.30.10      
  [7] highr_0.8                 vipor_0.4.5              
  [9] GenomeInfoDbData_1.2.3    yaml_2.2.1               
 [11] pillar_1.4.4              lattice_0.20-41          
 [13] glue_1.4.1                digest_0.6.25            
-[15] RColorBrewer_1.1-2        XVector_0.29.2           
-[17] colorspace_1.4-1          htmltools_0.4.0          
+[15] RColorBrewer_1.1-2        XVector_0.29.3           
+[17] colorspace_1.4-1          htmltools_0.5.0          
 [19] XML_3.99-0.3              pkgconfig_2.0.3          
-[21] pheatmap_1.0.12           bookdown_0.19            
+[21] pheatmap_1.0.12           bookdown_0.20            
 [23] zlibbioc_1.35.0           purrr_0.3.4              
 [25] scales_1.1.1              processx_3.4.2           
 [27] BiocParallel_1.23.0       tibble_3.0.1             
@@ -389,12 +390,12 @@ loaded via a namespace (and not attached):
 [47] rsvd_1.0.3                rlang_0.4.6              
 [49] grid_4.0.0                RCurl_1.98-1.2           
 [51] BiocNeighbors_1.7.0       bitops_1.0-6             
-[53] labeling_0.3              rmarkdown_2.2            
+[53] labeling_0.3              rmarkdown_2.3            
 [55] gtable_0.3.0              codetools_0.2-16         
 [57] R6_2.4.1                  gridExtra_2.3            
-[59] knitr_1.28                dplyr_1.0.0              
+[59] knitr_1.29                dplyr_1.0.0              
 [61] ggbeeswarm_0.6.0          stringi_1.4.6            
 [63] Rcpp_1.0.4.6              vctrs_0.3.1              
-[65] tidyselect_1.1.0          xfun_0.14                
+[65] tidyselect_1.1.0          xfun_0.15                
 ```
 </div>
