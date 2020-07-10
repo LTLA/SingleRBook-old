@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Advanced options | Assigning cell types with SingleR</title>
-  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
+  <meta name="description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Advanced options | Assigning cell types with SingleR" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
+  <meta property="og:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 7 Advanced options | Assigning cell types with SingleR" />
   
-  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn't enough." />
+  <meta name="twitter:description" content="The SingleR book. Because sometimes, a vignette just isn’t enough." />
   
 
 
 
-<meta name="date" content="2020-07-01" />
+<meta name="date" content="2020-07-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,6 +32,7 @@
   
 <link rel="prev" href="exploiting-the-cell-ontology.html"/>
 <link rel="next" href="cross-annotating-human-pancreas.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,41 +53,67 @@
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-pre, code { background-color: #f8f8f8; }
-code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code > span.dt { color: #204a87; } /* DataType */
-code > span.dv { color: #0000cf; } /* DecVal */
-code > span.bn { color: #0000cf; } /* BaseN */
-code > span.fl { color: #0000cf; } /* Float */
-code > span.ch { color: #4e9a06; } /* Char */
-code > span.st { color: #4e9a06; } /* String */
-code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-code > span.ot { color: #8f5902; } /* Other */
-code > span.al { color: #ef2929; } /* Alert */
-code > span.fu { color: #000000; } /* Function */
-code > span.er { color: #a40000; font-weight: bold; } /* Error */
-code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #000000; } /* Constant */
-code > span.sc { color: #000000; } /* SpecialChar */
-code > span.vs { color: #4e9a06; } /* VerbatimString */
-code > span.ss { color: #4e9a06; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #000000; } /* Variable */
-code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code > span.ex { } /* Extension */
-code > span.at { color: #c4a000; } /* Attribute */
-code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -107,14 +134,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="part"><span><b>I Basic usage</b></span></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>1.1</b> Motivation</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#method-description"><i class="fa fa-check"></i><b>1.2</b> Method description</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#quick-start"><i class="fa fa-check"></i><b>1.3</b> Quick start</a></li>
 <li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#where-to-get-help"><i class="fa fa-check"></i><b>1.4</b> Where to get help</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html"><i class="fa fa-check"></i><b>2</b> Using the classic mode</a><ul>
+<li class="chapter" data-level="2" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html"><i class="fa fa-check"></i><b>2</b> Using the classic mode</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#overview"><i class="fa fa-check"></i><b>2.1</b> Overview</a></li>
 <li class="chapter" data-level="2.2" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#annotation-the-test-dataset"><i class="fa fa-check"></i><b>2.2</b> Annotation the test dataset</a></li>
 <li class="chapter" data-level="2.3" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#interaction-with-quality-control"><i class="fa fa-check"></i><b>2.3</b> Interaction with quality control</a></li>
@@ -122,14 +151,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.5" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#reference-choice"><i class="fa fa-check"></i><b>2.5</b> Comments on choice of references</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="more-markers.html"><a href="more-markers.html"><i class="fa fa-check"></i><b>3</b> Controlling marker detection</a><ul>
+<li class="chapter" data-level="3" data-path="more-markers.html"><a href="more-markers.html"><i class="fa fa-check"></i><b>3</b> Controlling marker detection</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#overview"><i class="fa fa-check"></i><b>3.1</b> Overview</a></li>
 <li class="chapter" data-level="3.2" data-path="more-markers.html"><a href="more-markers.html#annotation-with-test-based-marker-detection"><i class="fa fa-check"></i><b>3.2</b> Annotation with test-based marker detection</a></li>
 <li class="chapter" data-level="3.3" data-path="more-markers.html"><a href="more-markers.html#defining-custom-markers"><i class="fa fa-check"></i><b>3.3</b> Defining custom markers</a></li>
 <li class="chapter" data-level="3.4" data-path="more-markers.html"><a href="more-markers.html#pseudo-bulk-aggregation"><i class="fa fa-check"></i><b>3.4</b> Pseudo-bulk aggregation</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html"><i class="fa fa-check"></i><b>4</b> Annotation diagnostics</a><ul>
+<li class="chapter" data-level="4" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html"><i class="fa fa-check"></i><b>4</b> Annotation diagnostics</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#overview"><i class="fa fa-check"></i><b>4.1</b> Overview</a></li>
 <li class="chapter" data-level="4.2" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-scores-within-cells"><i class="fa fa-check"></i><b>4.2</b> Based on the scores within cells</a></li>
 <li class="chapter" data-level="4.3" data-path="annotation-diagnostics.html"><a href="annotation-diagnostics.html#based-on-the-deltas-across-cells"><i class="fa fa-check"></i><b>4.3</b> Based on the deltas across cells</a></li>
@@ -137,40 +168,47 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="part"><span><b>II Advanced usage</b></span></li>
-<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a><ul>
+<li class="chapter" data-level="5" data-path="using-multiple-references.html"><a href="using-multiple-references.html"><i class="fa fa-check"></i><b>5</b> Using multiple references</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="using-the-classic-mode.html"><a href="using-the-classic-mode.html#overview"><i class="fa fa-check"></i><b>5.1</b> Overview</a></li>
 <li class="chapter" data-level="5.2" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-reference-specific-labels"><i class="fa fa-check"></i><b>5.2</b> Using reference-specific labels</a></li>
-<li class="chapter" data-level="5.3" data-path="using-multiple-references.html"><a href="using-multiple-references.html#comparing-scores-across-references"><i class="fa fa-check"></i><b>5.3</b> Comparing scores across references</a><ul>
+<li class="chapter" data-level="5.3" data-path="using-multiple-references.html"><a href="using-multiple-references.html#comparing-scores-across-references"><i class="fa fa-check"></i><b>5.3</b> Comparing scores across references</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="using-multiple-references.html"><a href="using-multiple-references.html#combining-inferences-from-individual-references"><i class="fa fa-check"></i><b>5.3.1</b> Combining inferences from individual references</a></li>
 <li class="chapter" data-level="5.3.2" data-path="using-multiple-references.html"><a href="using-multiple-references.html#combined-diagnostics"><i class="fa fa-check"></i><b>5.3.2</b> Combined diagnostics</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-harmonized-labels"><i class="fa fa-check"></i><b>5.4</b> Using harmonized labels</a><ul>
+<li class="chapter" data-level="5.4" data-path="using-multiple-references.html"><a href="using-multiple-references.html#using-harmonized-labels"><i class="fa fa-check"></i><b>5.4</b> Using harmonized labels</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="using-multiple-references.html"><a href="using-multiple-references.html#sharing-information-during-marker-detection"><i class="fa fa-check"></i><b>5.4.1</b> Sharing information during marker detection</a></li>
 <li class="chapter" data-level="5.4.2" data-path="using-multiple-references.html"><a href="using-multiple-references.html#manual-label-harmonization"><i class="fa fa-check"></i><b>5.4.2</b> Manual label harmonization</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="using-multiple-references.html"><a href="using-multiple-references.html#session-info"><i class="fa fa-check"></i>Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="exploiting-the-cell-ontology.html"><a href="exploiting-the-cell-ontology.html"><i class="fa fa-check"></i><b>6</b> Exploiting the cell ontology</a><ul>
+<li class="chapter" data-level="6" data-path="exploiting-the-cell-ontology.html"><a href="exploiting-the-cell-ontology.html"><i class="fa fa-check"></i><b>6</b> Exploiting the cell ontology</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="introduction.html"><a href="introduction.html#motivation"><i class="fa fa-check"></i><b>6.1</b> Motivation</a></li>
 <li class="chapter" data-level="6.2" data-path="exploiting-the-cell-ontology.html"><a href="exploiting-the-cell-ontology.html#basic-manipulation"><i class="fa fa-check"></i><b>6.2</b> Basic manipulation</a></li>
 <li class="chapter" data-level="6.3" data-path="exploiting-the-cell-ontology.html"><a href="exploiting-the-cell-ontology.html#adjusting-resolution"><i class="fa fa-check"></i><b>6.3</b> Adjusting resolution</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="advanced-options.html"><a href="advanced-options.html"><i class="fa fa-check"></i><b>7</b> Advanced options</a><ul>
+<li class="chapter" data-level="7" data-path="advanced-options.html"><a href="advanced-options.html"><i class="fa fa-check"></i><b>7</b> Advanced options</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="advanced-options.html"><a href="advanced-options.html#preconstructed-indices"><i class="fa fa-check"></i><b>7.1</b> Preconstructed indices</a></li>
 <li class="chapter" data-level="7.2" data-path="advanced-options.html"><a href="advanced-options.html#parallelization"><i class="fa fa-check"></i><b>7.2</b> Parallelization</a></li>
 <li class="chapter" data-level="7.3" data-path="advanced-options.html"><a href="advanced-options.html#approximate-algorithms"><i class="fa fa-check"></i><b>7.3</b> Approximate algorithms</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="part"><span><b>III Case studies</b></span></li>
-<li class="chapter" data-level="8" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html"><i class="fa fa-check"></i><b>8</b> Cross-annotating human pancreas</a><ul>
+<li class="chapter" data-level="8" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html"><i class="fa fa-check"></i><b>8</b> Cross-annotating human pancreas</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#loading-the-data"><i class="fa fa-check"></i><b>8.1</b> Loading the data</a></li>
 <li class="chapter" data-level="8.2" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#applying-the-annotation"><i class="fa fa-check"></i><b>8.2</b> Applying the annotation</a></li>
 <li class="chapter" data-level="8.3" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#diagnostics"><i class="fa fa-check"></i><b>8.3</b> Diagnostics</a></li>
 <li class="chapter" data-level="8.4" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#comparison-to-clusters"><i class="fa fa-check"></i><b>8.4</b> Comparison to clusters</a></li>
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="cross-annotating-mouse-brains.html"><a href="cross-annotating-mouse-brains.html"><i class="fa fa-check"></i><b>9</b> Cross-annotating mouse brains</a><ul>
+<li class="chapter" data-level="9" data-path="cross-annotating-mouse-brains.html"><a href="cross-annotating-mouse-brains.html"><i class="fa fa-check"></i><b>9</b> Cross-annotating mouse brains</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#loading-the-data"><i class="fa fa-check"></i><b>9.1</b> Loading the data</a></li>
 <li class="chapter" data-level="9.2" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#applying-the-annotation"><i class="fa fa-check"></i><b>9.2</b> Applying the annotation</a></li>
 <li class="chapter" data-level="9.3" data-path="cross-annotating-human-pancreas.html"><a href="cross-annotating-human-pancreas.html#diagnostics"><i class="fa fa-check"></i><b>9.3</b> Diagnostics</a></li>
@@ -178,7 +216,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#session-information"><i class="fa fa-check"></i>Session information</a></li>
 </ul></li>
 <li class="part"><span><b>IV Appendix</b></span></li>
-<li class="chapter" data-level="10" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>10</b> Contributors</a><ul>
+<li class="chapter" data-level="10" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i><b>10</b> Contributors</a>
+<ul>
 <li><a href="contributors.html#aaron-lun"><em>Aaron Lun</em></a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i><b>11</b> Bibliography</a></li>
@@ -202,7 +241,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="advanced-options" class="section level1">
+<div id="advanced-options" class="section level1" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Advanced options</h1>
 <script>
 document.addEventListener("click", function (event) {
@@ -237,12 +276,17 @@ document.addEventListener("click", function (event) {
   background-color: #f1f1f1;
 }
 </style>
-<div id="preconstructed-indices" class="section level2">
+<div id="preconstructed-indices" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Preconstructed indices</h2>
-<p>Advanced users can split the <code>SingleR()</code> workflow into two separate training and classification steps. This means that training (e.g., marker detection, assembling of nearest-neighbor indices) only needs to be performed once for any reference. The resulting data structure can then be re-used across multiple classifications with different test datasets, provided the gene annotation in the test dataset is identical to or a superset of the genes in the training set. To illustrate, we will consider the DICE reference dataset <span class="citation">(Schmiedel et al. <a href="#ref-diceRef">2018</a>)</span> from the <em><a href="https://bioconductor.org/packages/3.12/celldex">celldex</a></em> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(celldex)
-dice &lt;-<span class="st"> </span><span class="kw">DatabaseImmuneCellExpressionData</span>(<span class="dt">ensembl=</span><span class="ot">TRUE</span>)
-dice</code></pre></div>
+<p>Advanced users can split the <code>SingleR()</code> workflow into two separate training and classification steps.
+This means that training (e.g., marker detection, assembling of nearest-neighbor indices) only needs to be performed once
+for any reference.
+The resulting data structure can then be re-used across multiple classifications with different test datasets,
+provided the gene annotation in the test dataset is identical to or a superset of the genes in the training set.
+To illustrate, we will consider the DICE reference dataset <span class="citation">(Schmiedel et al. <a href="#ref-diceRef" role="doc-biblioref">2018</a>)</span> from the <em><a href="https://bioconductor.org/packages/3.12/celldex">celldex</a></em> package.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="advanced-options.html#cb110-1" aria-hidden="true"></a><span class="kw">library</span>(celldex)</span>
+<span id="cb110-2"><a href="advanced-options.html#cb110-2" aria-hidden="true"></a>dice &lt;-<span class="st"> </span><span class="kw">DatabaseImmuneCellExpressionData</span>(<span class="dt">ensembl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb110-3"><a href="advanced-options.html#cb110-3" aria-hidden="true"></a>dice</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 29914 1561 
 ## metadata(0):
@@ -252,7 +296,7 @@ dice</code></pre></div>
 ## rowData names(0):
 ## colnames(1561): TPM_1 TPM_2 ... TPM_101 TPM_102
 ## colData names(3): label.main label.fine label.ont</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(dice<span class="op">$</span>label.fine)</code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="advanced-options.html#cb112-1" aria-hidden="true"></a><span class="kw">table</span>(dice<span class="op">$</span>label.fine)</span></code></pre></div>
 <pre><code>## 
 ##                   B cells, naive                 Monocytes, CD14+ 
 ##                              106                              106 
@@ -270,18 +314,27 @@ dice</code></pre></div>
 ##                              104                              104 
 ## T cells, CD8+, naive, stimulated 
 ##                              102</code></pre>
-<p>Let's say we want to use the DICE reference to annotate the PBMC dataset from Chapter <a href="introduction.html#introduction">1</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(TENxPBMCData)
-sce &lt;-<span class="st"> </span><span class="kw">TENxPBMCData</span>(<span class="st">&quot;pbmc3k&quot;</span>)</code></pre></div>
-<p>We use the <code>trainSingleR()</code> function to do all the necessary calculations that are independent of the test dataset. (Almost; see comments below about <code>common</code>.) This yields a list of various components that contains all identified marker genes and precomputed rank indices to be used in the score calculation. We can also turn on aggregation with <code>aggr.ref=TRUE</code> (Section @ref(pseudo-bulk aggregation)) to further reduce computational work.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">common &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(sce), <span class="kw">rownames</span>(dice))
-
-<span class="kw">library</span>(SingleR)
-<span class="kw">set.seed</span>(<span class="dv">2000</span>)
-trained &lt;-<span class="st"> </span><span class="kw">trainSingleR</span>(dice[common,], <span class="dt">labels=</span>dice<span class="op">$</span>label.fine, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p>We then use the <code>trained</code> object to annotate our dataset of interest through the <code>classifySingleR()</code> function. As we can see, this yields exactly the same result as applying <code>SingleR()</code> directly. The advantage here is that <code>trained</code> can be re-used for multiple <code>classifySingleR()</code> calls - possibly on different datasets - without having to repeat unnecessary steps when the reference is unchanged.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred &lt;-<span class="st"> </span><span class="kw">classifySingleR</span>(sce, trained, <span class="dt">assay.type=</span><span class="dv">1</span>)
-<span class="kw">table</span>(pred<span class="op">$</span>labels)</code></pre></div>
+<p>Let’s say we want to use the DICE reference to annotate the PBMC dataset from Chapter <a href="introduction.html#introduction">1</a>.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="advanced-options.html#cb114-1" aria-hidden="true"></a><span class="kw">library</span>(TENxPBMCData)</span>
+<span id="cb114-2"><a href="advanced-options.html#cb114-2" aria-hidden="true"></a>sce &lt;-<span class="st"> </span><span class="kw">TENxPBMCData</span>(<span class="st">&quot;pbmc3k&quot;</span>)</span></code></pre></div>
+<p>We use the <code>trainSingleR()</code> function to do all the necessary calculations
+that are independent of the test dataset.
+(Almost; see comments below about <code>common</code>.)
+This yields a list of various components that contains all identified marker genes
+and precomputed rank indices to be used in the score calculation.
+We can also turn on aggregation with <code>aggr.ref=TRUE</code> (Section @ref(pseudo-bulk aggregation))
+to further reduce computational work.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="advanced-options.html#cb115-1" aria-hidden="true"></a>common &lt;-<span class="st"> </span><span class="kw">intersect</span>(<span class="kw">rownames</span>(sce), <span class="kw">rownames</span>(dice))</span>
+<span id="cb115-2"><a href="advanced-options.html#cb115-2" aria-hidden="true"></a></span>
+<span id="cb115-3"><a href="advanced-options.html#cb115-3" aria-hidden="true"></a><span class="kw">library</span>(SingleR)</span>
+<span id="cb115-4"><a href="advanced-options.html#cb115-4" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">2000</span>)</span>
+<span id="cb115-5"><a href="advanced-options.html#cb115-5" aria-hidden="true"></a>trained &lt;-<span class="st"> </span><span class="kw">trainSingleR</span>(dice[common,], <span class="dt">labels=</span>dice<span class="op">$</span>label.fine, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>We then use the <code>trained</code> object to annotate our dataset of interest through the <code>classifySingleR()</code> function.
+As we can see, this yields exactly the same result as applying <code>SingleR()</code> directly.
+The advantage here is that <code>trained</code> can be re-used for multiple <code>classifySingleR()</code> calls -
+possibly on different datasets - without having to repeat unnecessary steps when the reference is unchanged.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="advanced-options.html#cb116-1" aria-hidden="true"></a>pred &lt;-<span class="st"> </span><span class="kw">classifySingleR</span>(sce, trained, <span class="dt">assay.type=</span><span class="dv">1</span>)</span>
+<span id="cb116-2"><a href="advanced-options.html#cb116-2" aria-hidden="true"></a><span class="kw">table</span>(pred<span class="op">$</span>labels)</span></code></pre></div>
 <pre><code>## 
 ##             B cells, naive           Monocytes, CD14+ 
 ##                        346                        514 
@@ -297,42 +350,63 @@ trained &lt;-<span class="st"> </span><span class="kw">trainSingleR</span>(dice[
 ##                         60                         46 
 ##       T cells, CD8+, naive 
 ##                        212</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Comparing to the direct approach.</span>
-<span class="kw">set.seed</span>(<span class="dv">2000</span>)
-direct &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
-    <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)
-<span class="kw">identical</span>(pred<span class="op">$</span>labels, direct<span class="op">$</span>labels)</code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="advanced-options.html#cb118-1" aria-hidden="true"></a><span class="co"># Comparing to the direct approach.</span></span>
+<span id="cb118-2"><a href="advanced-options.html#cb118-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">2000</span>)</span>
+<span id="cb118-3"><a href="advanced-options.html#cb118-3" aria-hidden="true"></a>direct &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,</span>
+<span id="cb118-4"><a href="advanced-options.html#cb118-4" aria-hidden="true"></a>    <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">aggr.ref=</span><span class="ot">TRUE</span>)</span>
+<span id="cb118-5"><a href="advanced-options.html#cb118-5" aria-hidden="true"></a><span class="kw">identical</span>(pred<span class="op">$</span>labels, direct<span class="op">$</span>labels)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p>The big caveat is that the universe of genes in the test dataset must be a superset of that the reference. This is the reason behind the intersection to <code>common</code> genes and the subsequent subsetting of <code>dice</code>. Practical use of preconstructed indices is best combined with some prior information about the gene-level annotation; for example, we might know that we always use a particular version of the Ensembl gene models, so we would filter out any genes in the reference dataset that are not in our test datasets.</p>
+<p>The big caveat is that the universe of genes in the test dataset must be a superset of that the reference.
+This is the reason behind the intersection to <code>common</code> genes and the subsequent subsetting of <code>dice</code>.
+Practical use of preconstructed indices is best combined with some prior information about the gene-level annotation;
+for example, we might know that we always use a particular version of the Ensembl gene models,
+so we would filter out any genes in the reference dataset that are not in our test datasets.</p>
 </div>
-<div id="parallelization" class="section level2">
+<div id="parallelization" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Parallelization</h2>
-<p>Parallelization is an obvious approach to increasing annotation throughput. This is done using the framework in the <em><a href="https://bioconductor.org/packages/3.12/BiocParallel">BiocParallel</a></em> package, which provides several options for parallelization depending on the available hardware. On POSIX-compliant systems (i.e., Linux and MacOS), the simplest method is to use forking by passing <code>MulticoreParam()</code> to the <code>BPPARAM=</code> argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BiocParallel)
-pred2a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
-    <span class="dt">BPPARAM=</span><span class="kw">MulticoreParam</span>(<span class="dv">8</span>)) <span class="co"># 8 CPUs.</span></code></pre></div>
-<p>Alternatively, one can use separate processes with <code>SnowParam()</code>, which is slower but can be used on all systems - including Windows, our old nemesis.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred2b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,
-    <span class="dt">BPPARAM=</span><span class="kw">SnowParam</span>(<span class="dv">8</span>))
-<span class="kw">identical</span>(pred2a<span class="op">$</span>labels, pred2b<span class="op">$</span>labels) </code></pre></div>
+<p>Parallelization is an obvious approach to increasing annotation throughput.
+This is done using the framework in the <em><a href="https://bioconductor.org/packages/3.12/BiocParallel">BiocParallel</a></em> package,
+which provides several options for parallelization depending on the available hardware.
+On POSIX-compliant systems (i.e., Linux and MacOS), the simplest method is to use forking
+by passing <code>MulticoreParam()</code> to the <code>BPPARAM=</code> argument:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="advanced-options.html#cb120-1" aria-hidden="true"></a><span class="kw">library</span>(BiocParallel)</span>
+<span id="cb120-2"><a href="advanced-options.html#cb120-2" aria-hidden="true"></a>pred2a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,</span>
+<span id="cb120-3"><a href="advanced-options.html#cb120-3" aria-hidden="true"></a>    <span class="dt">BPPARAM=</span><span class="kw">MulticoreParam</span>(<span class="dv">8</span>)) <span class="co"># 8 CPUs.</span></span></code></pre></div>
+<p>Alternatively, one can use separate processes with <code>SnowParam()</code>,
+which is slower but can be used on all systems - including Windows, our old nemesis.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="advanced-options.html#cb121-1" aria-hidden="true"></a>pred2b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, <span class="dt">labels=</span>dice<span class="op">$</span>label.fine,</span>
+<span id="cb121-2"><a href="advanced-options.html#cb121-2" aria-hidden="true"></a>    <span class="dt">BPPARAM=</span><span class="kw">SnowParam</span>(<span class="dv">8</span>))</span>
+<span id="cb121-3"><a href="advanced-options.html#cb121-3" aria-hidden="true"></a><span class="kw">identical</span>(pred2a<span class="op">$</span>labels, pred2b<span class="op">$</span>labels) </span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p>When working on a cluster, passing <code>BatchtoolsParam()</code> to <code>SingleR()</code> allows us to seamlessly interface with various job schedulers like SLURM, LSF and so on. This permits heavy-duty parallelization across hundreds of CPUs for highly intensive jobs, though often some configuration is required - see the <a href="https://bioconductor.org/packages/3.12/BiocParallel/vignettes/BiocParallel_BatchtoolsParam.pdf">vignette</a> for more details.</p>
+<p>When working on a cluster, passing <code>BatchtoolsParam()</code> to <code>SingleR()</code> allows us to
+seamlessly interface with various job schedulers like SLURM, LSF and so on.
+This permits heavy-duty parallelization across hundreds of CPUs for highly intensive jobs,
+though often some configuration is required -
+see the <a href="https://bioconductor.org/packages/3.12/BiocParallel/vignettes/BiocParallel_BatchtoolsParam.pdf">vignette</a> for more details.</p>
 </div>
-<div id="approximate-algorithms" class="section level2">
+<div id="approximate-algorithms" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Approximate algorithms</h2>
-<p>It is possible to sacrifice accuracy to squeeze more speed out of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>. The most obvious approach is to simply turn off the fine-tuning with <code>fine.tune=FALSE</code>, which avoids the time-consuming fine-tuning iterations. When the reference labels are well-separated, this is probably an acceptable trade-off.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pred3a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, 
-    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>)
-<span class="kw">table</span>(pred3a<span class="op">$</span>labels)</code></pre></div>
+<p>It is possible to sacrifice accuracy to squeeze more speed out of <em><a href="https://bioconductor.org/packages/3.12/SingleR">SingleR</a></em>.
+The most obvious approach is to simply turn off the fine-tuning with <code>fine.tune=FALSE</code>,
+which avoids the time-consuming fine-tuning iterations.
+When the reference labels are well-separated, this is probably an acceptable trade-off.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="advanced-options.html#cb123-1" aria-hidden="true"></a>pred3a &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, </span>
+<span id="cb123-2"><a href="advanced-options.html#cb123-2" aria-hidden="true"></a>    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>)</span>
+<span id="cb123-3"><a href="advanced-options.html#cb123-3" aria-hidden="true"></a><span class="kw">table</span>(pred3a<span class="op">$</span>labels)</span></code></pre></div>
 <pre><code>## 
 ##       B cells     Monocytes      NK cells T cells, CD4+ T cells, CD8+ 
 ##           348           705           357           950           340</code></pre>
-<p>Another approximation is based on the fact that the initial score calculation is done using a nearest-neighbors search. By default, this is an exact seach but we can switch to an approximate algorithm via the <code>BNPARAM=</code> argument. In the example below, we use the <a href="https://github.com/spotify/annoy">Annoy algorithm</a> via the <em><a href="https://bioconductor.org/packages/3.12/BiocNeighbors">BiocNeighbors</a></em> framework, which yields mostly similar results. (Note, though, that the Annoy method does involve a considerable amount of overhead, so for small jobs it will actually be slower than the exact search.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(BiocNeighbors)
-pred3b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, 
-    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>, <span class="co"># for comparison with pred3a.</span>
-    <span class="dt">BNPARAM=</span><span class="kw">AnnoyParam</span>())
-<span class="kw">table</span>(pred3a<span class="op">$</span>labels, pred3b<span class="op">$</span>labels)</code></pre></div>
+<p>Another approximation is based on the fact that the initial score calculation is done using a nearest-neighbors search.
+By default, this is an exact seach but we can switch to an approximate algorithm via the <code>BNPARAM=</code> argument.
+In the example below, we use the <a href="https://github.com/spotify/annoy">Annoy algorithm</a>
+via the <em><a href="https://bioconductor.org/packages/3.12/BiocNeighbors">BiocNeighbors</a></em> framework, which yields mostly similar results.
+(Note, though, that the Annoy method does involve a considerable amount of overhead,
+so for small jobs it will actually be slower than the exact search.)</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="advanced-options.html#cb125-1" aria-hidden="true"></a><span class="kw">library</span>(BiocNeighbors)</span>
+<span id="cb125-2"><a href="advanced-options.html#cb125-2" aria-hidden="true"></a>pred3b &lt;-<span class="st"> </span><span class="kw">SingleR</span>(sce, <span class="dt">ref=</span>dice, <span class="dt">assay.type.test=</span><span class="dv">1</span>, </span>
+<span id="cb125-3"><a href="advanced-options.html#cb125-3" aria-hidden="true"></a>    <span class="dt">labels=</span>dice<span class="op">$</span>label.main, <span class="dt">fine.tune=</span><span class="ot">FALSE</span>, <span class="co"># for comparison with pred3a.</span></span>
+<span id="cb125-4"><a href="advanced-options.html#cb125-4" aria-hidden="true"></a>    <span class="dt">BNPARAM=</span><span class="kw">AnnoyParam</span>())</span>
+<span id="cb125-5"><a href="advanced-options.html#cb125-5" aria-hidden="true"></a><span class="kw">table</span>(pred3a<span class="op">$</span>labels, pred3b<span class="op">$</span>labels)</span></code></pre></div>
 <pre><code>##                
 ##                 B cells Monocytes NK cells T cells, CD4+ T cells, CD8+
 ##   B cells           348         0        0             0             0
@@ -435,7 +509,7 @@ loaded via a namespace (and not attached):
 <h3> Bibliography</h3>
 <div id="refs" class="references">
 <div id="ref-diceRef">
-<p>Schmiedel, Benjamin J., Divya Singh, Ariel Madrigal, Alan G. Valdovino-Gonzalez, Brandie M. White, Jose Zapardiel-Gonzalo, Brendan Ha, et al. 2018. “Impact of Genetic Polymorphisms on Human Immune Cell Gene Expression.” <em>Cell</em> 175 (6): 1701–1715.e16. doi:<a href="https://doi.org/10.1016/j.cell.2018.10.022">10.1016/j.cell.2018.10.022</a>.</p>
+<p>Schmiedel, Benjamin J., Divya Singh, Ariel Madrigal, Alan G. Valdovino-Gonzalez, Brandie M. White, Jose Zapardiel-Gonzalo, Brendan Ha, et al. 2018. “Impact of Genetic Polymorphisms on Human Immune Cell Gene Expression.” <em>Cell</em> 175 (6): 1701–1715.e16. <a href="https://doi.org/10.1016/j.cell.2018.10.022">https://doi.org/10.1016/j.cell.2018.10.022</a>.</p>
 </div>
 </div>
             </section>
@@ -475,15 +549,15 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/LTLA/SingleRBook-base/edit/master/advanced.Rmd",
+"text": "Edit"
 },
 "history": {
-"link": null,
+"link": "https://github.com/LTLA/SingleRBook-base/commits/master/advanced.Rmd",
 "text": null
 },
 "view": {
-"link": null,
+"link": "https://github.com/LTLA/SingleRBook-base/blob/master/advanced.Rmd",
 "text": null
 },
 "download": null,
@@ -491,7 +565,8 @@ gitbook.start({
 "collapse": "subsection"
 },
 "bookdown::epub_book": "default",
-"cover": "images/cover.png"
+"cover-image": "https://www.bioconductor.org/images/logo_bioconductor.gif",
+"favicon": "https://bioc2019.bioconductor.org/images/favicon.ico"
 });
 });
 </script>
@@ -501,7 +576,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
