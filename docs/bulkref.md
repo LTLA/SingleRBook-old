@@ -61,7 +61,7 @@ Classic mode is primarily intended for reference datasets that have little or no
 a description that covers many of the bulk-derived references 
 and precludes more complicated marker detection procedures (Chapter \@ref(more-markers)).
 
-## Annotation the test dataset
+## Annotating the test dataset
 
 For demonstration purposes, we will use the @grun2016denovo haematopoietic stem cell (HSC)
 dataset from the *[scRNAseq](https://bioconductor.org/packages/3.12/scRNAseq)* package.
